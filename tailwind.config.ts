@@ -17,7 +17,6 @@ export default <Partial<Config>>{
           50: '#FDF7F1',
           100: '#FDE6CF',
           500: '#F5B87B',
-          900: '#24140B',
           DEFAULT: '#24140B'
         },
         neutral: {
