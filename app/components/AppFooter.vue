@@ -60,7 +60,7 @@ const socialLinks = [
           type="text"
           required
           placeholder="姓名"
-          class="rounded-full border border-neutral-0 bg-transparent px-5 py-4 text-neutral-0 outline-none placeholder:text-neutral-0 focus:border-primary-500 md:px-8 md:py-5"
+          class="rounded-full border border-neutral-0 bg-transparent px-5 py-4 text-neutral-0 outline-none placeholder:text-neutral-0 md:px-8 md:py-5"
         />
 
         <label class="sr-only" for="phone">手機號碼</label>
@@ -69,7 +69,7 @@ const socialLinks = [
           type="tel"
           required
           placeholder="手機號碼"
-          class="rounded-full border border-neutral-0 bg-transparent px-5 py-4 text-neutral-0 outline-none placeholder:text-neutral-0 focus:border-primary-500 md:px-8 md:py-5"
+          class="rounded-full border border-neutral-0 bg-transparent px-5 py-4 text-neutral-0 outline-none placeholder:text-neutral-0 md:px-8 md:py-5"
         />
 
         <label class="sr-only" for="email">電子信箱</label>
@@ -78,7 +78,7 @@ const socialLinks = [
           type="email"
           required
           placeholder="電子信箱"
-          class="rounded-full border border-neutral-0 bg-transparent px-5 py-4 text-neutral-0 outline-none placeholder:text-neutral-0 focus:border-primary-500 sm:col-span-2 md:px-8 md:py-5"
+          class="rounded-full border border-neutral-0 bg-transparent px-5 py-4 text-neutral-0 outline-none placeholder:text-neutral-0 sm:col-span-2 md:px-8 md:py-5"
         />
 
         <label class="sr-only" for="message">備註</label>
@@ -86,11 +86,11 @@ const socialLinks = [
           id="message"
           placeholder="備註"
           rows="4"
-          class="resize-none rounded-[32px] border border-neutral-0 bg-transparent px-5 py-4 text-neutral-0 outline-none placeholder:text-neutral-0 focus:border-primary-500 sm:col-span-2 md:rounded-[40px] md:px-8 md:py-5"
+          class="resize-none rounded-[32px] border border-neutral-0 bg-transparent px-5 py-4 text-neutral-0 outline-none placeholder:text-neutral-0 sm:col-span-2 md:rounded-[40px] md:px-8 md:py-5"
         />
 
         <button
-          class="rounded-full bg-neutral-0 py-3 text-label-small text-neutral transition hover:bg-primary-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-0 sm:col-span-2 md:text-label-medium"
+          class="rounded-full bg-neutral-0 py-3 text-label-small text-neutral transition hover:bg-primary-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-0 sm:col-span-2 md:text-label-medium"
         >
           送出
         </button>
