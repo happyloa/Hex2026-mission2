@@ -21,7 +21,7 @@ const closeMenu = () => {
       <NuxtLink to="/" aria-label="回到首頁" @click="closeMenu">
         <picture>
           <source media="(min-width: 768px)" srcset="/img/common/desktop/logo.svg" />
-          <img src="/img/common/mobile/logo.svg" alt="網站 logo" />
+          <img src="/img/common/mobile/logo.svg" alt="Nelson 網站 logo" />
         </picture>
       </NuxtLink>
 
@@ -48,11 +48,11 @@ const closeMenu = () => {
         @click="isMenuOpen = !isMenuOpen"
       >
         <!-- 漢堡圖示 -->
-        <span class="flex size-5 flex-col justify-center gap-[5px]" aria-hidden="true">
+        <div class="flex size-5 flex-col justify-center gap-[5px]" aria-hidden="true">
           <div class="h-px bg-neutral"></div>
           <div class="h-px bg-neutral"></div>
           <div class="h-px bg-neutral"></div>
-        </span>
+        </div>
       </button>
     </nav>
 

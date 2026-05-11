@@ -93,13 +93,15 @@ const socialLinks = [
       <div class="block md:hidden">
         <ul class="mb-3 flex gap-3" aria-label="社群連結">
           <li v-for="link in socialLinks" :key="link.label">
-            <NuxtLink
-              :to="link.to"
+            <a
+              :href="link.to"
+              target="_blank"
+              rel="noopener noreferrer"
               class="flex size-11 items-center justify-center rounded-full border border-neutral-0 text-neutral-0 transition hover:bg-neutral-0 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-0"
               :aria-label="link.label"
             >
               <Icon :name="link.icon" class="size-4" />
-            </NuxtLink>
+            </a>
           </li>
         </ul>
 
