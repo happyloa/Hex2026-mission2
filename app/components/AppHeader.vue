@@ -1,6 +1,4 @@
 <script setup>
-const isMenuOpen = ref(false)
-
 const navLinks = [
   { label: '服務項目', to: '/service' },
   { label: '專案作品', to: '/project' },
@@ -9,9 +7,58 @@ const navLinks = [
 
 const navLinkClass = 'px-3 py-1 text-label-medium transition hover:text-neutral-900'
 
+const isMenuOpen = ref(false)
+
+// 保存原本的 body overflow，避免關閉選單時覆蓋頁面其他地方的設定。
+let originalBodyOverflow = ''
+
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value
+}
+
 const closeMenu = () => {
   isMenuOpen.value = false
 }
+
+const lockBodyScroll = () => {
+  if (import.meta.server) return
+
+  originalBodyOverflow = document.body.style.overflow
+  document.body.style.overflow = 'hidden'
+}
+
+const unlockBodyScroll = () => {
+  if (import.meta.server) return
+
+  document.body.style.overflow = originalBodyOverflow
+}
+
+// 手機選單打開時鎖住背景捲動，關閉或離開元件時恢復。
+const syncBodyScrollLock = (shouldLock) => {
+  if (shouldLock) {
+    lockBodyScroll()
+  } else {
+    unlockBodyScroll()
+  }
+}
+
+const handleKeydown = (event) => {
+  if (event.key === 'Escape' && isMenuOpen.value) {
+    closeMenu()
+  }
+}
+
+watch(isMenuOpen, syncBodyScrollLock)
+
+onMounted(() => {
+  // 讓鍵盤使用者可以用 Esc 關閉已打開的手機選單。
+  window.addEventListener('keydown', handleKeydown)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', handleKeydown)
+  unlockBodyScroll()
+})
 </script>
 
 <template>
@@ -45,7 +92,7 @@ const closeMenu = () => {
         :aria-expanded="isMenuOpen"
         aria-controls="mobile-menu"
         aria-label="開關選單"
-        @click="isMenuOpen = !isMenuOpen"
+        @click="toggleMenu"
       >
         <!-- 漢堡圖示 -->
         <div class="flex size-5 flex-col justify-center gap-[5px]" aria-hidden="true">
