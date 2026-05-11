@@ -7,12 +7,10 @@ const socialLinks = [
 </script>
 
 <template>
-  <footer class="bg-primary text-neutral-0">
-    <div
-      class="mx-auto flex max-w-[1296px] flex-col justify-between gap-6 px-3 py-10 md:flex-row md:py-20"
-    >
+  <footer class="bg-primary px-3 py-10 text-neutral-0 md:py-20">
+    <div class="mx-auto flex max-w-[1296px] flex-col justify-between gap-6 md:flex-row">
       <!-- 左側文字區塊 -->
-      <div class="md:max-w-[526px]">
+      <div class="flex-1 md:max-w-[526px]">
         <p class="text-heading-xxxx-small md:text-heading-xxx-small">與我聯絡</p>
         <h3 class="mb-3 text-heading-x-large md:mb-6 md:text-heading-xxx-large">CONTACT</h3>
         <p class="text-paragraph-small md:text-paragraph-medium">
@@ -46,7 +44,7 @@ const socialLinks = [
 
       <!-- 右側表單 -->
       <form
-        class="grid max-w-[746px] gap-3 text-paragraph-small sm:grid-cols-2 md:gap-6 md:text-paragraph-medium lg:px-10"
+        class="grid max-w-[746px] flex-1 gap-3 text-paragraph-small sm:grid-cols-2 md:gap-6 md:text-paragraph-medium lg:px-10"
         @submit.prevent
       >
         <label class="sr-only" for="name">姓名</label>
