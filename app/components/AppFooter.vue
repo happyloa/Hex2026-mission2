@@ -89,11 +89,7 @@ const socialLinks = [
           class="resize-none rounded-[32px] border border-neutral-0 bg-transparent px-5 py-4 text-neutral-0 outline-none placeholder:text-neutral-0 sm:col-span-2 md:rounded-[40px] md:px-8 md:py-5"
         />
 
-        <button
-          class="rounded-full bg-neutral-0 py-3 text-label-small text-neutral transition hover:bg-primary-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-0 sm:col-span-2 md:text-label-medium"
-        >
-          送出
-        </button>
+        <AtomButton type="submit" color="white" full class="sm:col-span-2"> 送出 </AtomButton>
       </form>
 
       <!-- 行動版 social -->

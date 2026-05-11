@@ -32,11 +32,9 @@
             placeholder="電子信箱"
             class="w-full rounded-full border border-neutral-0 bg-transparent p-5 outline-none placeholder:text-neutral-0"
           />
-          <button
-            class="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-neutral-0 px-5 py-3 text-label-small text-neutral transition hover:bg-primary-50 md:px-6 md:text-label-medium"
-          >
+          <AtomButton type="submit" color="white" class="absolute right-2 top-1/2 -translate-y-1/2">
             送出
-          </button>
+          </AtomButton>
         </form>
       </div>
     </div>
