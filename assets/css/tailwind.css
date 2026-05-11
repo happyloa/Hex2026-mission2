@@ -5,9 +5,42 @@
 @layer base {
   html {
     @apply font-sans font-medium text-neutral;
+    scrollbar-color: #737373 #fdf7f1;
+    scrollbar-gutter: stable;
   }
 
   body {
     @apply bg-neutral-0;
+  }
+
+  * {
+    scrollbar-width: thin;
+  }
+
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #fdf7f1;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #737373 0%, #404040 100%);
+    border: 3px solid #fdf7f1;
+    border-radius: 9999px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: #404040;
+  }
+
+  *::-webkit-scrollbar-thumb:active {
+    background: #24140b;
+  }
+
+  *::-webkit-scrollbar-corner {
+    background: #fdf7f1;
   }
 }
