@@ -57,39 +57,57 @@ const closeMenu = () => {
     </nav>
 
     <!-- 遮罩 -->
-    <div
-      v-if="isMenuOpen"
-      class="fixed inset-0 top-16 z-40 bg-dark-60a md:hidden"
-      aria-hidden="true"
-      @click="closeMenu"
-    ></div>
+    <Transition
+      enter-active-class="transition-opacity duration-200 ease-out"
+      enter-from-class="opacity-0"
+      enter-to-class="opacity-100"
+      leave-active-class="transition-opacity duration-150 ease-in"
+      leave-from-class="opacity-100"
+      leave-to-class="opacity-0"
+    >
+      <div
+        v-if="isMenuOpen"
+        class="fixed inset-0 top-16 z-40 bg-dark-60a md:hidden"
+        aria-hidden="true"
+        @click="closeMenu"
+      ></div>
+    </Transition>
 
     <!-- 手機版選單 -->
-    <nav
-      v-if="isMenuOpen"
-      class="absolute left-0 right-0 top-full z-50 bg-primary-50 py-3 md:hidden"
+    <Transition
+      enter-active-class="transition duration-200 ease-out"
+      enter-from-class="-translate-y-2 opacity-0"
+      enter-to-class="translate-y-0 opacity-100"
+      leave-active-class="transition duration-150 ease-in"
+      leave-from-class="translate-y-0 opacity-100"
+      leave-to-class="-translate-y-2 opacity-0"
     >
-      <ul class="flex flex-col items-center gap-3">
-        <li v-for="link in navLinks" :key="link.to">
-          <NuxtLink
-            :to="link.to"
-            class="block px-3 py-1 text-label-small transition hover:text-neutral-900"
-            active-class="text-primary-500"
-            @click="closeMenu"
-          >
-            {{ link.label }}
-          </NuxtLink>
-        </li>
-        <li>
-          <a
-            class="block px-3 py-1 text-label-small transition hover:text-neutral-900"
-            href="#footer"
-            @click="closeMenu"
-          >
-            與我聯絡
-          </a>
-        </li>
-      </ul>
-    </nav>
+      <nav
+        v-if="isMenuOpen"
+        class="absolute left-0 right-0 top-full z-50 bg-primary-50 py-3 md:hidden"
+      >
+        <ul class="flex flex-col items-center gap-3">
+          <li v-for="link in navLinks" :key="link.to">
+            <NuxtLink
+              :to="link.to"
+              class="block px-3 py-1 text-label-small transition hover:text-neutral-900"
+              active-class="text-primary-500"
+              @click="closeMenu"
+            >
+              {{ link.label }}
+            </NuxtLink>
+          </li>
+          <li>
+            <a
+              class="block px-3 py-1 text-label-small transition hover:text-neutral-900"
+              href="#footer"
+              @click="closeMenu"
+            >
+              與我聯絡
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </Transition>
   </header>
 </template>
