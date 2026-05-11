@@ -1,3 +1,15 @@
+<script setup>
+const isProjectModalOpen = ref(false)
+
+const openProjectModal = () => {
+  isProjectModalOpen.value = true
+}
+
+const closeProjectModal = () => {
+  isProjectModalOpen.value = false
+}
+</script>
+
 <template>
   <LayoutBanner />
   <nav class="px-3 py-6 md:py-10">
@@ -74,7 +86,7 @@
             </h2>
             <!-- 專案描述 -->
             <p>從品牌識別設計到 RWD 網站開發，打造療癒系植栽購物體驗</p>
-            <AtomButton>前往專案</AtomButton>
+            <AtomButton @click="openProjectModal">前往專案</AtomButton>
           </div>
         </article>
       </li>
@@ -105,7 +117,7 @@
             </h2>
             <!-- 專案描述 -->
             <p>運用數據視覺化邏輯，將複雜的財務數據轉化為直覺的操作介面</p>
-            <AtomButton>前往專案</AtomButton>
+            <AtomButton @click="openProjectModal">前往專案</AtomButton>
           </div>
         </article>
       </li>
@@ -135,7 +147,7 @@
             </h2>
             <!-- 專案描述 -->
             <p>以溫暖、輕盈的視覺語言，精準定位高質感甜點市場的品牌形象</p>
-            <AtomButton>前往專案</AtomButton>
+            <AtomButton @click="openProjectModal">前往專案</AtomButton>
           </div>
         </article>
       </li>
@@ -166,11 +178,36 @@
             </h2>
             <!-- 專案描述 -->
             <p>串接第三方 API 並規劃穩定的後端架構，建構安全的資產管理後台。</p>
-            <AtomButton>前往專案</AtomButton>
+            <AtomButton @click="openProjectModal">前往專案</AtomButton>
           </div>
         </article>
       </li>
     </ul>
     <AtomButton class="self-center">探索更多</AtomButton>
   </section>
+
+  <Teleport to="body">
+    <Transition
+      enter-active-class="transition-opacity duration-300 ease-out"
+      enter-from-class="opacity-0"
+      enter-to-class="opacity-100"
+      leave-active-class="transition-opacity duration-200 ease-in"
+      leave-from-class="opacity-100"
+      leave-to-class="opacity-0"
+    >
+      <div v-if="isProjectModalOpen" class="fixed inset-0 z-[100]">
+        <!-- 遮罩 -->
+        <div class="absolute inset-0 bg-dark-60a" @click="closeProjectModal"></div>
+
+        <!-- modal 內容 -->
+        <div
+          role="dialog"
+          aria-modal="true"
+          class="relative mx-auto mt-20 min-h-40 w-[calc(100%-24px)] max-w-[960px] bg-primary-50 p-6"
+        >
+          <div>Project modal content</div>
+        </div>
+      </div>
+    </Transition>
+  </Teleport>
 </template>
