@@ -7,7 +7,7 @@ const socialLinks = [
 </script>
 
 <template>
-  <footer class="bg-primary px-3 py-10 text-neutral-0 md:py-20">
+  <footer id="footer" class="bg-primary px-3 py-10 text-neutral-0 md:py-20">
     <div class="mx-auto flex max-w-[1296px] flex-col justify-between gap-6 md:flex-row">
       <!-- 左側文字區塊 -->
       <div class="flex-1 md:max-w-[526px]">
