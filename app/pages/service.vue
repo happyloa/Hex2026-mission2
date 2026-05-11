@@ -48,17 +48,17 @@ const faqItems = [
           :open="faq.open"
         >
           <summary
-            class="grid cursor-pointer grid-cols-[1.25rem_1fr_20px] items-center gap-3 p-4 text-heading-xxx-small md:grid-cols-[1.375rem_1fr_20px] md:gap-4 md:p-6 md:text-heading-xx-small"
+            class="grid cursor-pointer grid-cols-[2rem_1fr_24px] items-center gap-3 p-4 text-heading-xxx-small md:gap-4 md:p-6 md:text-heading-xx-small"
           >
             <span class="shrink-0">{{ String(faq.id).padStart(2, '0') }}</span>
             <span>{{ faq.title }}</span>
             <Icon
               name="lucide:chevron-down"
-              class="size-5 shrink-0 transition-transform duration-300 group-open:rotate-180"
+              class="size-6 shrink-0 transition-transform duration-300 group-open:rotate-180"
             />
           </summary>
           <p
-            class="grid grid-cols-[1.25rem_1fr_20px] gap-3 px-4 pb-4 text-paragraph-small md:grid-cols-[1.375rem_1fr_20px] md:gap-4 md:px-6 md:pb-6 md:text-paragraph-medium"
+            class="grid grid-cols-[2rem_1fr_24px] gap-3 px-4 pb-4 text-paragraph-small md:gap-4 md:px-6 md:pb-6 md:text-paragraph-medium"
           >
             <span class="col-start-2">
               {{ faq.content }}
