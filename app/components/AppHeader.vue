@@ -131,6 +131,7 @@ onBeforeUnmount(() => {
     >
       <nav
         v-if="isMenuOpen"
+        id="mobile-menu"
         class="absolute left-0 right-0 top-full z-50 bg-primary-50 py-3 md:hidden"
       >
         <ul class="flex flex-col items-center gap-3">
