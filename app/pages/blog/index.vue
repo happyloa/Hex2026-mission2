@@ -111,7 +111,7 @@ const setBlogTab = (tab) => {
             <li>
               <button
                 type="button"
-                class="flex size-11 items-center justify-center rounded-full transition hover:bg-neutral hover:text-neutral-0"
+                class="flex size-11 items-center justify-center rounded-full bg-neutral text-neutral-0 transition"
               >
                 1
               </button>
