@@ -36,7 +36,6 @@ const bannerStyle = computed(() => ({
   <section
     class="relative flex h-[380px] flex-col justify-center overflow-hidden bg-[image:var(--banner-mobile-image)] bg-cover bg-center text-center text-neutral-0 md:bg-[image:var(--banner-desktop-image)]"
     :style="bannerStyle"
-    fetchpriority="high"
   >
     <!-- 遮罩 -->
     <div class="absolute inset-0 bg-dark-40a"></div>
