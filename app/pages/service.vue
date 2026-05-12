@@ -43,6 +43,111 @@ const faqItems = [
 </script>
 
 <template>
+  <!-- 客戶案例區塊 -->
+  <section class="px-3 py-10 md:py-20">
+    <div class="mx-auto max-w-[1076px]">
+      <div class="mb-10 text-center md:text-start">
+        <p class="text-heading-xxxx-small md:text-heading-xxx-small">USER CASE</p>
+        <h2 class="text-heading-x-large md:text-heading-xx-large">客戶案例</h2>
+      </div>
+      <!-- 案例卡片 -->
+      <ol class="grid gap-3 sm:grid-cols-2 md:gap-6">
+        <!-- 案例1 -->
+        <li>
+          <article>
+            <NuxtLink to="/project" class="group space-y-2 md:space-y-3">
+              <img
+                src="/img/service/service_case_1.webp"
+                alt="品牌視覺與電商整合，多肉植物品牌電商建置"
+                class="block max-h-[205px] w-full object-cover md:max-h-[305px]"
+              />
+              <!-- 標籤與時間 -->
+              <div class="flex flex-col-reverse justify-between gap-1 md:flex-row md:items-center">
+                <ul
+                  class="flex flex-wrap text-paragraph-small md:text-paragraph-medium [&>li:not(:last-child)::after]:mx-0.5 [&>li:not(:last-child)::after]:content-['·'] md:[&>li:not(:last-child)::after]:mx-1"
+                >
+                  <li>平面設計</li>
+                  <li>網頁設計</li>
+                </ul>
+                <time datetime="2022-10-16" class="text-paragraph-x-small md:text-paragraph-small"
+                  >Oct 16, 2022</time
+                >
+              </div>
+              <h3 class="text-heading-x-small md:text-heading-small">
+                品牌視覺與電商整合，多肉植物品牌電商建置
+              </h3>
+              <!-- 描述與 CTA 按鈕 -->
+              <div class="flex gap-2 md:gap-5">
+                <p class="flex-1 text-paragraph-small md:text-paragraph-medium">
+                  從品牌識別設計到 RWD 響應式網站開發，打造療癒系植栽購物體驗
+                </p>
+                <button
+                  type="button"
+                  class="flex size-11 items-center justify-center rounded-full bg-neutral transition group-hover:bg-neutral-900 md:size-12"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 -960 960 960"
+                    fill="#ffffff"
+                    class="size-5 md:size-6"
+                  >
+                    <path d="M247.54-268.46 220-296l403.23-404H251.54v-40h440v440h-40v-371.69z" />
+                  </svg>
+                </button>
+              </div>
+            </NuxtLink>
+          </article>
+        </li>
+        <!-- 案例2 -->
+        <li>
+          <article>
+            <NuxtLink to="/project" class="group space-y-2 md:space-y-3">
+              <img
+                src="/img/service/service_case_2.webp"
+                alt="數位產品 UI/UX 設計，個人化財務視覺化軟體"
+                class="block max-h-[205px] w-full object-cover md:max-h-[305px]"
+              />
+              <!-- 標籤與時間 -->
+              <div class="flex flex-col-reverse justify-between gap-1 md:flex-row md:items-center">
+                <ul
+                  class="flex flex-wrap text-paragraph-small md:text-paragraph-medium [&>li:not(:last-child)::after]:mx-0.5 [&>li:not(:last-child)::after]:content-['·'] md:[&>li:not(:last-child)::after]:mx-1"
+                >
+                  <li>平面設計</li>
+                  <li>網頁設計</li>
+                  <li>前端切版</li>
+                </ul>
+                <time datetime="2022-10-16" class="text-paragraph-x-small md:text-paragraph-small"
+                  >Oct 16, 2022</time
+                >
+              </div>
+              <h3 class="text-heading-x-small md:text-heading-small">
+                數位產品 UI/UX 設計，個人化財務視覺化軟體
+              </h3>
+              <!-- 描述與 CTA 按鈕 -->
+              <div class="flex gap-2 md:gap-5">
+                <p class="flex-1 text-paragraph-small md:text-paragraph-medium">
+                  運用數據視覺化邏輯，將複雜的財務數據轉化為直覺的個人化操作介面
+                </p>
+                <button
+                  type="button"
+                  class="flex size-11 items-center justify-center rounded-full bg-neutral transition group-hover:bg-neutral-900 md:size-12"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 -960 960 960"
+                    fill="#ffffff"
+                    class="size-5 md:size-6"
+                  >
+                    <path d="M247.54-268.46 220-296l403.23-404H251.54v-40h440v440h-40v-371.69z" />
+                  </svg>
+                </button>
+              </div>
+            </NuxtLink>
+          </article>
+        </li>
+      </ol>
+    </div>
+  </section>
   <!-- FAQ 區塊 -->
   <section class="bg-primary-50 px-3 py-10 md:py-20">
     <div class="mx-auto flex max-w-[1076px] flex-col justify-between gap-6 md:flex-row">
