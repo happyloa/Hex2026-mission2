@@ -28,9 +28,23 @@ const blogTabs = [
 const route = useRoute()
 const router = useRouter()
 
-const { data: posts } = await useAsyncData('blog-posts', () =>
-  queryCollection('blog').order('date', 'DESC').all()
+// 文章列表由 Nuxt Content 取得；刷新頁面時 client 端資料可能會比畫面 hydration 慢一拍。
+const {
+  data: posts,
+  status: postsStatus,
+  refresh: refreshPosts
+} = await useAsyncData('blog-posts', () => queryCollection('blog').order('date', 'DESC').all())
+
+const isPostsPending = computed(
+  () => postsStatus.value === 'idle' || postsStatus.value === 'pending'
 )
+
+// 若刷新後 hydration 階段沒有拿到文章，mounted 後再補抓一次，避免 fallback 被誤顯示。
+onMounted(async () => {
+  if (!posts.value?.length) {
+    await refreshPosts()
+  }
+})
 
 // 目前選取的 tab 以網址的 tag 參數為準，沒有參數時回到「全部」。
 const activeBlogTab = computed(() => {
@@ -100,7 +114,7 @@ const setBlogTab = (tab) => {
             <CommonBlogCard :post="post" />
           </li>
         </ul>
-        <CommonBlogFallback v-else />
+        <CommonBlogFallback v-else-if="!isPostsPending" />
         <!-- 換頁按鈕 -->
         <nav class="flex justify-center md:justify-end">
           <ul class="flex items-center gap-4">
