@@ -31,7 +31,7 @@ defineEmits(['close'])
         <div
           role="dialog"
           aria-modal="true"
-          class="absolute left-1/2 top-1/2 mx-auto max-h-[90vh] w-[calc(100%-24px)] max-w-[1076px] -translate-x-1/2 -translate-y-1/2 overflow-y-auto"
+          class="absolute left-1/2 top-1/2 mx-auto max-h-[85dvh] w-[calc(100%-24px)] max-w-[1076px] -translate-x-1/2 -translate-y-1/2 overflow-y-auto md:max-h-[90vh]"
         >
           <!-- 關閉 modal 的按鈕 -->
           <div class="sticky top-0 flex justify-end bg-neutral-0 px-3 py-2 md:px-6 md:py-3">
