@@ -56,7 +56,7 @@ const imageClass = computed(() => {
         </component>
         <!-- meta -->
         <div
-          class="flex flex-wrap justify-between gap-2 whitespace-nowrap text-paragraph-x-small md:gap-6 md:text-paragraph-small"
+          class="flex flex-wrap justify-between gap-2 whitespace-nowrap text-paragraph-x-small md:text-paragraph-small lg:gap-6"
         >
           <time :datetime="post.date">{{ formattedDate }}</time>
           <!-- 觀看數與分享數 -->
