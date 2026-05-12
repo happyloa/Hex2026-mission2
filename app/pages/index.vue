@@ -34,6 +34,17 @@ const latestBlogPosts = computed(() => latestPosts.value ?? [])
 </script>
 
 <template>
+  <!-- 專案作品區塊 -->
+  <section class="bg-primary-50 px-3 py-10 md:py-20">
+    <div class="mx-auto max-w-[1296px]">
+      <!-- 標題區塊 -->
+      <div class="mb-6 text-center md:mb-10">
+        <p class="text-heading-xxxx-small md:text-heading-xxx-small">專案作品</p>
+        <h2 class="text-heading-x-large md:text-heading-xxx-large">PROJECTS</h2>
+      </div>
+      <!-- 專案作品列表 -->
+    </div>
+  </section>
   <!-- 部落格區塊 -->
   <section class="bg-primary-50 px-3 py-10 md:py-20">
     <div class="mx-auto max-w-[1296px]">
