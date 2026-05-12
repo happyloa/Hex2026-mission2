@@ -1,0 +1,2 @@
+# Nuxt Content MDC blocks use YAML props that Prettier parses as Markdown headings.
+content/**/*.md
