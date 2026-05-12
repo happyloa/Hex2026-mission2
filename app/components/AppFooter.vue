@@ -94,7 +94,7 @@ const socialLinks = [
 
       <!-- 行動版 social -->
       <div class="block md:hidden">
-        <ul class="mb-3 flex gap-3" aria-label="社群連結">
+        <ul class="mb-3 flex flex-wrap gap-3" aria-label="社群連結">
           <li v-for="link in socialLinks" :key="link.label">
             <a
               :href="link.to"
