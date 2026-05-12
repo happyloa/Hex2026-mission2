@@ -3,6 +3,14 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: 'zh-Hant-TW'
+      }
+    }
+  },
+
   modules: ['@nuxt/content', '@nuxt/fonts', '@nuxt/icon', '@nuxtjs/tailwindcss'],
 
   fonts: {
