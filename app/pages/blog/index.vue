@@ -121,6 +121,7 @@ const setBlogTab = (tab) => {
             <li>
               <button
                 type="button"
+                aria-label="上一頁"
                 class="flex size-11 items-center justify-center rounded-full transition hover:bg-neutral hover:text-neutral-0"
               >
                 <svg
@@ -177,6 +178,7 @@ const setBlogTab = (tab) => {
             <li>
               <button
                 type="button"
+                aria-label="下一頁"
                 class="flex size-11 items-center justify-center rounded-full transition hover:bg-neutral hover:text-neutral-0"
               >
                 <svg
