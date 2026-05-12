@@ -4,6 +4,7 @@ import 'swiper/css'
 
 const route = useRoute()
 const requestUrl = useRequestURL()
+const runtimeConfig = useRuntimeConfig()
 
 const blogSlug = computed(() => {
   const slug = route.params.blog
@@ -23,18 +24,33 @@ if (!post.value) {
   })
 }
 
+// 分享與 OG URL 需要帶上 Nuxt baseURL，避免部署在子路徑時產生錯誤連結。
+const withAppBaseURL = (path) => {
+  const baseURL = runtimeConfig.app.baseURL || '/'
+  const normalizedBaseURL = baseURL.replace(/\/$/, '')
+  const normalizedPath = path.replace(/^\//, '')
+
+  return `${normalizedBaseURL}/${normalizedPath}`
+}
+
+const articlePath = computed(() => withAppBaseURL(post.value.path))
+const articleUrl = computed(() => buildAbsoluteUrl(articlePath.value, requestUrl.origin))
+const ogImageUrl = computed(() =>
+  buildAbsoluteUrl(withAppBaseURL(SITE_OG_IMAGE), requestUrl.origin)
+)
+
 useSeoMeta({
   title: () => buildSeoTitle(post.value.title),
   description: () => post.value.description,
   ogTitle: () => buildSeoTitle(post.value.title),
   ogDescription: () => post.value.description,
-  ogImage: () => buildAbsoluteUrl(SITE_OG_IMAGE, requestUrl.origin),
-  ogUrl: () => buildAbsoluteUrl(post.value.path, requestUrl.origin),
+  ogImage: () => ogImageUrl.value,
+  ogUrl: () => articleUrl.value,
   ogType: 'article',
   twitterCard: 'summary_large_image',
   twitterTitle: () => buildSeoTitle(post.value.title),
   twitterDescription: () => post.value.description,
-  twitterImage: () => buildAbsoluteUrl(SITE_OG_IMAGE, requestUrl.origin)
+  twitterImage: () => ogImageUrl.value
 })
 
 const { data: allPosts } = await useAsyncData('blog-related-posts', () =>
@@ -76,7 +92,6 @@ const relatedPosts = computed(() => {
   return [...matchedPosts, ...fallbackPosts].slice(0, 3)
 })
 
-const articleUrl = computed(() => `${requestUrl.origin}${post.value.path}`)
 const encodedArticleUrl = computed(() => encodeURIComponent(articleUrl.value))
 const encodedArticleTitle = computed(() => encodeURIComponent(post.value.title))
 
