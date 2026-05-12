@@ -1,7 +1,7 @@
 ---
 title: 10年職人手記：如何運用 Figma 與 Storybook 打造美感與邏輯兼具的企業級設計系統
 description: 從設計 token、元件規格到前端文件化，整理設計系統如何成為團隊協作的共同語言。
-date: 2022-10-16
+date: 2022-10-15
 tags:
   - UIUX 設計
   - 設計規範
