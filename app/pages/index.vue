@@ -1,6 +1,7 @@
 <script setup>
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
+import { projects } from '../data/projects'
 
 const requestUrl = useRequestURL()
 
@@ -13,6 +14,22 @@ useSeoMeta(
   })
 )
 
+// 專案作品
+const homeProjects = projects.slice(0, 3)
+const selectedProject = ref(null)
+const isProjectModalOpen = ref(false)
+
+// 開啟 modal 前先記錄點擊的專案，讓 modal 內容能對應目前卡片。
+const openProjectModal = (project) => {
+  selectedProject.value = project
+  isProjectModalOpen.value = true
+}
+
+const closeProjectModal = () => {
+  isProjectModalOpen.value = false
+}
+
+// 最新文章
 const { data: latestPosts, refresh: refreshLatestPosts } = await useAsyncData(
   'home-latest-posts',
   async () => {
@@ -43,6 +60,14 @@ const latestBlogPosts = computed(() => latestPosts.value ?? [])
         <h2 class="text-heading-x-large md:text-heading-xxx-large">PROJECTS</h2>
       </div>
       <!-- 專案作品列表 -->
+      <div class="flex flex-col gap-6 md:gap-10">
+        <ul class="space-y-3 md:space-y-6">
+          <li v-for="project in homeProjects" :key="project.id">
+            <CommonProjectCard :project="project" @open="openProjectModal" />
+          </li>
+        </ul>
+        <AtomButton to="/project" class="self-center">探索更多</AtomButton>
+      </div>
     </div>
   </section>
   <!-- 部落格區塊 -->
@@ -76,5 +101,10 @@ const latestBlogPosts = computed(() => latestPosts.value ?? [])
       </ul>
     </div>
   </section>
+  <LayoutProjectModal
+    :open="isProjectModalOpen"
+    :project="selectedProject"
+    @close="closeProjectModal"
+  />
   <LayoutSubscription />
 </template>
