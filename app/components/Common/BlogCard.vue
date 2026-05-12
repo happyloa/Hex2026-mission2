@@ -29,17 +29,17 @@ const articleClass = computed(() => {
 
 const imageClass = computed(() => {
   if (props.variant === 'related') {
-    return 'mb-3 block h-[196px] w-full object-cover'
+    return 'mb-2 block h-[150px] md:h-[240px] md:mb-3'
   }
 
-  return 'h-[200px] w-full object-cover lg:h-[256px] lg:max-w-[526px]'
+  return 'h-[200px] lg:h-[256px] lg:max-w-[526px]'
 })
 </script>
 
 <template>
   <NuxtLink :to="post.path">
     <article :class="articleClass">
-      <img :src="post.image" :alt="post.title" :class="imageClass" />
+      <img :src="post.image" :alt="post.title" class="w-full object-cover" :class="imageClass" />
       <div class="space-y-2 md:space-y-3">
         <!-- 文章標籤 -->
         <ul
