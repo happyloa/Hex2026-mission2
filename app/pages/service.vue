@@ -48,7 +48,7 @@ const faqItems = [
           :open="faq.open"
         >
           <summary
-            class="grid cursor-pointer grid-cols-[2rem_1fr_24px] items-center gap-3 p-4 text-heading-xxx-small md:gap-4 md:p-6 md:text-heading-xx-small"
+            class="grid cursor-pointer grid-cols-[32px_1fr_24px] gap-3 p-4 text-heading-xxx-small group-open:pb-2 md:items-center md:gap-4 md:p-6 md:text-heading-xx-small md:group-open:pb-4"
           >
             <span class="shrink-0">{{ String(faq.id).padStart(2, '0') }}</span>
             <span>{{ faq.title }}</span>
@@ -58,7 +58,7 @@ const faqItems = [
             />
           </summary>
           <p
-            class="grid grid-cols-[2rem_1fr_24px] gap-3 px-4 pb-4 text-paragraph-small md:gap-4 md:px-6 md:pb-6 md:text-paragraph-medium"
+            class="grid grid-cols-[32px_1fr_24px] gap-3 px-4 pb-4 text-paragraph-small md:gap-4 md:px-6 md:pb-6 md:text-paragraph-medium"
           >
             <span class="col-start-2">
               {{ faq.content }}
