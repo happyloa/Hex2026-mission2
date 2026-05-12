@@ -13,10 +13,21 @@ useSeoMeta(
   })
 )
 
-const { data: latestPosts } = await useAsyncData('home-latest-posts', async () => {
-  const posts = await queryCollection('blog').order('date', 'DESC').all()
+const { data: latestPosts, refresh: refreshLatestPosts } = await useAsyncData(
+  'home-latest-posts',
+  async () => {
+    const posts = await queryCollection('blog').order('date', 'DESC').all()
 
-  return posts.slice(0, 3)
+    return posts.slice(0, 3)
+  }
+)
+
+// 正式環境重新整理時，Nuxt Content 的 payload 偶爾會在 hydration 前後不同步；
+// 若首頁沒有拿到預渲染資料，就在 client 端補抓一次最新文章。
+onMounted(async () => {
+  if (!latestPosts.value?.length) {
+    await refreshLatestPosts()
+  }
 })
 
 const latestBlogPosts = computed(() => latestPosts.value ?? [])
