@@ -233,7 +233,7 @@ const instagramUrl = 'https://www.instagram.com/'
       <span class="text-heading-xxxx-small md:text-heading-xxx-small">相關文章</span>
       <h2 class="mb-6 text-heading-x-large md:mb-10 md:text-heading-xxx-large">RELATED BLOG</h2>
       <!-- 手機版相關文章 -->
-      <Swiper :slides-per-view="1.4" :space-between="12" class="md:!hidden">
+      <Swiper :slides-per-view="1.4" :space-between="12" :loop="true" class="md:!hidden">
         <SwiperSlide v-for="relatedPost in relatedPosts" :key="relatedPost.path">
           <CommonBlogCard :post="relatedPost" variant="related" />
         </SwiperSlide>
