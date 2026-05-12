@@ -12,6 +12,19 @@ useSeoMeta(
 </script>
 
 <template>
-  <h1 class="text-primary underline">首頁</h1>
+  <!-- 部落格區塊 -->
+  <section class="bg-primary-50 px-3 py-10 md:py-20">
+    <div class="mx-auto max-w-[1296px]">
+      <!-- 標題區塊與按鈕 -->
+      <div class="mb-6 flex items-center justify-between gap-6 md:mb-10">
+        <div>
+          <p class="text-heading-xxxx-small md:text-heading-xxx-small">部落格</p>
+          <h2 class="text-heading-x-large md:text-heading-xxx-large">BLOGS</h2>
+        </div>
+        <AtomButton to="/blog" variant="outline">探索更多</AtomButton>
+      </div>
+      <!-- 最新文章卡片 -->
+    </div>
+  </section>
   <LayoutSubscription />
 </template>
