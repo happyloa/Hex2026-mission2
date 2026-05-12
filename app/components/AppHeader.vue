@@ -5,7 +5,7 @@ const navLinks = [
   { label: '部落格', to: '/blog' }
 ]
 
-const navLinkClass = 'px-3 py-1 text-label-medium transition hover:text-neutral-900'
+const navLinkClass = 'px-3 py-1 text-label-medium transition hover:text-primary-500'
 
 const isMenuOpen = ref(false)
 
@@ -137,7 +137,7 @@ onBeforeUnmount(() => {
           <li v-for="link in navLinks" :key="link.to">
             <NuxtLink
               :to="link.to"
-              class="block px-3 py-1 text-label-small transition hover:text-neutral-900"
+              class="block px-3 py-1 text-label-small transition hover:text-primary-500"
               active-class="text-primary-500"
               @click="closeMenu"
             >
@@ -146,7 +146,7 @@ onBeforeUnmount(() => {
           </li>
           <li>
             <a
-              class="block px-3 py-1 text-label-small transition hover:text-neutral-900"
+              class="block px-3 py-1 text-label-small transition hover:text-primary-500"
               href="#footer"
               @click="closeMenu"
             >
