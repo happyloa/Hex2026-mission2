@@ -1,5 +1,9 @@
 <script setup>
 const props = defineProps({
+  to: {
+    type: [String, Object],
+    default: null
+  },
   variant: {
     type: String,
     default: 'filled',
@@ -22,7 +26,7 @@ const props = defineProps({
 })
 
 const baseClass =
-  'rounded-full px-5 py-3 text-label-small transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 md:px-6 md:text-label-medium'
+  'inline-flex items-center justify-center rounded-full px-5 py-3 text-label-small transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 md:px-6 md:text-label-medium'
 
 const variantClasses = {
   filled: {
@@ -45,7 +49,10 @@ const buttonClass = computed(() => [
 </script>
 
 <template>
-  <button :type="type" :class="buttonClass">
+  <NuxtLink v-if="to" :to="to" :class="buttonClass">
+    <slot />
+  </NuxtLink>
+  <button v-else :type="type" :class="buttonClass">
     <slot />
   </button>
 </template>
