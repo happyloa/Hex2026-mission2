@@ -83,6 +83,7 @@ const faqItems = [
                 </p>
                 <button
                   type="button"
+                  aria-label="前往查看專案：品牌視覺與電商整合，多肉植物品牌電商建置"
                   class="flex size-11 items-center justify-center rounded-full bg-neutral transition group-hover:bg-neutral-900 md:size-12"
                 >
                   <svg
@@ -130,6 +131,7 @@ const faqItems = [
                 </p>
                 <button
                   type="button"
+                  aria-label="前往查看專案：數位產品 UI/UX 設計，個人化財務視覺化軟體"
                   class="flex size-11 items-center justify-center rounded-full bg-neutral transition group-hover:bg-neutral-900 md:size-12"
                 >
                   <svg
