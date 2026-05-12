@@ -23,6 +23,20 @@ if (!post.value) {
   })
 }
 
+useSeoMeta({
+  title: () => buildSeoTitle(post.value.title),
+  description: () => post.value.description,
+  ogTitle: () => buildSeoTitle(post.value.title),
+  ogDescription: () => post.value.description,
+  ogImage: () => buildAbsoluteUrl(SITE_OG_IMAGE, requestUrl.origin),
+  ogUrl: () => buildAbsoluteUrl(post.value.path, requestUrl.origin),
+  ogType: 'article',
+  twitterCard: 'summary_large_image',
+  twitterTitle: () => buildSeoTitle(post.value.title),
+  twitterDescription: () => post.value.description,
+  twitterImage: () => buildAbsoluteUrl(SITE_OG_IMAGE, requestUrl.origin)
+})
+
 const { data: allPosts } = await useAsyncData('blog-related-posts', () =>
   queryCollection('blog').order('date', 'DESC').all()
 )

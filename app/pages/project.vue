@@ -1,4 +1,16 @@
 <script setup>
+const requestUrl = useRequestURL()
+
+useSeoMeta(
+  getPageSeo({
+    title: '專案作品',
+    description:
+      '瀏覽 Nelson 的專案作品，包含品牌識別、UIUX 設計、RWD 網站開發與數位產品介面規劃。',
+    origin: requestUrl.origin,
+    path: '/project'
+  })
+)
+
 // tab 的「全部」狀態不寫進網址，讓 /project 保持為預設列表。
 const ALL_PROJECTS_LABEL = '全部'
 

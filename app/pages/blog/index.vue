@@ -1,4 +1,16 @@
 <script setup>
+const requestUrl = useRequestURL()
+
+useSeoMeta(
+  getPageSeo({
+    title: '部落格',
+    description:
+      '閱讀 UIUX 設計、前端技術、設計規範與 AI 趨勢應用文章，整理數位產品設計與開發的實務觀點。',
+    origin: requestUrl.origin,
+    path: '/blog'
+  })
+)
+
 const ALL_BLOGS_LABEL = '全部'
 
 const blogTabs = [

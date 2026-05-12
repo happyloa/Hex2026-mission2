@@ -1,4 +1,16 @@
 <script setup>
+const requestUrl = useRequestURL()
+
+useSeoMeta(
+  getPageSeo({
+    title: '服務項目',
+    description:
+      '了解 Nelson 提供的品牌視覺、UIUX 設計、網頁設計與前端開發服務，協助產品從設計提案走到可落地的網站體驗。',
+    origin: requestUrl.origin,
+    path: '/service'
+  })
+)
+
 // 常見問題資料
 const faqItems = [
   {
