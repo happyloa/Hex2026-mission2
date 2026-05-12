@@ -87,7 +87,7 @@ const closeProjectModal = () => {
       </li>
     </ul>
   </nav>
-  <section class="flex flex-col gap-10 px-3 pb-10 md:gap-20 md:pb-20">
+  <main class="flex flex-col gap-10 px-3 pb-10 md:gap-20 md:pb-20">
     <ul v-if="filteredProjects.length" class="mx-auto w-full max-w-[1296px] space-y-3 md:space-y-6">
       <!-- 專案列表 -->
       <li v-for="project in filteredProjects" :key="project.id">
@@ -96,7 +96,7 @@ const closeProjectModal = () => {
     </ul>
     <CommonProjectFallback v-else />
     <AtomButton class="self-center">探索更多</AtomButton>
-  </section>
+  </main>
 
   <LayoutProjectModal
     :open="isProjectModalOpen"
