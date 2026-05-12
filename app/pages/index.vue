@@ -1,4 +1,7 @@
 <script setup>
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/css'
+
 const requestUrl = useRequestURL()
 
 useSeoMeta(
@@ -9,6 +12,14 @@ useSeoMeta(
     origin: requestUrl.origin
   })
 )
+
+const { data: latestPosts } = await useAsyncData('home-latest-posts', async () => {
+  const posts = await queryCollection('blog').order('date', 'DESC').all()
+
+  return posts.slice(0, 3)
+})
+
+const latestBlogPosts = computed(() => latestPosts.value ?? [])
 </script>
 
 <template>
@@ -23,7 +34,24 @@ useSeoMeta(
         </div>
         <AtomButton to="/blog" variant="outline">探索更多</AtomButton>
       </div>
-      <!-- 最新文章卡片 -->
+      <!-- 手機版最新文章 -->
+      <Swiper
+        v-if="latestBlogPosts.length"
+        :slides-per-view="1.4"
+        :space-between="12"
+        :loop="latestBlogPosts.length > 1"
+        class="md:!hidden"
+      >
+        <SwiperSlide v-for="post in latestBlogPosts" :key="post.path">
+          <CommonBlogCard :post="post" variant="related" />
+        </SwiperSlide>
+      </Swiper>
+      <!-- 電腦版最新文章 -->
+      <ul v-if="latestBlogPosts.length" class="hidden grid-cols-3 gap-6 md:grid">
+        <li v-for="post in latestBlogPosts" :key="post.path">
+          <CommonBlogCard :post="post" variant="related" />
+        </li>
+      </ul>
     </div>
   </section>
   <LayoutSubscription />
