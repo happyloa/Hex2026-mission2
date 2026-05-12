@@ -17,7 +17,7 @@ defineProps({
 
 <template>
   <figure class="mb-5 lg:mb-6">
-    <img :src="src" :alt="alt" class="mb-2 block lg:mb-4" />
+    <img :src="src" :alt="alt" class="mb-2 block w-full lg:mb-4" />
     <figcaption>{{ caption }}</figcaption>
   </figure>
 </template>
