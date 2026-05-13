@@ -61,7 +61,7 @@ const latestBlogPosts = computed(() => latestPosts.value ?? [])
           Hello<br />
           I'm Nelson
         </h1>
-        <p class="mb-8 text-paragraph-small sm:mb-[60px] sm:text-paragraph-medium">
+        <p class="mb-8 text-paragraph-small sm:text-paragraph-medium md:mb-[60px]">
           我是一個擁有 10 年經驗的 UIUX 設計師 和 前端工程師<br />喜歡把美學和程式結合，打造一個又一個精美的網頁設計！
         </p>
         <div class="flex gap-3 sm:gap-6">
