@@ -223,7 +223,7 @@ const faqItems = [
               <path :d="service.iconPath" />
             </svg>
             <p class="text-heading-xxx-small md:text-heading-xxx-small">{{ service.eyebrow }}</p>
-            <h3 class="text-heading-small md:text-heading-medium">{{ service.title }}</h3>
+            <h2 class="text-heading-small md:text-heading-medium">{{ service.title }}</h2>
           </button>
         </li>
       </ol>
