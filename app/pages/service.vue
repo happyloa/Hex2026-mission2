@@ -43,6 +43,18 @@ const faqItems = [
 </script>
 
 <template>
+  <!-- 服務流程區塊 -->
+  <section class="bg-primary px-3 py-10 text-neutral-0 md:py-20">
+    <div class="mx-auto flex max-w-[1076px] flex-col justify-between gap-6 md:flex-row">
+      <!-- 左側標題 -->
+      <div class="text-center md:max-w-[416px] md:text-start">
+        <p class="text-heading-xxxx-small md:text-heading-xxx-small">SERVICE STEPS</p>
+        <h2 class="text-heading-x-large md:text-heading-xx-large">服務流程</h2>
+      </div>
+      <!-- 右側步驟  -->
+      <div class="flex-1 md:max-w-[636px]"></div>
+    </div>
+  </section>
   <!-- 客戶案例區塊 -->
   <section class="px-3 py-10 md:py-20">
     <div class="mx-auto max-w-[1076px]">
