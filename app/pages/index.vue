@@ -56,7 +56,7 @@ const latestBlogPosts = computed(() => latestPosts.value ?? [])
   <section class="relative overflow-hidden bg-primary-50 px-3 pb-6 sm:pb-0">
     <div class="mx-auto flex max-w-[1296px] flex-col-reverse gap-6 sm:flex-row sm:items-center">
       <!-- 標題、描述、按鈕 -->
-      <div class="min-w-0 flex-1 sm:max-w-[526px]">
+      <div class="relative z-20 min-w-0 flex-1 sm:max-w-[526px]">
         <h1 class="mb-3 text-heading-x-large sm:mb-6 lg:text-heading-xxx-large">
           Hello<br />
           I'm Nelson
@@ -73,6 +73,42 @@ const latestBlogPosts = computed(() => latestPosts.value ?? [])
         src="/img/index/index_person.webp"
         alt="Nelson 個人照"
         class="block h-auto w-full min-w-0 sm:max-w-[746px] sm:flex-1"
+        fetchpriority="high"
+      />
+    </div>
+    <!-- 裝飾圖片 -->
+    <div class="pointer-events-none absolute inset-0 z-10 w-full" aria-hidden="true">
+      <img
+        src="/img/index/index_decora_1.webp"
+        class="absolute -left-[15px] top-[26px] w-[80px] sm:left-[40%] lg:top-[97px] lg:w-[200px]"
+      />
+      <img
+        src="/img/index/index_decora_2.webp"
+        class="absolute -right-[13px] bottom-[330px] w-[80px] sm:bottom-[87px] sm:right-[10%] lg:w-[160px]"
+      />
+      <img
+        src="/img/index/index_decora_3.webp"
+        class="absolute left-9 top-[56px] hidden w-[140px] xl:block"
+      />
+      <img
+        src="/img/index/index_decora_3.webp"
+        class="absolute bottom-[182px] right-[34px] w-[80px] sm:left-[35%] lg:bottom-[192px]"
+      />
+      <img
+        src="/img/index/index_decora_3.webp"
+        class="absolute right-[142px] top-[206px] hidden w-[140px] xl:block"
+      />
+      <img
+        src="/img/index/index_decora_4.webp"
+        class="absolute left-[225px] top-[120px] hidden w-[313px] lg:block"
+      />
+      <img
+        src="/img/index/index_decora_5.webp"
+        class="absolute bottom-20 left-[23%] hidden w-[180px] md:block"
+      />
+      <img
+        src="/img/index/index_decora_6.webp"
+        class="absolute bottom-[245px] left-1/2 w-[113px] -translate-x-1/2 sm:hidden"
       />
     </div>
   </section>
