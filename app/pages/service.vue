@@ -1,5 +1,7 @@
 <script setup>
 const requestUrl = useRequestURL()
+const route = useRoute()
+const router = useRouter()
 
 useSeoMeta(
   getPageSeo({
@@ -11,29 +13,151 @@ useSeoMeta(
   })
 )
 
-// 服務流程資料
-const serviceSteps = [
+// 沒有帶 service query 時，預設顯示平面設計流程。
+const defaultService = 'graphic'
+
+// 服務項目與對應流程資料；key 會同步到網址上的 service 參數。
+const serviceItems = [
   {
-    id: 1,
-    title: '需求訪談與視覺定位',
-    content: '深度溝通品牌核心價值，確認目標受眾與視覺風格，制定符合商業邏輯的設計藍圖。'
+    key: 'graphic',
+    eyebrow: 'GRAPHIC',
+    title: '平面設計',
+    iconPath:
+      'm263.92-857.08 27.77-29.07L617-560.85q19.15 19.16 19.15 46.23 0 27.08-19.15 46.24L460.85-310.69q-18.39 18.38-45.47 18.38-27.07 0-45.46-18.38L213.77-468.38q-19.16-19.16-19.16-46.24 0-27.07 19.16-46.23l173.85-172.54zm152.23 152.23L240.54-530.77q-3.85 3.85-5 8.08-1.16 4.23-1.16 8.84h362q0-4.61-1.15-8.84t-5-8.08zm284.27 435.2q-17.34-17.35-17.34-42.66 0-17.92 9.42-35.38t19.81-33.08q7.46-10.46 15.15-20.38 7.69-9.93 15.62-20.39 7.92 10.46 15.61 20.39 7.69 9.92 15.16 20.38 10.38 15.62 19.8 33.08 9.43 17.46 9.43 35.38 0 25.31-17.35 42.66-17.35 17.34-42.65 17.34-25.31 0-42.66-17.34M80 0v-80h800V0z',
+    steps: [
+      {
+        id: 1,
+        title: '需求訪談與視覺定位',
+        content: '深度溝通品牌核心價值，確認目標受眾與視覺風格，制定符合商業邏輯的設計藍圖。'
+      },
+      {
+        id: 2,
+        title: '概念發展與方案提案',
+        content: '將抽象概念具象化，提供多層次的設計提案，確保視覺語言精準傳遞品牌獨特魅力。'
+      },
+      {
+        id: 3,
+        title: '匠心編排與細節校正',
+        content: '針對初稿進行多輪細緻微調，優化排版層次與色彩表現，追求美學與易讀性的完美平衡。'
+      },
+      {
+        id: 4,
+        title: '專業檔案交付結案',
+        content: '提供完整原始碼與多樣格式輸出，並附上使用規範建議，確保品牌形象在各處始終如一。'
+      }
+    ]
   },
   {
-    id: 2,
-    title: '概念發展與方案提案',
-    content: '將抽象概念具象化，提供多層次的設計提案，確保視覺語言精準傳遞品牌獨特魅力。'
+    key: 'website',
+    eyebrow: 'WEBSITE',
+    title: '網頁設計',
+    iconPath:
+      'M620-332.31h127.69V-460h-35.38v92.31H620v35.38ZM212.31-580h35.38v-92.31H340v-35.38H212.31V-580ZM360-160v-80H184.62q-27.62 0-46.12-18.5Q120-277 120-304.62v-430.76q0-27.62 18.5-46.12Q157-800 184.62-800h590.76q27.62 0 46.12 18.5Q840-763 840-735.38v430.76q0 27.62-18.5 46.12Q803-240 775.38-240H600v80H360ZM184.62-280h590.76q9.24 0 16.93-7.69 7.69-7.69 7.69-16.93v-430.76q0-9.24-7.69-16.93-7.69-7.69-16.93-7.69H184.62q-9.24 0-16.93 7.69-7.69 7.69-7.69 16.93v430.76q0 9.24 7.69 16.93 7.69 7.69 16.93 7.69ZM160-280v-480 480Z',
+    steps: [
+      {
+        id: 1,
+        title: '架構訪談與體驗定位',
+        content: '釐清網站目標、核心動線與使用情境，規劃兼具品牌識別與轉換效率的資訊架構。'
+      },
+      {
+        id: 2,
+        title: '版面規劃與視覺提案',
+        content: '依據內容層級建立頁面框架，延伸一致的視覺語言，確保畫面節奏清楚且易於瀏覽。'
+      },
+      {
+        id: 3,
+        title: '互動細節與響應校正',
+        content: '細修按鈕狀態、區塊間距與 RWD 呈現，讓桌機與手機皆保有穩定順暢的瀏覽體驗。'
+      },
+      {
+        id: 4,
+        title: '設計規格交付結案',
+        content: '整理完整設計稿、元件狀態與開發標註，協助後續切版與維護能快速銜接落地。'
+      }
+    ]
   },
   {
-    id: 3,
-    title: '匠心編排與細節校正',
-    content: '針對初稿進行多輪細緻微調，優化排版層次與色彩表現，追求美學與易讀性的完美平衡。'
+    key: 'frontend',
+    eyebrow: 'FRONTEND',
+    title: '前端切版',
+    iconPath:
+      'M184.62-200q-27.62 0-46.12-18.5T120-264.62v-430.76q0-27.62 18.5-46.12t46.12-18.5h590.76q27.62 0 46.12 18.5t18.5 46.12v430.76q0 27.62-18.5 46.12T775.38-200zm0-40H600v-155.38H160v130.76q0 9.24 7.69 16.93t16.93 7.69M640-240h135.38q9.24 0 16.93-7.69t7.69-16.93v-326.15H640zM160-435.38h440v-155.39H160z',
+    steps: [
+      {
+        id: 1,
+        title: '設計盤點與技術評估',
+        content: '確認設計稿規格、互動狀態與斷點需求，預先規劃最適合專案維護的切版結構。'
+      },
+      {
+        id: 2,
+        title: '元件拆分與版面建置',
+        content: '將介面拆解為可重用元件，使用語意化結構與工具樣式，建立穩定且清楚的頁面骨架。'
+      },
+      {
+        id: 3,
+        title: '響應調整與互動校正',
+        content: '逐一檢查不同裝置的間距、文字與 hover 狀態，確保版面細節貼近設計稿並順暢操作。'
+      },
+      {
+        id: 4,
+        title: '程式整理與交付結案',
+        content: '完成程式碼整理、註解與基本驗證，交付可延伸維護的前端頁面與使用建議。'
+      }
+    ]
   },
   {
-    id: 4,
-    title: '專業檔案交付結案',
-    content: '提供完整原始碼與多樣格式輸出，並附上使用規範建議，確保品牌形象在各處始終如一。'
+    key: 'backend',
+    eyebrow: 'BACKEND',
+    title: '後端開發',
+    iconPath:
+      'M224.62-160q-27.62 0-46.12-18.5T160-224.62v-510.76q0-27.62 18.5-46.12t46.12-18.5h510.76q27.62 0 46.12 18.5t18.5 46.12v510.76q0 27.62-18.5 46.12T735.38-160zM200-600.08h560v-135.3q0-9.24-7.69-16.93T735.38-760H224.62q-9.24 0-16.93 7.69T200-735.38zm0 200.16h560v-160.16H200zM224.62-200h510.76q9.24 0 16.93-7.69t7.69-16.93v-135.3H200v135.3q0 9.24 7.69 16.93t16.93 7.69m46.15-447.85v-64.61h64.61v64.61zm0 200.16v-64.62h64.61v64.62zm0 200.15v-64.61h64.61v64.61z',
+    steps: [
+      {
+        id: 1,
+        title: '需求釐清與資料規劃',
+        content: '深入盤點功能情境、資料欄位與權限流程，建立符合產品邏輯且可擴充的後端藍圖。'
+      },
+      {
+        id: 2,
+        title: 'API 設計與系統建置',
+        content: '依據前端流程規劃 API 介面與資料模型，確保資料交換穩定、清楚且易於串接。'
+      },
+      {
+        id: 3,
+        title: '功能測試與安全校正',
+        content: '針對例外狀態、表單驗證與存取權限進行檢查，降低上線後的操作風險與維護成本。'
+      },
+      {
+        id: 4,
+        title: '部署文件與交付結案',
+        content: '整理環境設定、部署流程與 API 文件，讓後續維運能快速理解系統並穩定接手。'
+      }
+    ]
   }
 ]
+
+// 依照網址 service 參數決定目前選取的項目；若參數不存在或不合法則回到預設項目。
+const activeServiceKey = computed(() => {
+  const service = Array.isArray(route.query.service) ? route.query.service[0] : route.query.service
+  return serviceItems.some((item) => item.key === service) ? service : defaultService
+})
+
+// 將目前選取的服務項目整理成單一物件，供 banner active 狀態與流程區塊共用。
+const activeService = computed(
+  () => serviceItems.find((item) => item.key === activeServiceKey.value) || serviceItems[0]
+)
+
+const serviceSteps = computed(() => activeService.value.steps)
+
+// 點擊 banner 項目時只更新 service query，保留頁面上其它既有 query。
+const setActiveService = (service) => {
+  router.push({
+    query: {
+      ...route.query,
+      service: service.key
+    }
+  })
+}
 
 // 常見問題資料
 const faqItems = [
@@ -78,10 +202,17 @@ const faqItems = [
       <p class="mb-1 text-heading-x-large md:mb-2 lg:text-heading-xxx-large">SERVICES</p>
       <h1 class="mb-6 text-heading-x-large md:mb-10 lg:text-heading-xx-large">服務項目</h1>
       <ol class="grid grid-cols-2 gap-3 text-neutral md:gap-6 lg:grid-cols-4">
-        <li>
+        <li v-for="service in serviceItems" :key="service.key">
           <button
             type="button"
-            class="flex w-full flex-col items-center bg-neutral-0 px-3 py-4 text-center transition hover:bg-primary hover:text-neutral-0 md:p-8"
+            class="flex w-full flex-col items-center px-3 py-4 text-center transition hover:bg-primary hover:text-neutral-0 md:p-8"
+            :class="
+              activeServiceKey === service.key
+                ? 'bg-primary text-neutral-0'
+                : 'bg-neutral-0 text-neutral'
+            "
+            :aria-pressed="activeServiceKey === service.key"
+            @click="setActiveService(service)"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -89,69 +220,10 @@ const faqItems = [
               fill="currentColor"
               class="mb-1 size-6 md:mb-3 md:size-7"
             >
-              <path
-                d="m263.92-857.08 27.77-29.07L617-560.85q19.15 19.16 19.15 46.23 0 27.08-19.15 46.24L460.85-310.69q-18.39 18.38-45.47 18.38-27.07 0-45.46-18.38L213.77-468.38q-19.16-19.16-19.16-46.24 0-27.07 19.16-46.23l173.85-172.54zm152.23 152.23L240.54-530.77q-3.85 3.85-5 8.08-1.16 4.23-1.16 8.84h362q0-4.61-1.15-8.84t-5-8.08zm284.27 435.2q-17.34-17.35-17.34-42.66 0-17.92 9.42-35.38t19.81-33.08q7.46-10.46 15.15-20.38 7.69-9.93 15.62-20.39 7.92 10.46 15.61 20.39 7.69 9.92 15.16 20.38 10.38 15.62 19.8 33.08 9.43 17.46 9.43 35.38 0 25.31-17.35 42.66-17.35 17.34-42.65 17.34-25.31 0-42.66-17.34M80 0v-80h800V0z"
-              />
+              <path :d="service.iconPath" />
             </svg>
-            <p class="text-heading-xxx-small md:text-heading-xxx-small">GRAPHIC</p>
-            <h3 class="text-heading-small md:text-heading-medium">平面設計</h3>
-          </button>
-        </li>
-        <li>
-          <button
-            type="button"
-            class="flex w-full flex-col items-center bg-neutral-0 px-3 py-4 text-center transition hover:bg-primary hover:text-neutral-0 md:p-8"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 -960 960 960"
-              fill="currentColor"
-              class="mb-1 size-6 md:mb-3 md:size-7"
-            >
-              <path
-                d="M620-332.31h127.69V-460h-35.38v92.31H620v35.38ZM212.31-580h35.38v-92.31H340v-35.38H212.31V-580ZM360-160v-80H184.62q-27.62 0-46.12-18.5Q120-277 120-304.62v-430.76q0-27.62 18.5-46.12Q157-800 184.62-800h590.76q27.62 0 46.12 18.5Q840-763 840-735.38v430.76q0 27.62-18.5 46.12Q803-240 775.38-240H600v80H360ZM184.62-280h590.76q9.24 0 16.93-7.69 7.69-7.69 7.69-16.93v-430.76q0-9.24-7.69-16.93-7.69-7.69-16.93-7.69H184.62q-9.24 0-16.93 7.69-7.69 7.69-7.69 16.93v430.76q0 9.24 7.69 16.93 7.69 7.69 16.93 7.69ZM160-280v-480 480Z"
-              />
-            </svg>
-            <p class="text-heading-xxx-small md:text-heading-xxx-small">WEBSITE</p>
-            <h3 class="text-heading-small md:text-heading-medium">網頁設計</h3>
-          </button>
-        </li>
-        <li>
-          <button
-            type="button"
-            class="flex w-full flex-col items-center bg-neutral-0 px-3 py-4 text-center transition hover:bg-primary hover:text-neutral-0 md:p-8"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 -960 960 960"
-              fill="currentColor"
-              class="mb-1 size-6 md:mb-3 md:size-7"
-            >
-              <path
-                d="M184.62-200q-27.62 0-46.12-18.5T120-264.62v-430.76q0-27.62 18.5-46.12t46.12-18.5h590.76q27.62 0 46.12 18.5t18.5 46.12v430.76q0 27.62-18.5 46.12T775.38-200zm0-40H600v-155.38H160v130.76q0 9.24 7.69 16.93t16.93 7.69M640-240h135.38q9.24 0 16.93-7.69t7.69-16.93v-326.15H640zM160-435.38h440v-155.39H160z"
-              />
-            </svg>
-            <p class="text-heading-xxx-small md:text-heading-xxx-small">FRONTEND</p>
-            <h3 class="text-heading-small md:text-heading-medium">前端切版</h3>
-          </button>
-        </li>
-        <li>
-          <button
-            type="button"
-            class="flex w-full flex-col items-center bg-neutral-0 px-3 py-4 text-center transition hover:bg-primary hover:text-neutral-0 md:p-8"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 -960 960 960"
-              fill="currentColor"
-              class="mb-1 size-6 md:mb-3 md:size-7"
-            >
-              <path
-                d="M224.62-160q-27.62 0-46.12-18.5T160-224.62v-510.76q0-27.62 18.5-46.12t46.12-18.5h510.76q27.62 0 46.12 18.5t18.5 46.12v510.76q0 27.62-18.5 46.12T735.38-160zM200-600.08h560v-135.3q0-9.24-7.69-16.93T735.38-760H224.62q-9.24 0-16.93 7.69T200-735.38zm0 200.16h560v-160.16H200zM224.62-200h510.76q9.24 0 16.93-7.69t7.69-16.93v-135.3H200v135.3q0 9.24 7.69 16.93t16.93 7.69m46.15-447.85v-64.61h64.61v64.61zm0 200.16v-64.62h64.61v64.62zm0 200.15v-64.61h64.61v64.61z"
-              />
-            </svg>
-            <p class="text-heading-xxx-small md:text-heading-xxx-small">BACKEND</p>
-            <h3 class="text-heading-small md:text-heading-medium">後端開發</h3>
+            <p class="text-heading-xxx-small md:text-heading-xxx-small">{{ service.eyebrow }}</p>
+            <h3 class="text-heading-small md:text-heading-medium">{{ service.title }}</h3>
           </button>
         </li>
       </ol>
