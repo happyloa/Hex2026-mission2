@@ -4,6 +4,9 @@
 
 此專案為六角學院 2026 軟體工程師體驗營任務作品。網站以個人作品集為主軸，包含首頁、服務項目、專案作品、部落格列表與單篇文章頁，可作為個人品牌網站或作品展示版型使用。
 
+- [設計稿](https://www.figma.com/design/p9J0EAASQNwGpiz7NuJaxi/2026ver.-%E9%AB%94%E9%A9%97%E7%87%9F%E8%A8%AD%E8%A8%88%E7%A8%BF--%E8%A8%AD%E8%A8%88%E5%B8%AB%E7%B7%A8%E8%BC%AF%E6%AA%94-?node-id=11107-13669&p=f&t=m9EDgVEp1OwvunCL-0)
+- [作品展示](https://hex2026-mission2.pages.dev/)
+
 ## 使用技術
 
 - [Nuxt 4](https://nuxt.com/)
