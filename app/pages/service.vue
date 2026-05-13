@@ -254,7 +254,7 @@ const faqItems = [
             </span>
             <div class="space-y-3">
               <h3 class="text-heading-small md:text-heading-medium">{{ step.title }}</h3>
-              <p>
+              <p class="text-paragraph-small md:text-paragraph-medium">
                 {{ step.content }}
               </p>
             </div>
