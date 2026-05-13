@@ -52,6 +52,30 @@ const latestBlogPosts = computed(() => latestPosts.value ?? [])
 </script>
 
 <template>
+  <!-- 首頁大圖與自我介紹 -->
+  <section class="relative bg-primary-50 px-3 pb-6 sm:pb-0">
+    <div class="mx-auto flex max-w-[1296px] flex-col-reverse gap-6 sm:flex-row sm:items-center">
+      <!-- 標題、描述、按鈕 -->
+      <div class="min-w-0 flex-1 sm:max-w-[526px]">
+        <h1 class="mb-3 text-heading-x-large sm:mb-6 lg:text-heading-xxx-large">
+          Hello<br />
+          I'm Nelson
+        </h1>
+        <p class="mb-8 text-paragraph-small sm:mb-[60px] sm:text-paragraph-medium">
+          我是一個擁有 10 年經驗的 UIUX 設計師 和 前端工程師<br />喜歡把美學和程式結合，打造一個又一個精美的網頁設計！
+        </p>
+        <div class="flex gap-3 sm:gap-6">
+          <AtomButton to="#footer">與我聯絡</AtomButton>
+          <AtomButton to="/project" variant="outline">我的履歷</AtomButton>
+        </div>
+      </div>
+      <img
+        src="/img/index/index_person.webp"
+        alt="Nelson 個人照"
+        class="block h-auto w-full min-w-0 sm:max-w-[746px] sm:flex-1"
+      />
+    </div>
+  </section>
   <!-- 服務項目區塊 -->
   <main class="bg-primary px-3 py-10 md:py-20">
     <div class="mx-auto max-w-[1296px] text-neutral-0">
