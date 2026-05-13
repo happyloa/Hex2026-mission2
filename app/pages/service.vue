@@ -180,9 +180,8 @@ const faqItems = [
                 <p class="flex-1 text-paragraph-small md:text-paragraph-medium">
                   從品牌識別設計到 RWD 響應式網站開發，打造療癒系植栽購物體驗
                 </p>
-                <button
-                  type="button"
-                  aria-label="前往查看專案：品牌視覺與電商整合，多肉植物品牌電商建置"
+                <span
+                  aria-hidden="true"
                   class="flex size-11 items-center justify-center rounded-full bg-neutral transition group-hover:bg-neutral-900 md:size-12"
                 >
                   <svg
@@ -193,7 +192,7 @@ const faqItems = [
                   >
                     <path d="M247.54-268.46 220-296l403.23-404H251.54v-40h440v440h-40v-371.69z" />
                   </svg>
-                </button>
+                </span>
               </div>
             </NuxtLink>
           </article>
@@ -228,9 +227,8 @@ const faqItems = [
                 <p class="flex-1 text-paragraph-small md:text-paragraph-medium">
                   運用數據視覺化邏輯，將複雜的財務數據轉化為直覺的個人化操作介面
                 </p>
-                <button
-                  type="button"
-                  aria-label="前往查看專案：數位產品 UI/UX 設計，個人化財務視覺化軟體"
+                <span
+                  aria-hidden="true"
                   class="flex size-11 items-center justify-center rounded-full bg-neutral transition group-hover:bg-neutral-900 md:size-12"
                 >
                   <svg
@@ -241,7 +239,7 @@ const faqItems = [
                   >
                     <path d="M247.54-268.46 220-296l403.23-404H251.54v-40h440v440h-40v-371.69z" />
                   </svg>
-                </button>
+                </span>
               </div>
             </NuxtLink>
           </article>

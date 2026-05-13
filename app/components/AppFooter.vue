@@ -1,4 +1,5 @@
 <script setup>
+// 連結使用佔位網址；實際使用時請替換成自己的實際帳號連結。
 const socialLinks = [
   { label: 'Instagram', icon: 'simple-icons:instagram', to: '#' },
   { label: 'LINE', icon: 'simple-icons:line', to: '#' },
