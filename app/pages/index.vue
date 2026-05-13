@@ -15,6 +15,50 @@ useSeoMeta(
   })
 )
 
+// 首頁裝飾圖案的滑鼠視差設定；只在桌機寬度啟用，手機維持靜態排版。
+const heroSection = ref(null)
+const heroParallaxStyle = reactive({
+  '--hero-parallax-x': '0px',
+  '--hero-parallax-y': '0px'
+})
+const heroParallaxDistance = {
+  x: 72,
+  y: 48
+}
+
+let desktopMediaQuery
+let heroParallaxFrame = 0
+
+// 滑鼠離開 hero 或切回非桌機寬度時，讓裝飾圖案回到原本位置。
+const resetHeroParallax = () => {
+  heroParallaxStyle['--hero-parallax-x'] = '0px'
+  heroParallaxStyle['--hero-parallax-y'] = '0px'
+}
+
+const updateHeroParallax = (event) => {
+  if (!desktopMediaQuery?.matches || !heroSection.value) {
+    return
+  }
+
+  // pointermove 觸發頻率很高，透過 requestAnimationFrame 合併更新，避免重複 repaint。
+  cancelAnimationFrame(heroParallaxFrame)
+  heroParallaxFrame = requestAnimationFrame(() => {
+    const rect = heroSection.value.getBoundingClientRect()
+    const x = (event.clientX - rect.left) / rect.width - 0.5
+    const y = (event.clientY - rect.top) / rect.height - 0.5
+
+    heroParallaxStyle['--hero-parallax-x'] = `${x * heroParallaxDistance.x}px`
+    heroParallaxStyle['--hero-parallax-y'] = `${y * heroParallaxDistance.y}px`
+  })
+}
+
+// 斷點改變時同步狀態，避免桌機移動後切到手機仍殘留 transform。
+const syncHeroParallax = () => {
+  if (!desktopMediaQuery?.matches) {
+    resetHeroParallax()
+  }
+}
+
 // 專案作品
 const homeProjects = projects.slice(0, 3)
 const selectedProject = ref(null)
@@ -49,11 +93,28 @@ onMounted(async () => {
 })
 
 const latestBlogPosts = computed(() => latestPosts.value ?? [])
+
+onMounted(() => {
+  // 和 Tailwind 的 lg 斷點一致，視差效果只在電腦版寬度生效。
+  desktopMediaQuery = window.matchMedia('(min-width: 1024px)')
+  desktopMediaQuery.addEventListener('change', syncHeroParallax)
+  syncHeroParallax()
+})
+
+onBeforeUnmount(() => {
+  desktopMediaQuery?.removeEventListener('change', syncHeroParallax)
+  cancelAnimationFrame(heroParallaxFrame)
+})
 </script>
 
 <template>
   <!-- 首頁大圖與自我介紹 -->
-  <section class="relative overflow-hidden bg-primary-50 px-3 pb-6 sm:pb-0">
+  <section
+    ref="heroSection"
+    class="relative overflow-hidden bg-primary-50 px-3 pb-6 sm:pb-0"
+    @pointermove="updateHeroParallax"
+    @pointerleave="resetHeroParallax"
+  >
     <div class="mx-auto flex max-w-[1296px] flex-col-reverse gap-6 sm:flex-row sm:items-center">
       <!-- 標題、描述、按鈕 -->
       <div class="relative z-20 min-w-0 flex-1 sm:max-w-[526px]">
@@ -77,34 +138,38 @@ const latestBlogPosts = computed(() => latestPosts.value ?? [])
       />
     </div>
     <!-- 裝飾圖片 -->
-    <div class="pointer-events-none absolute inset-0 z-10 w-full" aria-hidden="true">
+    <div
+      class="pointer-events-none absolute inset-0 z-10 w-full"
+      :style="heroParallaxStyle"
+      aria-hidden="true"
+    >
       <img
         src="/img/index/index_decora_1.webp"
-        class="absolute -left-[15px] top-[26px] w-[80px] sm:left-[40%] lg:top-[97px] lg:w-[200px]"
+        class="absolute -left-[15px] top-[26px] w-[80px] transition-transform duration-300 ease-out sm:left-[40%] lg:top-[97px] lg:w-[200px] lg:translate-x-[calc(var(--hero-parallax-x)*-0.65)] lg:translate-y-[calc(var(--hero-parallax-y)*-0.65)] lg:will-change-transform"
       />
       <img
         src="/img/index/index_decora_2.webp"
-        class="absolute -right-[13px] bottom-[330px] w-[80px] sm:bottom-[87px] sm:right-[10%] lg:w-[160px]"
+        class="absolute -right-[13px] bottom-[330px] w-[80px] transition-transform duration-300 ease-out sm:bottom-[87px] sm:right-[10%] lg:w-[160px] lg:translate-x-[calc(var(--hero-parallax-x)*0.55)] lg:translate-y-[calc(var(--hero-parallax-y)*0.55)] lg:will-change-transform"
       />
       <img
         src="/img/index/index_decora_3.webp"
-        class="absolute left-9 top-[56px] hidden w-[140px] xl:block"
+        class="absolute left-9 top-[56px] hidden w-[140px] transition-transform duration-300 ease-out lg:translate-x-[calc(var(--hero-parallax-x)*0.35)] lg:translate-y-[calc(var(--hero-parallax-y)*0.35)] lg:will-change-transform xl:block"
       />
       <img
         src="/img/index/index_decora_3.webp"
-        class="absolute bottom-[182px] right-[34px] w-[80px] sm:left-[35%] lg:bottom-[192px]"
+        class="absolute bottom-[182px] right-[34px] w-[80px] transition-transform duration-300 ease-out sm:left-[35%] lg:bottom-[192px] lg:translate-x-[calc(var(--hero-parallax-x)*-0.45)] lg:translate-y-[calc(var(--hero-parallax-y)*-0.45)] lg:will-change-transform"
       />
       <img
         src="/img/index/index_decora_3.webp"
-        class="absolute right-[142px] top-[206px] hidden w-[140px] xl:block"
+        class="absolute right-[142px] top-[206px] hidden w-[140px] transition-transform duration-300 ease-out lg:translate-x-[calc(var(--hero-parallax-x)*0.4)] lg:translate-y-[calc(var(--hero-parallax-y)*0.4)] lg:will-change-transform xl:block"
       />
       <img
         src="/img/index/index_decora_4.webp"
-        class="absolute left-[225px] top-[120px] hidden w-[313px] lg:block"
+        class="absolute left-[225px] top-[120px] hidden w-[313px] transition-transform duration-300 ease-out lg:block lg:translate-x-[calc(var(--hero-parallax-x)*0.25)] lg:translate-y-[calc(var(--hero-parallax-y)*0.25)] lg:will-change-transform"
       />
       <img
         src="/img/index/index_decora_5.webp"
-        class="absolute bottom-20 left-[23%] hidden w-[180px] md:block"
+        class="absolute bottom-20 left-[23%] hidden w-[180px] transition-transform duration-300 ease-out md:block lg:translate-x-[calc(var(--hero-parallax-x)*-0.35)] lg:translate-y-[calc(var(--hero-parallax-y)*-0.35)] lg:will-change-transform"
       />
       <img
         src="/img/index/index_decora_6.webp"
