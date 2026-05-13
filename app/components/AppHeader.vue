@@ -5,7 +5,7 @@ const navLinks = [
   { label: '部落格', to: '/blog' }
 ]
 
-const navLinkClass = 'px-3 py-1 text-label-medium transition hover:text-primary-500'
+const navLinkClass = 'px-3 py-1 text-label-medium transition hover:text-primary'
 
 const isMenuOpen = ref(false)
 
@@ -75,7 +75,7 @@ onBeforeUnmount(() => {
       <!-- 電腦版選單 -->
       <ul class="hidden gap-6 md:flex">
         <li v-for="link in navLinks" :key="link.to">
-          <NuxtLink :to="link.to" :class="navLinkClass" active-class="text-primary-500">
+          <NuxtLink :to="link.to" :class="navLinkClass" active-class="text-primary">
             {{ link.label }}
           </NuxtLink>
         </li>
@@ -138,8 +138,8 @@ onBeforeUnmount(() => {
           <li v-for="link in navLinks" :key="link.to">
             <NuxtLink
               :to="link.to"
-              class="block px-3 py-1 text-label-small transition hover:text-primary-500"
-              active-class="text-primary-500"
+              class="block px-3 py-1 text-label-small transition hover:text-primary"
+              active-class="text-primary"
               @click="closeMenu"
             >
               {{ link.label }}
@@ -147,7 +147,7 @@ onBeforeUnmount(() => {
           </li>
           <li>
             <a
-              class="block px-3 py-1 text-label-small transition hover:text-primary-500"
+              class="block px-3 py-1 text-label-small transition hover:text-primary"
               href="#footer"
               @click="closeMenu"
             >
