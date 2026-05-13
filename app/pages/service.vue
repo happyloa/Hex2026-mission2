@@ -201,15 +201,15 @@ const faqItems = [
     <div class="relative z-10 mx-auto max-w-[1076px]">
       <p class="mb-1 text-heading-x-large md:mb-2 lg:text-heading-xxx-large">SERVICES</p>
       <h1 class="mb-6 text-heading-x-large md:mb-10 lg:text-heading-xx-large">服務項目</h1>
-      <ol class="grid grid-cols-2 gap-3 text-neutral md:gap-6 lg:grid-cols-4">
+      <ol class="grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-4">
         <li v-for="service in serviceItems" :key="service.key">
           <button
             type="button"
-            class="flex w-full flex-col items-center px-3 py-4 text-center transition hover:bg-primary hover:text-neutral-0 md:p-8"
+            class="flex w-full flex-col items-center px-3 py-4 text-center transition md:p-8"
             :class="
               activeServiceKey === service.key
                 ? 'bg-primary text-neutral-0'
-                : 'bg-neutral-0 text-neutral'
+                : 'bg-neutral-0 text-neutral hover:bg-primary-50'
             "
             :aria-pressed="activeServiceKey === service.key"
             @click="setActiveService(service)"
@@ -222,7 +222,7 @@ const faqItems = [
             >
               <path :d="service.iconPath" />
             </svg>
-            <p class="text-heading-xxx-small md:text-heading-xxx-small">{{ service.eyebrow }}</p>
+            <p class="text-heading-xxxx-small md:text-heading-xxx-small">{{ service.eyebrow }}</p>
             <h2 class="text-heading-small md:text-heading-medium">{{ service.title }}</h2>
           </button>
         </li>
