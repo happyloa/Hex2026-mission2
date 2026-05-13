@@ -53,7 +53,7 @@ const latestBlogPosts = computed(() => latestPosts.value ?? [])
 
 <template>
   <!-- 首頁大圖與自我介紹 -->
-  <section class="relative bg-primary-50 px-3 pb-6 sm:pb-0">
+  <section class="relative overflow-hidden bg-primary-50 px-3 pb-6 sm:pb-0">
     <div class="mx-auto flex max-w-[1296px] flex-col-reverse gap-6 sm:flex-row sm:items-center">
       <!-- 標題、描述、按鈕 -->
       <div class="min-w-0 flex-1 sm:max-w-[526px]">
