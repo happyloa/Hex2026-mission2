@@ -11,6 +11,30 @@ useSeoMeta(
   })
 )
 
+// 服務流程資料
+const serviceSteps = [
+  {
+    id: 1,
+    title: '需求訪談與視覺定位',
+    content: '深度溝通品牌核心價值，確認目標受眾與視覺風格，制定符合商業邏輯的設計藍圖。'
+  },
+  {
+    id: 2,
+    title: '概念發展與方案提案',
+    content: '將抽象概念具象化，提供多層次的設計提案，確保視覺語言精準傳遞品牌獨特魅力。'
+  },
+  {
+    id: 3,
+    title: '匠心編排與細節校正',
+    content: '針對初稿進行多輪細緻微調，優化排版層次與色彩表現，追求美學與易讀性的完美平衡。'
+  },
+  {
+    id: 4,
+    title: '專業檔案交付結案',
+    content: '提供完整原始碼與多樣格式輸出，並附上使用規範建議，確保品牌形象在各處始終如一。'
+  }
+]
+
 // 常見問題資料
 const faqItems = [
   {
@@ -51,8 +75,30 @@ const faqItems = [
         <p class="text-heading-xxxx-small md:text-heading-xxx-small">SERVICE STEPS</p>
         <h2 class="text-heading-x-large md:text-heading-xx-large">服務流程</h2>
       </div>
-      <!-- 右側步驟  -->
-      <div class="flex-1 md:max-w-[636px]"></div>
+      <!-- 右側步驟 -->
+      <div class="flex-1 md:max-w-[636px]">
+        <ol
+          class="relative space-y-10 before:absolute before:bottom-16 before:left-[18px] before:top-6 before:w-[0.5px] before:bg-neutral-0 md:before:bottom-20 md:before:left-5 md:before:top-5"
+        >
+          <li
+            v-for="step in serviceSteps"
+            :key="step.id"
+            class="relative grid grid-cols-[36px_1fr] gap-6 md:grid-cols-[40px_1fr]"
+          >
+            <span
+              class="z-10 flex size-9 items-center justify-center rounded-full bg-neutral-0 text-neutral md:size-10"
+            >
+              {{ step.id }}
+            </span>
+            <div class="space-y-3">
+              <h3 class="text-heading-small md:text-heading-medium">{{ step.title }}</h3>
+              <p>
+                {{ step.content }}
+              </p>
+            </div>
+          </li>
+        </ol>
+      </div>
     </div>
   </section>
   <!-- 客戶案例區塊 -->
