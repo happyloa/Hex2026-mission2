@@ -67,6 +67,96 @@ const faqItems = [
 </script>
 
 <template>
+  <!-- Banner -->
+  <section
+    class="relative bg-[url('/img/service/mobile/service_banner.webp')] bg-cover bg-center px-3 py-10 text-center text-neutral-0 md:bg-[url('/img/service/desktop/service_banner.webp')] md:py-20"
+  >
+    <!-- 遮罩 -->
+    <div class="absolute inset-0 bg-dark-40a"></div>
+    <!-- 內容 -->
+    <div class="relative z-10 mx-auto max-w-[1076px]">
+      <p class="mb-1 text-heading-x-large md:mb-2 lg:text-heading-xxx-large">SERVICES</p>
+      <h1 class="mb-6 text-heading-x-large md:mb-10 lg:text-heading-xx-large">服務項目</h1>
+      <ol class="grid grid-cols-2 gap-3 text-neutral md:gap-6 lg:grid-cols-4">
+        <li>
+          <button
+            type="button"
+            class="flex w-full flex-col items-center bg-neutral-0 px-3 py-4 text-center transition hover:bg-primary hover:text-neutral-0 md:p-8"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 -960 960 960"
+              fill="currentColor"
+              class="mb-1 size-6 md:mb-3 md:size-7"
+            >
+              <path
+                d="m263.92-857.08 27.77-29.07L617-560.85q19.15 19.16 19.15 46.23 0 27.08-19.15 46.24L460.85-310.69q-18.39 18.38-45.47 18.38-27.07 0-45.46-18.38L213.77-468.38q-19.16-19.16-19.16-46.24 0-27.07 19.16-46.23l173.85-172.54zm152.23 152.23L240.54-530.77q-3.85 3.85-5 8.08-1.16 4.23-1.16 8.84h362q0-4.61-1.15-8.84t-5-8.08zm284.27 435.2q-17.34-17.35-17.34-42.66 0-17.92 9.42-35.38t19.81-33.08q7.46-10.46 15.15-20.38 7.69-9.93 15.62-20.39 7.92 10.46 15.61 20.39 7.69 9.92 15.16 20.38 10.38 15.62 19.8 33.08 9.43 17.46 9.43 35.38 0 25.31-17.35 42.66-17.35 17.34-42.65 17.34-25.31 0-42.66-17.34M80 0v-80h800V0z"
+              />
+            </svg>
+            <p class="text-heading-xxx-small md:text-heading-xxx-small">GRAPHIC</p>
+            <h3 class="text-heading-small md:text-heading-medium">平面設計</h3>
+          </button>
+        </li>
+        <li>
+          <button
+            type="button"
+            class="flex w-full flex-col items-center bg-neutral-0 px-3 py-4 text-center transition hover:bg-primary hover:text-neutral-0 md:p-8"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 -960 960 960"
+              fill="currentColor"
+              class="mb-1 size-6 md:mb-3 md:size-7"
+            >
+              <path
+                d="M620-332.31h127.69V-460h-35.38v92.31H620v35.38ZM212.31-580h35.38v-92.31H340v-35.38H212.31V-580ZM360-160v-80H184.62q-27.62 0-46.12-18.5Q120-277 120-304.62v-430.76q0-27.62 18.5-46.12Q157-800 184.62-800h590.76q27.62 0 46.12 18.5Q840-763 840-735.38v430.76q0 27.62-18.5 46.12Q803-240 775.38-240H600v80H360ZM184.62-280h590.76q9.24 0 16.93-7.69 7.69-7.69 7.69-16.93v-430.76q0-9.24-7.69-16.93-7.69-7.69-16.93-7.69H184.62q-9.24 0-16.93 7.69-7.69 7.69-7.69 16.93v430.76q0 9.24 7.69 16.93 7.69 7.69 16.93 7.69ZM160-280v-480 480Z"
+              />
+            </svg>
+            <p class="text-heading-xxx-small md:text-heading-xxx-small">WEBSITE</p>
+            <h3 class="text-heading-small md:text-heading-medium">網頁設計</h3>
+          </button>
+        </li>
+        <li>
+          <button
+            type="button"
+            class="flex w-full flex-col items-center bg-neutral-0 px-3 py-4 text-center transition hover:bg-primary hover:text-neutral-0 md:p-8"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 -960 960 960"
+              fill="currentColor"
+              class="mb-1 size-6 md:mb-3 md:size-7"
+            >
+              <path
+                d="M184.62-200q-27.62 0-46.12-18.5T120-264.62v-430.76q0-27.62 18.5-46.12t46.12-18.5h590.76q27.62 0 46.12 18.5t18.5 46.12v430.76q0 27.62-18.5 46.12T775.38-200zm0-40H600v-155.38H160v130.76q0 9.24 7.69 16.93t16.93 7.69M640-240h135.38q9.24 0 16.93-7.69t7.69-16.93v-326.15H640zM160-435.38h440v-155.39H160z"
+              />
+            </svg>
+            <p class="text-heading-xxx-small md:text-heading-xxx-small">FRONTEND</p>
+            <h3 class="text-heading-small md:text-heading-medium">前端切版</h3>
+          </button>
+        </li>
+        <li>
+          <button
+            type="button"
+            class="flex w-full flex-col items-center bg-neutral-0 px-3 py-4 text-center transition hover:bg-primary hover:text-neutral-0 md:p-8"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 -960 960 960"
+              fill="currentColor"
+              class="mb-1 size-6 md:mb-3 md:size-7"
+            >
+              <path
+                d="M224.62-160q-27.62 0-46.12-18.5T160-224.62v-510.76q0-27.62 18.5-46.12t46.12-18.5h510.76q27.62 0 46.12 18.5t18.5 46.12v510.76q0 27.62-18.5 46.12T735.38-160zM200-600.08h560v-135.3q0-9.24-7.69-16.93T735.38-760H224.62q-9.24 0-16.93 7.69T200-735.38zm0 200.16h560v-160.16H200zM224.62-200h510.76q9.24 0 16.93-7.69t7.69-16.93v-135.3H200v135.3q0 9.24 7.69 16.93t16.93 7.69m46.15-447.85v-64.61h64.61v64.61zm0 200.16v-64.62h64.61v64.62zm0 200.15v-64.61h64.61v64.61z"
+              />
+            </svg>
+            <p class="text-heading-xxx-small md:text-heading-xxx-small">BACKEND</p>
+            <h3 class="text-heading-small md:text-heading-medium">後端開發</h3>
+          </button>
+        </li>
+      </ol>
+    </div>
+  </section>
   <!-- 服務流程區塊 -->
   <main class="bg-primary px-3 py-10 text-neutral-0 md:py-20">
     <div class="mx-auto flex max-w-[1076px] flex-col justify-between gap-6 md:flex-row">
