@@ -13,7 +13,6 @@
 - [Vue 3](https://vuejs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Nuxt Content](https://content.nuxt.com/)
-- [Nuxt Fonts](https://fonts.nuxt.com/)
 - [Nuxt Icon](https://nuxt.com/modules/icon)
 - [Swiper](https://swiperjs.com/)
 
@@ -183,6 +182,10 @@ caption: 圖片說明文字
 - `tags`
 - `title`
 - `description`
+- `modal.image`
+- `modal.content`
+- `modal.designPrinciple`
+- `modal.development`
 
 圖片建議放在：
 
@@ -192,6 +195,7 @@ public/img/project/desktop
 ```
 
 首頁目前會取前三筆專案資料，專案列表頁會顯示全部專案並依 `tags` 篩選。
+專案卡片與彈出視窗都會使用這份資料；若要替不同專案更新彈出視窗內容，可直接調整該筆資料的 `modal` 欄位。
 
 ## 表單與社群連結
 
@@ -223,8 +227,17 @@ npm run generate
 NUXT_APP_BASE_URL=/your-repo-name/
 ```
 
+SEO 的 OG URL 與分享網址預設使用作品展示網址。若部署到自己的網域，請設定正式站台 origin：
+
+```sh
+NUXT_PUBLIC_SITE_URL=https://your-domain.com
+```
+
+Cloudflare Pages 會讀取 `public/_headers`，目前已設定基本安全標頭與靜態資源快取規則。
+
 ## 備註
 
 - `nuxt.config.ts` 的 Nuxt DevTools 僅在開發環境啟用。
+- 網站字型使用 Google Fonts 載入 Noto Sans TC 500 / 700，並保留系統字型 fallback。
 - Markdown 文章已加入 `.prettierignore`，避免 MDC 區塊被格式化後無法正確渲染。
 - 網站已設定 `zh-Hant-TW` 語系、頁面 title、description 與 OG image。
