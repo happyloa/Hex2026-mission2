@@ -1,5 +1,5 @@
 <script setup>
-defineProps({
+const props = defineProps({
   open: {
     type: Boolean,
     default: false
@@ -11,6 +11,8 @@ defineProps({
 })
 
 defineEmits(['close'])
+
+const modal = computed(() => props.project?.modal ?? {})
 </script>
 
 <template>
@@ -85,22 +87,20 @@ defineEmits(['close'])
             <!-- 內容、設計原則、開發方式 -->
             <div class="flex flex-col items-center gap-5 text-neutral-500 md:flex-row md:gap-6">
               <p class="md:max-w-[638px]">
-                我們將大自然的平靜感轉化為數位語彙，透過揉合大地色系與極簡排版，為「PLANTIQUE
-                LIFE」建構出專屬的視覺靈魂。在開發過程中，我們秉持對細節的極致追求，確保從品牌 Logo
-                到每一個組件的轉場，皆展現像素級的精準。
+                {{ modal.content }}
               </p>
               <div class="hidden h-12 border-l border-neutral-500 md:block"></div>
               <hr class="w-full border-neutral-500 md:hidden" />
               <ul class="space-y-1 self-start md:self-center md:whitespace-nowrap">
-                <li>設計原則：植栽藝術、日系風格、暖陽視覺</li>
-                <li>開發方式：Bootstrap、Javascript</li>
+                <li>設計原則：{{ modal.designPrinciple }}</li>
+                <li>開發方式：{{ modal.development }}</li>
               </ul>
             </div>
           </main>
           <!-- 專案完整截圖 -->
           <section class="bg-primary-50 px-3 py-10 md:py-20">
             <img
-              src="/img/project/project_modal_pic.webp"
+              :src="modal.image"
               :alt="project.title"
               class="mx-auto block"
             />
