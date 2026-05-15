@@ -3,6 +3,21 @@ export const SITE_OG_IMAGE = '/img/common/og-image.png'
 
 export const buildSeoTitle = (title: string) => `${title} | ${SITE_TITLE_BASE}`
 
+export const resolveSiteOrigin = (siteUrl: string | undefined, fallbackOrigin: string) => {
+  return (siteUrl || fallbackOrigin).replace(/\/$/, '')
+}
+
+export const withAppBaseURL = (path: string, baseURL = '/') => {
+  if (/^https?:\/\//.test(path)) {
+    return path
+  }
+
+  const normalizedBaseURL = baseURL.replace(/\/$/, '')
+  const normalizedPath = path.replace(/^\//, '')
+
+  return `${normalizedBaseURL}/${normalizedPath}` || '/'
+}
+
 export const buildAbsoluteUrl = (path: string, origin: string) => {
   if (/^https?:\/\//.test(path)) {
     return path
@@ -15,17 +30,19 @@ export const getPageSeo = ({
   title,
   description,
   origin,
+  baseURL = '/',
   path = '/',
   ogImage = SITE_OG_IMAGE
 }: {
   title: string
   description: string
   origin: string
+  baseURL?: string
   path?: string
   ogImage?: string
 }) => {
   const fullTitle = buildSeoTitle(title)
-  const imageUrl = buildAbsoluteUrl(ogImage, origin)
+  const imageUrl = buildAbsoluteUrl(withAppBaseURL(ogImage, baseURL), origin)
 
   return {
     title: fullTitle,
@@ -33,7 +50,7 @@ export const getPageSeo = ({
     ogTitle: fullTitle,
     ogDescription: description,
     ogImage: imageUrl,
-    ogUrl: buildAbsoluteUrl(path, origin),
+    ogUrl: buildAbsoluteUrl(withAppBaseURL(path, baseURL), origin),
     ogType: 'website',
     twitterCard: 'summary_large_image',
     twitterTitle: fullTitle,

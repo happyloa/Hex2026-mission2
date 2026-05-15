@@ -3,13 +3,16 @@
 import { projects } from '../data/projects'
 
 const requestUrl = useRequestURL()
+const runtimeConfig = useRuntimeConfig()
+const siteOrigin = resolveSiteOrigin(runtimeConfig.public.siteUrl, requestUrl.origin)
 
 useSeoMeta(
   getPageSeo({
     title: '專案作品',
     description:
       '瀏覽 Nelson 的專案作品，包含品牌識別、UIUX 設計、RWD 網站開發與數位產品介面規劃。',
-    origin: requestUrl.origin,
+    origin: siteOrigin,
+    baseURL: runtimeConfig.app.baseURL,
     path: '/project'
   })
 )

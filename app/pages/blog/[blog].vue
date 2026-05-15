@@ -5,6 +5,7 @@ import 'swiper/css'
 const route = useRoute()
 const requestUrl = useRequestURL()
 const runtimeConfig = useRuntimeConfig()
+const siteOrigin = resolveSiteOrigin(runtimeConfig.public.siteUrl, requestUrl.origin)
 
 const blogSlug = computed(() => {
   const slug = route.params.blog
@@ -25,18 +26,10 @@ if (!post.value) {
 }
 
 // 分享與 OG URL 需要帶上 Nuxt baseURL，避免部署在子路徑時產生錯誤連結。
-const withAppBaseURL = (path) => {
-  const baseURL = runtimeConfig.app.baseURL || '/'
-  const normalizedBaseURL = baseURL.replace(/\/$/, '')
-  const normalizedPath = path.replace(/^\//, '')
-
-  return `${normalizedBaseURL}/${normalizedPath}`
-}
-
-const articlePath = computed(() => withAppBaseURL(post.value.path))
-const articleUrl = computed(() => buildAbsoluteUrl(articlePath.value, requestUrl.origin))
+const articlePath = computed(() => withAppBaseURL(post.value.path, runtimeConfig.app.baseURL))
+const articleUrl = computed(() => buildAbsoluteUrl(articlePath.value, siteOrigin))
 const ogImageUrl = computed(() =>
-  buildAbsoluteUrl(withAppBaseURL(SITE_OG_IMAGE), requestUrl.origin)
+  buildAbsoluteUrl(withAppBaseURL(SITE_OG_IMAGE, runtimeConfig.app.baseURL), siteOrigin)
 )
 
 useSeoMeta({

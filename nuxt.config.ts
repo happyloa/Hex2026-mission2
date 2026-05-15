@@ -24,31 +24,29 @@ export default defineNuxtConfig({
     head: {
       htmlAttrs: {
         lang: 'zh-Hant-TW'
-      }
+      },
+      link: [
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&display=swap'
+        }
+      ]
     }
   },
 
-  modules: ['@nuxt/content', '@nuxt/fonts', '@nuxt/icon', '@nuxtjs/tailwindcss'],
+  runtimeConfig: {
+    public: {
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://hex2026-mission2.pages.dev'
+    }
+  },
+
+  modules: ['@nuxt/content', '@nuxt/icon', '@nuxtjs/tailwindcss'],
 
   nitro: {
     prerender: {
       routes: blogPrerenderRoutes
     }
-  },
-
-  fonts: {
-    defaults: {
-      weights: ['500', '700'],
-      styles: ['normal']
-    },
-    families: [
-      {
-        name: 'Noto Sans TC',
-        provider: 'google',
-        weights: ['500', '700'],
-        styles: ['normal'],
-        global: true
-      }
-    ]
   }
 })

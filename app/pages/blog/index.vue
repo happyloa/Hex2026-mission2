@@ -1,12 +1,15 @@
 <script setup>
 const requestUrl = useRequestURL()
+const runtimeConfig = useRuntimeConfig()
+const siteOrigin = resolveSiteOrigin(runtimeConfig.public.siteUrl, requestUrl.origin)
 
 useSeoMeta(
   getPageSeo({
     title: '部落格',
     description:
       '閱讀 UIUX 設計、前端技術、設計規範與 AI 趨勢應用文章，整理數位產品設計與開發的實務觀點。',
-    origin: requestUrl.origin,
+    origin: siteOrigin,
+    baseURL: runtimeConfig.app.baseURL,
     path: '/blog'
   })
 )
