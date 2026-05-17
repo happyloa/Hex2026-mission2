@@ -4,7 +4,7 @@
 
 @layer base {
   html {
-    @apply font-sans font-medium text-neutral;
+    @apply font-sans font-medium tracking-[0.02em] text-neutral;
     scrollbar-color: #737373 #fdf7f1;
     scrollbar-gutter: stable;
   }
