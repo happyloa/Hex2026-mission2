@@ -67,9 +67,9 @@ const modal = computed(() => props.project?.modal ?? {})
             class="space-y-5 bg-neutral-0 px-3 py-6 text-paragraph-small md:space-y-6 md:p-10 md:text-paragraph-medium"
           >
             <!-- 標籤與時間 -->
-            <div class="flex justify-between gap-2">
+            <div class="flex flex-wrap justify-between gap-2">
               <ul
-                class="flex flex-wrap [&>li:not(:last-child)::after]:mx-0.5 [&>li:not(:last-child)::after]:content-['·'] md:[&>li:not(:last-child)::after]:mx-1"
+                class="flex [&>li:not(:last-child)::after]:mx-0.5 [&>li:not(:last-child)::after]:content-['·'] md:[&>li:not(:last-child)::after]:mx-1"
               >
                 <li v-for="tag in project.tags" :key="tag">{{ tag }}</li>
               </ul>
@@ -99,11 +99,7 @@ const modal = computed(() => props.project?.modal ?? {})
           </main>
           <!-- 專案完整截圖 -->
           <section class="bg-primary-50 px-3 py-10 md:py-20">
-            <img
-              :src="modal.image"
-              :alt="project.title"
-              class="mx-auto block"
-            />
+            <img :src="modal.image" :alt="project.title" class="mx-auto block" />
           </section>
         </div>
       </div>
