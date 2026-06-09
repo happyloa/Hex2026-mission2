@@ -50,13 +50,73 @@ const handleKeydown = (event) => {
 
 watch(isMenuOpen, syncBodyScrollLock)
 
+// 閱讀進度條相關邏輯
+const route = useRoute()
+// 判斷當前頁面是否為部落格單頁 (例如: /blog/ai-interface-design-workflow)
+const isBlogSinglePage = computed(() => {
+  return route.path.startsWith('/blog/') && route.path !== '/blog'
+})
+
+const scrollPercent = ref(0)
+let isListening = false
+
+// 計算當前的捲動進度百分比
+const updateScrollProgress = () => {
+  const scrollTop = window.scrollY || document.documentElement.scrollTop
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight
+  if (docHeight > 0) {
+    scrollPercent.value = Math.min((scrollTop / docHeight) * 100, 100)
+  } else {
+    scrollPercent.value = 0
+  }
+}
+
+// 註冊捲動接聽器 (限客戶端)
+const addScrollListener = () => {
+  if (isListening || import.meta.server) return
+  window.addEventListener('scroll', updateScrollProgress, { passive: true })
+  isListening = true
+  updateScrollProgress()
+}
+
+// 移除捲動接聽器並重設進度百分比
+const removeScrollListener = () => {
+  if (!isListening || import.meta.server) return
+  window.removeEventListener('scroll', updateScrollProgress)
+  isListening = false
+  scrollPercent.value = 0
+}
+
+// 監聽路由變化，若切換到部落格單頁則註冊捲動接聽，切出則移除
+watch(
+  isBlogSinglePage,
+  (isSingle) => {
+    if (isSingle) {
+      if (import.meta.client) {
+        nextTick(() => {
+          addScrollListener()
+        })
+      }
+    } else {
+      removeScrollListener()
+    }
+  }
+)
+
 onMounted(() => {
   // 讓鍵盤使用者可以用 Esc 關閉已打開的手機選單。
   window.addEventListener('keydown', handleKeydown)
+  
+  // 若初始進入即為部落格單頁，則啟動捲動監聽
+  if (isBlogSinglePage.value) {
+    addScrollListener()
+  }
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', handleKeydown)
+  // 卸載元件時確保移除捲動接聽器，避免記憶體洩漏
+  removeScrollListener()
   unlockBodyScroll()
 })
 </script>
@@ -157,5 +217,11 @@ onBeforeUnmount(() => {
         </ul>
       </nav>
     </Transition>
+    <!-- 閱讀進度條 -->
+    <div
+      v-if="isBlogSinglePage"
+      class="absolute bottom-0 left-0 h-1 bg-primary transition-all duration-75"
+      :style="{ width: `${scrollPercent}%` }"
+    ></div>
   </header>
 </template>
