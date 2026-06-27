@@ -87,7 +87,7 @@ onBeforeUnmount(() => {
             }"
           ></div>
           <!-- 專案介紹 -->
-          <main
+          <div
             class="space-y-5 bg-neutral-0 px-3 py-6 text-paragraph-small md:space-y-6 md:p-10 md:text-paragraph-medium"
           >
             <!-- 標籤與時間 -->
@@ -118,7 +118,7 @@ onBeforeUnmount(() => {
                 <li>開發方式：{{ modal.development }}</li>
               </ul>
             </div>
-          </main>
+          </div>
           <!-- 專案完整截圖 -->
           <section class="bg-primary-50 px-3 py-10 md:py-20">
             <img :src="modal.image" :alt="project.title" class="mx-auto block" />

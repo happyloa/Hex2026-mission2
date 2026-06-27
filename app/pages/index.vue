@@ -179,7 +179,7 @@ onBeforeUnmount(() => {
     </div>
   </section>
   <!-- 服務項目區塊 -->
-  <main class="bg-primary px-3 py-10 md:py-20">
+  <section class="bg-primary px-3 py-10 md:py-20">
     <div class="mx-auto max-w-[1296px] text-neutral-0">
       <p class="text-heading-xxxx-small md:text-heading-xxx-small">服務項目</p>
       <h2 class="mb-6 text-heading-x-large md:mb-10 md:text-heading-xxx-large">SERVICES</h2>
@@ -196,7 +196,7 @@ onBeforeUnmount(() => {
         </li>
       </ol>
     </div>
-  </main>
+  </section>
   <!-- 專案作品區塊 -->
   <section class="bg-primary-50 px-3 py-10 md:py-20">
     <div class="mx-auto max-w-[1296px]">

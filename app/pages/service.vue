@@ -112,7 +112,7 @@ const faqItems = [
     </div>
   </section>
   <!-- 服務流程區塊 -->
-  <main class="bg-primary px-3 py-10 text-neutral-0 md:py-20">
+  <section class="bg-primary px-3 py-10 text-neutral-0 md:py-20">
     <div class="mx-auto flex max-w-[1076px] flex-col justify-between gap-6 md:flex-row">
       <!-- 左側標題 -->
       <div class="text-center md:max-w-[416px] md:text-start">
@@ -144,7 +144,7 @@ const faqItems = [
         </ol>
       </div>
     </div>
-  </main>
+  </section>
   <!-- 客戶案例區塊 -->
   <section class="px-3 py-10 md:py-20">
     <div class="mx-auto max-w-[1076px]">
