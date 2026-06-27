@@ -1,16 +1,4 @@
-<script setup>
-// 連結使用佔位網址；實際使用時請替換成自己的實際帳號連結。
-const socialLinks = [
-  { label: 'Instagram', icon: 'simple-icons:instagram', to: '#' },
-  { label: 'LINE', icon: 'simple-icons:line', to: '#' },
-  { label: 'LinkedIn', icon: 'simple-icons:linkedin', to: '#' },
-  {
-    label: 'GitHub',
-    icon: 'simple-icons:github',
-    to: 'https://github.com/happyloa/Hex2026-mission2'
-  }
-]
-</script>
+<script setup></script>
 
 <template>
   <footer id="footer" class="bg-primary px-3 py-10 text-neutral-0 md:py-20">
@@ -26,27 +14,7 @@ const socialLinks = [
 
         <!-- 電腦版 social -->
         <div class="mt-[92px] hidden md:block">
-          <ul class="mb-6 flex gap-3" aria-label="社群連結">
-            <li v-for="link in socialLinks" :key="link.label">
-              <a
-                :href="link.to"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex size-12 items-center justify-center rounded-full border border-neutral-0 text-neutral-0 transition hover:bg-neutral-0 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-0"
-                :aria-label="link.label"
-              >
-                <Icon :name="link.icon" class="size-4" />
-              </a>
-            </li>
-          </ul>
-
-          <a
-            href="mailto:service@hexschool.com"
-            class="flex w-fit items-center gap-2 text-paragraph-medium transition hover:text-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-0"
-          >
-            <Icon name="lucide:mail-open" class="size-6" />
-            service@hexschool.com
-          </a>
+          <CommonSocialContact size="md" />
         </div>
       </div>
 
@@ -95,27 +63,7 @@ const socialLinks = [
 
       <!-- 行動版 social -->
       <div class="block md:hidden">
-        <ul class="mb-3 flex flex-wrap gap-3" aria-label="社群連結">
-          <li v-for="link in socialLinks" :key="link.label">
-            <a
-              :href="link.to"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="flex size-11 items-center justify-center rounded-full border border-neutral-0 text-neutral-0 transition hover:bg-neutral-0 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-0"
-              :aria-label="link.label"
-            >
-              <Icon :name="link.icon" class="size-4" />
-            </a>
-          </li>
-        </ul>
-
-        <a
-          href="mailto:service@hexschool.com"
-          class="flex items-center gap-2 text-paragraph-small transition hover:text-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-0"
-        >
-          <Icon name="lucide:mail-open" class="size-4" />
-          service@hexschool.com
-        </a>
+        <CommonSocialContact size="sm" />
       </div>
     </div>
   </footer>
