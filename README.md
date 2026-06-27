@@ -155,7 +155,7 @@ caption: 圖片說明文字
 
 ## 新增服務項目
 
-服務資料集中在 `app/data/services.js`。新增服務時請補上：
+服務資料集中在 `app/data/services.ts`。新增服務時請補上：
 
 - `key`：網址參數使用，例如 `graphic`
 - `eyebrow`：英文小標
@@ -172,7 +172,7 @@ caption: 圖片說明文字
 
 ## 新增專案作品
 
-專案資料集中在 `app/data/projects.js`。新增專案時請補上：
+專案資料集中在 `app/data/projects.ts`。新增專案時請補上：
 
 - `id`
 - `images.mobile`
