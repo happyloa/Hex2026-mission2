@@ -87,21 +87,19 @@ const { data: latestPosts, refresh: refreshLatestPosts } = await useAsyncData(
   }
 )
 
-// 正式環境重新整理時，Nuxt Content 的 payload 偶爾會在 hydration 前後不同步；
-// 若首頁沒有拿到預渲染資料，就在 client 端補抓一次最新文章。
-onMounted(async () => {
-  if (!latestPosts.value?.length) {
-    await refreshLatestPosts()
-  }
-})
-
 const latestBlogPosts = computed(() => latestPosts.value ?? [])
 
-onMounted(() => {
+onMounted(async () => {
   // 和 Tailwind 的 lg 斷點一致，視差效果只在電腦版寬度生效。
   desktopMediaQuery = window.matchMedia('(min-width: 1024px)')
   desktopMediaQuery.addEventListener('change', syncHeroParallax)
   syncHeroParallax()
+
+  // 正式環境重新整理時，Nuxt Content 的 payload 偶爾會在 hydration 前後不同步；
+  // 若首頁沒有拿到預渲染資料，就在 client 端補抓一次最新文章。
+  if (!latestPosts.value?.length) {
+    await refreshLatestPosts()
+  }
 })
 
 onBeforeUnmount(() => {

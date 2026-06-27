@@ -53,9 +53,7 @@ watch(isMenuOpen, syncBodyScrollLock)
 // 閱讀進度條相關邏輯
 const route = useRoute()
 // 判斷當前頁面是否為部落格單頁 (例如: /blog/ai-interface-design-workflow)
-const isBlogSinglePage = computed(() => {
-  return route.path.startsWith('/blog/') && route.path !== '/blog'
-})
+const isBlogSinglePage = computed(() => route.path.startsWith('/blog/'))
 
 const scrollPercent = ref(0)
 let isListening = false
