@@ -10,9 +10,31 @@ const props = defineProps({
   }
 })
 
-defineEmits(['close'])
+const emit = defineEmits(['close'])
 
 const modal = computed(() => props.project?.modal ?? {})
+
+const closeButton = ref(null)
+
+const handleKeydown = (e) => {
+  if (e.key === 'Escape') emit('close')
+}
+
+watch(
+  () => props.open,
+  (isOpen) => {
+    if (isOpen) {
+      nextTick(() => closeButton.value?.focus())
+      window.addEventListener('keydown', handleKeydown)
+    } else {
+      window.removeEventListener('keydown', handleKeydown)
+    }
+  }
+)
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', handleKeydown)
+})
 </script>
 
 <template>
@@ -33,11 +55,13 @@ const modal = computed(() => props.project?.modal ?? {})
         <div
           role="dialog"
           aria-modal="true"
+          aria-labelledby="modal-project-title"
           class="absolute left-1/2 top-1/2 mx-auto max-h-[85dvh] w-[calc(100%-24px)] max-w-[1076px] -translate-x-1/2 -translate-y-1/2 overflow-y-auto md:max-h-[90vh]"
         >
           <!-- 關閉 modal 的按鈕 -->
           <div class="sticky top-0 flex justify-end bg-neutral-0 px-3 py-2 md:px-6 md:py-3">
             <button
+              ref="closeButton"
               class="size-11 p-3 md:size-12"
               aria-label="關閉專案視窗"
               @click="$emit('close')"
@@ -77,7 +101,7 @@ const modal = computed(() => props.project?.modal ?? {})
             </div>
             <!-- 名稱與描述 -->
             <div class="text-balance">
-              <h2 class="mb-2 text-heading-small md:mb-3 md:text-heading-medium">
+              <h2 id="modal-project-title" class="mb-2 text-heading-small md:mb-3 md:text-heading-medium">
                 {{ project.title }}
               </h2>
               <p>{{ project.description }}</p>
