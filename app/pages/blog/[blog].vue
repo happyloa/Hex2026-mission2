@@ -143,9 +143,9 @@ const instagramUrl = 'https://www.instagram.com/'
         {{ post.title }}
       </h1>
       <!-- 摘要 -->
-      <h2 class="mb-2 text-heading-xx-small lg:mb-4 lg:text-heading-small">
+      <p class="mb-2 text-heading-xx-small lg:mb-4 lg:text-heading-small">
         {{ post.description }}
-      </h2>
+      </p>
       <!-- 正文 -->
       <ContentRenderer
         :value="post"
