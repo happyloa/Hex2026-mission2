@@ -117,7 +117,11 @@ const setBlogTab = (tab) => {
             <CommonBlogCard :post="post" />
           </li>
         </ul>
-        <CommonBlogFallback v-else-if="!isPostsPending" />
+        <CommonEmptyState
+          v-else-if="!isPostsPending"
+          title="目前沒有符合的文章"
+          description="可以切回全部，或選擇其它分類看看。"
+        />
         <!-- 換頁按鈕 -->
         <nav class="flex justify-center md:justify-end">
           <ul class="flex items-center gap-4">

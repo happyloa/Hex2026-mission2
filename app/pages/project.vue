@@ -97,7 +97,12 @@ const closeProjectModal = () => {
         <CommonProjectCard :project="project" @open="openProjectModal" />
       </li>
     </ul>
-    <CommonProjectFallback v-else />
+    <CommonEmptyState
+      v-else
+      class="mx-auto w-full max-w-[1296px]"
+      title="目前沒有符合的專案"
+      description="可以切回全部，或選擇其它分類看看。"
+    />
     <AtomButton class="self-center">探索更多</AtomButton>
   </main>
 
