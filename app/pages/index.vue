@@ -209,7 +209,7 @@ onBeforeUnmount(() => {
       <div class="flex flex-col gap-6 md:gap-10">
         <ul class="space-y-3 md:space-y-6">
           <li v-for="project in homeProjects" :key="project.id">
-            <CommonProjectCard :project="project" @open="openProjectModal" />
+            <CommonProjectCard :project="project" heading-level="h3" @open="openProjectModal" />
           </li>
         </ul>
         <AtomButton to="/project" class="self-center">探索更多</AtomButton>

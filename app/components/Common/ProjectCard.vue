@@ -3,6 +3,10 @@ defineProps({
   project: {
     type: Object,
     required: true
+  },
+  headingLevel: {
+    type: String,
+    default: 'h2'
   }
 })
 
@@ -30,9 +34,9 @@ defineEmits(['open'])
         <li v-for="tag in project.tags" :key="tag">{{ tag }}</li>
       </ul>
       <!-- 專案名稱 -->
-      <h2 class="text-heading-x-small md:text-heading-small">
+      <component :is="headingLevel" class="text-heading-x-small md:text-heading-small">
         {{ project.title }}
-      </h2>
+      </component>
       <!-- 專案描述 -->
       <p>{{ project.description }}</p>
       <AtomButton @click="$emit('open', project)">前往專案</AtomButton>
