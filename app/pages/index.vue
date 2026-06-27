@@ -181,8 +181,8 @@ onBeforeUnmount(() => {
   <!-- 服務項目區塊 -->
   <section class="bg-primary px-3 py-10 md:py-20">
     <div class="mx-auto max-w-[1296px] text-neutral-0">
-      <p class="text-heading-xxxx-small md:text-heading-xxx-small">服務項目</p>
-      <h2 class="mb-6 text-heading-x-large md:mb-10 md:text-heading-xxx-large">SERVICES</h2>
+      <h2 class="text-heading-xxxx-small md:text-heading-xxx-small">服務項目</h2>
+      <p class="mb-6 text-heading-x-large md:mb-10 md:text-heading-xxx-large">SERVICES</p>
       <!-- 手機版服務項目輪播 -->
       <Swiper :slides-per-view="1.4" :space-between="12" :loop="true" class="sm:!hidden">
         <SwiperSlide v-for="service in serviceItems" :key="service.key">
@@ -202,8 +202,8 @@ onBeforeUnmount(() => {
     <div class="mx-auto max-w-[1296px]">
       <!-- 標題區塊 -->
       <div class="mb-6 text-center md:mb-10">
-        <p class="text-heading-xxxx-small md:text-heading-xxx-small">專案作品</p>
-        <h2 class="text-heading-x-large md:text-heading-xxx-large">PROJECTS</h2>
+        <h2 class="text-heading-xxxx-small md:text-heading-xxx-small">專案作品</h2>
+        <p class="text-heading-x-large md:text-heading-xxx-large">PROJECTS</p>
       </div>
       <!-- 專案作品列表 -->
       <div class="flex flex-col gap-6 md:gap-10">
@@ -222,8 +222,8 @@ onBeforeUnmount(() => {
       <!-- 標題區塊與按鈕 -->
       <div class="mb-6 flex items-center justify-between gap-6 md:mb-10">
         <div>
-          <p class="text-heading-xxxx-small md:text-heading-xxx-small">部落格</p>
-          <h2 class="text-heading-x-large md:text-heading-xxx-large">BLOGS</h2>
+          <h2 class="text-heading-xxxx-small md:text-heading-xxx-small">部落格</h2>
+          <p class="text-heading-x-large md:text-heading-xxx-large">BLOGS</p>
         </div>
         <AtomButton to="/blog" variant="outline">探索更多</AtomButton>
       </div>
