@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  /* 以「·」分隔清單項目的通用樣式，用於標籤列表等場景 */
+  .tag-list li:not(:last-child)::after {
+    content: '·';
+    @apply mx-0.5 md:mx-1;
+  }
+}
+
 @layer base {
   html {
     @apply font-sans font-medium tracking-[0.02em] text-neutral;

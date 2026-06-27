@@ -126,9 +126,7 @@ const instagramUrl = 'https://www.instagram.com/'
     <article class="mx-auto max-w-[1076px] text-paragraph-small md:text-paragraph-medium">
       <!-- 文章 meta，標籤與日期 -->
       <div class="mb-2 flex flex-wrap justify-between gap-2 lg:mb-4">
-        <ul
-          class="flex flex-wrap [&>li:not(:last-child)::after]:mx-0.5 [&>li:not(:last-child)::after]:content-['·'] md:[&>li:not(:last-child)::after]:mx-1"
-        >
+        <ul class="tag-list flex flex-wrap">
           <li v-for="tag in post.tags" :key="tag">
             <NuxtLink
               :to="{ path: '/blog', query: { tag } }"

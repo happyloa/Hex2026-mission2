@@ -42,9 +42,7 @@ const imageClass = computed(() => {
       <img :src="post.image" :alt="post.title" class="w-full object-cover" :class="imageClass" />
       <div class="space-y-2 md:space-y-3">
         <!-- 文章標籤 -->
-        <ul
-          class="flex flex-wrap text-paragraph-small md:text-paragraph-medium [&>li:not(:last-child)::after]:mx-0.5 [&>li:not(:last-child)::after]:content-['·'] md:[&>li:not(:last-child)::after]:mx-1"
-        >
+        <ul class="tag-list flex flex-wrap text-paragraph-small md:text-paragraph-medium">
           <li v-for="tag in post.tags" :key="tag">{{ tag }}</li>
         </ul>
         <!-- 標題 -->

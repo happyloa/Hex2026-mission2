@@ -26,9 +26,7 @@ defineEmits(['open'])
         >{{ project.date }}
       </time>
       <!-- 標籤 -->
-      <ul
-        class="flex flex-wrap [&>li:not(:last-child)::after]:mx-0.5 [&>li:not(:last-child)::after]:content-['·'] md:[&>li:not(:last-child)::after]:mx-1"
-      >
+      <ul class="tag-list flex flex-wrap">
         <li v-for="tag in project.tags" :key="tag">{{ tag }}</li>
       </ul>
       <!-- 專案名稱 -->

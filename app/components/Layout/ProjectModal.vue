@@ -68,9 +68,7 @@ const modal = computed(() => props.project?.modal ?? {})
           >
             <!-- 標籤與時間 -->
             <div class="flex flex-wrap justify-between gap-2">
-              <ul
-                class="flex [&>li:not(:last-child)::after]:mx-0.5 [&>li:not(:last-child)::after]:content-['·'] md:[&>li:not(:last-child)::after]:mx-1"
-              >
+              <ul class="tag-list flex">
                 <li v-for="tag in project.tags" :key="tag">{{ tag }}</li>
               </ul>
               <time :datetime="project.datetime" class="whitespace-nowrap"
