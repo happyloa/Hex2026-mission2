@@ -1,3 +1,12 @@
+<script setup>
+defineProps({
+  headingLevel: {
+    type: String,
+    default: 'h2'
+  }
+})
+</script>
+
 <template>
   <section
     class="relative bg-[url('/img/common/mobile/subscription_bg.webp')] bg-cover bg-center md:bg-[url('/img/common/desktop/subscription_bg.webp')]"
@@ -16,9 +25,12 @@
         class="flex flex-col justify-center px-3 py-10 text-neutral-0 md:max-w-[746px] lg:px-10 lg:py-20"
       >
         <p class="text-heading-xxxx-small md:text-heading-xxx-small">電子報訂閱</p>
-        <h3 class="mb-3 break-all text-heading-x-large md:mb-6 xl:text-heading-xxx-large">
+        <component
+          :is="headingLevel"
+          class="mb-3 break-all text-heading-x-large md:mb-6 xl:text-heading-xxx-large"
+        >
           SUBSCRIPTION
-        </h3>
+        </component>
         <p class="mb-6 text-paragraph-small md:text-paragraph-medium">
           你也在追求設計美感與技術落地的完美平衡嗎？作為資深設計師兼工程師，我深知跨領域協作的痛點。訂閱電子報，我將分享如何利用
           AI 工具提升產能！
