@@ -1,5 +1,6 @@
-// 專案卡片與 modal 共用資料；首頁與專案列表頁都從這裡取用，避免重複維護。
-const defaultProjectModal = {
+import type { Project, ProjectModal } from '../types'
+
+const defaultProjectModal: ProjectModal = {
   image: '/img/project/project_modal_pic.webp',
   content:
     '我們將大自然的平靜感轉化為數位語彙，透過揉合大地色系與極簡排版，為「PLANTIQUE LIFE」建構出專屬的視覺靈魂。在開發過程中，我們秉持對細節的極致追求，確保從品牌 Logo 到每一個組件的轉場，皆展現像素級的精準。',
@@ -7,7 +8,7 @@ const defaultProjectModal = {
   development: 'Bootstrap、Javascript'
 }
 
-export const projects = [
+export const projects: Project[] = [
   {
     id: 1,
     images: {

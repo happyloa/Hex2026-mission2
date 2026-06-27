@@ -1,7 +1,8 @@
+import type { ServiceItem } from '../types'
+
 export const defaultService = 'graphic'
 
-// 服務項目共用資料；首頁只取卡片摘要，服務頁只取流程步驟。
-export const serviceItems = [
+export const serviceItems: ServiceItem[] = [
   {
     key: 'graphic',
     eyebrow: 'GRAPHIC',
