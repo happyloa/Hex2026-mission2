@@ -1,5 +1,5 @@
 {
-  "name": "Hex2026-mission2",
+  "name": "hex2026-mission2",
   "type": "module",
   "private": true,
   "engines": {
@@ -14,25 +14,18 @@
   },
   "dependencies": {
     "@nuxt/content": "^3.15.2",
-    "@nuxt/icon": "^2.4.1",
-    "@nuxtjs/tailwindcss": "^6.14.0",
-    "nuxt": "^4.5.1",
-    "swiper": "^14.0.7"
+    "@nuxt/icon": "^2.5.1",
+    "nuxt": "^4.5.2",
+    "swiper": "^14.1.0"
   },
   "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.14.0",
     "prettier": "^3.9.6",
-    "prettier-plugin-tailwindcss": "^0.8.1"
-  },
-  "overrides": {
-    "replace-in-file": "^8.4.0",
-    "@koa/router": "^15.7.0",
-    "glob": "^13.0.6",
-    "readdir-glob": "^3.0.0",
-    "brace-expansion": "^5.0.8",
-    "tar": "^7.5.22"
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "typescript": "^6.0.3"
   },
   "allowScripts": {
-    "@parcel/watcher@2.5.6": true,
-    "esbuild@0.28.1": true
+    "esbuild@0.28.1": true,
+    "unrs-resolver@1.12.2": true
   }
 }

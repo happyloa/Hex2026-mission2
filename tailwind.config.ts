@@ -1,15 +1,4 @@
-import type { Config } from 'tailwindcss'
-
-export default <Partial<Config>>{
-  content: [
-    './app/**/*.{vue,js,ts,jsx,tsx}',
-    './components/**/*.{vue,js,ts}',
-    './layouts/**/*.vue',
-    './pages/**/*.vue',
-    './plugins/**/*.{js,ts}',
-    './nuxt.config.{js,ts}',
-    './app.vue'
-  ],
+export default {
   theme: {
     extend: {
       colors: {
@@ -52,12 +41,7 @@ export default <Partial<Config>>{
         'paragraph-medium': ['16px', { lineHeight: '1.5', fontWeight: '500' }],
         'paragraph-small': ['14px', { lineHeight: '1.5', fontWeight: '500' }],
         'paragraph-x-small': ['13px', { lineHeight: '1.5', fontWeight: '500' }]
-      },
-      fontWeight: {
-        medium: '500',
-        bold: '700'
       }
     }
-  },
-  plugins: []
+  }
 }
