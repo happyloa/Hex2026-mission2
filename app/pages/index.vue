@@ -80,11 +80,7 @@ const closeProjectModal = () => {
 // 最新文章
 const { data: latestPosts, refresh: refreshLatestPosts } = await useAsyncData(
   'home-latest-posts',
-  async () => {
-    const posts = await queryCollection('blog').order('date', 'DESC').all()
-
-    return posts.slice(0, 3)
-  }
+  () => queryCollection('blog').order('date', 'DESC').limit(3).all()
 )
 
 const latestBlogPosts = computed(() => latestPosts.value ?? [])
