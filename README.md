@@ -11,7 +11,7 @@
 
 - [Nuxt 4](https://nuxt.com/)
 - [Vue 3](https://vuejs.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
+- [Tailwind CSS 4](https://tailwindcss.com/)（Vite 外掛）
 - [Nuxt Content](https://content.nuxt.com/)
 - [Nuxt Icon](https://nuxt.com/modules/icon)
 - [Swiper](https://swiperjs.com/)
@@ -27,12 +27,12 @@
 
 ## 快速開始
 
-複製專案並安裝套件：
+使用 Node.js 24.19.0（見 `.nvmrc`）複製專案並安裝套件：
 
 ```sh
 git clone https://github.com/happyloa/Hex2026-mission2.git
 cd Hex2026-mission2
-npm install
+npm ci
 ```
 
 啟動開發伺服器：
@@ -53,7 +53,14 @@ http://localhost:3000/
 npm run build
 ```
 
-產生靜態網站：
+執行型別檢查與套件漏洞掃描：
+
+```sh
+npm run typecheck
+npm audit
+```
+
+產生靜態網站（輸出於 `.output/public`）：
 
 ```sh
 npm run generate
@@ -81,6 +88,7 @@ app/pages
 
 ```txt
 app
+├── assets/css/main.css       Tailwind 4 主題色、字級與全域樣式
 ├── components
 │   ├── Atom                  基礎元件，例如按鈕
 │   ├── Common                可跨頁共用的卡片與 fallback
@@ -209,19 +217,13 @@ public/img/project/desktop
 
 ## 部署
 
-若部署到 Vercel、Cloudflare Pages 等平台，可以依平台需求選擇：
+此作品目前以靜態站部署。Cloudflare Pages 的建置指令為 `npm run generate`，發佈目錄為 `.output/public`。需要 Nuxt 伺服器的部署環境則可執行：
 
 ```sh
 npm run build
 ```
 
-或：
-
-```sh
-npm run generate
-```
-
-此專案預設部署在網域根目錄。如果部署到 GitHub Pages 子路徑，可透過環境變數設定 base URL：
+此專案的圖片路徑以 `/img/` 開頭，預設部署在網域根目錄。若要部署到子路徑，除設定 base URL 外，也需調整這些圖片參照：
 
 ```sh
 NUXT_APP_BASE_URL=/your-repo-name/
@@ -238,6 +240,8 @@ Cloudflare Pages 會讀取 `public/_headers`，目前已設定基本安全標頭
 ## 備註
 
 - `nuxt.config.ts` 的 Nuxt DevTools 僅在開發環境啟用。
+- Tailwind 4 使用 `@tailwindcss/vite`；設計 token 寫在 `app/assets/css/main.css` 的 `@theme`，不需要舊版 `tailwind.config.ts`。
+- Nuxt Content 建置期使用 Node.js 內建 `node:sqlite`；`@nuxt/icon` 使用本機圖示集並將所需圖示打包進靜態網站。
 - 網站字型使用 Google Fonts 載入 Noto Sans TC 500 / 700，並保留系統字型 fallback。
 - Markdown 文章已加入 `.prettierignore`，避免 MDC 區塊被格式化後無法正確渲染。
 - 網站已設定 `zh-Hant-TW` 語系、頁面 title、description 與 OG image。
