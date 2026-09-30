@@ -5,11 +5,17 @@ defineProps({
     default: 'h2'
   }
 })
+
+const backgroundStyle = {
+  '--subscription-mobile-image': "url('/img/common/mobile/subscription_bg.webp')",
+  '--subscription-desktop-image': "url('/img/common/desktop/subscription_bg.webp')"
+}
 </script>
 
 <template>
   <section
-    class="relative bg-[url('/img/common/mobile/subscription_bg.webp')] bg-cover bg-center md:bg-[url('/img/common/desktop/subscription_bg.webp')]"
+    class="relative bg-[image:var(--subscription-mobile-image)] bg-cover bg-center md:bg-[image:var(--subscription-desktop-image)]"
+    :style="backgroundStyle"
   >
     <!-- 遮罩 -->
     <div class="absolute inset-0 bg-dark-60a"></div>

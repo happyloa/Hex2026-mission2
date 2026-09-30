@@ -1,0 +1,120 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-primary: #24140b;
+  --color-primary-50: #fdf7f1;
+  --color-primary-100: #fde6cf;
+  --color-primary-500: #f5b87b;
+  --color-neutral: #404040;
+  --color-neutral-0: #ffffff;
+  --color-neutral-500: #737373;
+  --color-neutral-900: #1e1e1e;
+  --color-dark-40a: rgb(0 0 0 / 40%);
+  --color-dark-60a: rgb(0 0 0 / 60%);
+  --font-sans: 'Noto Sans TC', 'Noto Sans', sans-serif;
+
+  --text-display: 300px;
+  --text-display--line-height: 1.2;
+  --text-display--font-weight: 700;
+  --text-display-2: 160px;
+  --text-display-2--line-height: 1.2;
+  --text-display-2--font-weight: 700;
+  --text-heading-xxx-large: 80px;
+  --text-heading-xxx-large--line-height: 1.2;
+  --text-heading-xxx-large--font-weight: 700;
+  --text-heading-xx-large: 48px;
+  --text-heading-xx-large--line-height: 1.2;
+  --text-heading-xx-large--font-weight: 700;
+  --text-heading-x-large: 40px;
+  --text-heading-x-large--line-height: 1.2;
+  --text-heading-x-large--font-weight: 700;
+  --text-heading-large: 32px;
+  --text-heading-large--line-height: 1.5;
+  --text-heading-large--font-weight: 700;
+  --text-heading-medium: 28px;
+  --text-heading-medium--line-height: 1.5;
+  --text-heading-medium--font-weight: 700;
+  --text-heading-small: 24px;
+  --text-heading-small--line-height: 1.5;
+  --text-heading-small--font-weight: 700;
+  --text-heading-x-small: 20px;
+  --text-heading-x-small--line-height: 1.5;
+  --text-heading-x-small--font-weight: 700;
+  --text-heading-xx-small: 18px;
+  --text-heading-xx-small--line-height: 1.5;
+  --text-heading-xx-small--font-weight: 700;
+  --text-heading-xxx-small: 16px;
+  --text-heading-xxx-small--line-height: 1.5;
+  --text-heading-xxx-small--font-weight: 700;
+  --text-heading-xxxx-small: 14px;
+  --text-heading-xxxx-small--line-height: 1.5;
+  --text-heading-xxxx-small--font-weight: 700;
+  --text-label-medium: 16px;
+  --text-label-medium--line-height: 1.5;
+  --text-label-medium--font-weight: 500;
+  --text-label-small: 14px;
+  --text-label-small--line-height: 1.5;
+  --text-label-small--font-weight: 500;
+  --text-label-x-small: 13px;
+  --text-label-x-small--line-height: 1.5;
+  --text-label-x-small--font-weight: 500;
+  --text-paragraph-medium: 16px;
+  --text-paragraph-medium--line-height: 1.5;
+  --text-paragraph-medium--font-weight: 500;
+  --text-paragraph-small: 14px;
+  --text-paragraph-small--line-height: 1.5;
+  --text-paragraph-small--font-weight: 500;
+  --text-paragraph-x-small: 13px;
+  --text-paragraph-x-small--line-height: 1.5;
+  --text-paragraph-x-small--font-weight: 500;
+}
+
+@layer components {
+  .tag-list li:not(:last-child)::after {
+    content: '·';
+    @apply mx-0.5 md:mx-1;
+  }
+}
+
+@layer base {
+  html {
+    @apply text-neutral font-sans font-medium tracking-[0.02em];
+    scrollbar-color: #737373 #fdf7f1;
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    @apply bg-neutral-0;
+  }
+
+  * {
+    scrollbar-width: thin;
+  }
+
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #fdf7f1;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #737373 0%, #404040 100%);
+    border: 3px solid #fdf7f1;
+    border-radius: 9999px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: #404040;
+  }
+
+  *::-webkit-scrollbar-thumb:active {
+    background: #24140b;
+  }
+
+  *::-webkit-scrollbar-corner {
+    background: #fdf7f1;
+  }
+}

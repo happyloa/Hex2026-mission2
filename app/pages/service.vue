@@ -6,6 +6,10 @@ const runtimeConfig = useRuntimeConfig()
 const siteOrigin = resolveSiteOrigin(runtimeConfig.public.siteUrl, requestUrl.origin)
 const route = useRoute()
 const router = useRouter()
+const bannerStyle = {
+  '--banner-mobile-image': "url('/img/service/mobile/service_banner.webp')",
+  '--banner-desktop-image': "url('/img/service/desktop/service_banner.webp')"
+}
 
 useSeoMeta(
   getPageSeo({
@@ -75,7 +79,8 @@ const faqItems = [
 <template>
   <!-- Banner -->
   <section
-    class="relative bg-[url('/img/service/mobile/service_banner.webp')] bg-cover bg-center px-3 py-10 text-center text-neutral-0 md:bg-[url('/img/service/desktop/service_banner.webp')] md:py-20"
+    class="relative bg-[image:var(--banner-mobile-image)] bg-cover bg-center px-3 py-10 text-center text-neutral-0 md:bg-[image:var(--banner-desktop-image)] md:py-20"
+    :style="bannerStyle"
   >
     <!-- 遮罩 -->
     <div class="absolute inset-0 bg-dark-40a"></div>

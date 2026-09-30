@@ -1,5 +1,6 @@
 import { readdirSync } from 'node:fs'
 import { basename, extname } from 'node:path'
+import tailwindcss from '@tailwindcss/vite'
 
 const getBlogPrerenderRoutes = () => {
   try {
@@ -42,7 +43,27 @@ export default defineNuxtConfig({
     }
   },
 
-  modules: ['@nuxt/content', '@nuxt/icon', '@nuxtjs/tailwindcss'],
+  css: ['~/assets/css/main.css'],
+  vite: {
+    plugins: [tailwindcss()]
+  },
+  modules: ['@nuxt/content', '@nuxt/icon'],
+
+  icon: {
+    provider: 'none',
+    clientBundle: {
+      icons: [
+        'lucide:chevron-down',
+        'lucide:instagram',
+        'lucide:mail-open',
+        'lucide:share-2',
+        'simple-icons:github',
+        'simple-icons:instagram',
+        'simple-icons:line',
+        'simple-icons:linkedin'
+      ]
+    }
+  },
 
   content: {
     // 使用 Node.js 內建 node:sqlite 作為建置期資料庫，取代已棄用的 better-sqlite3
