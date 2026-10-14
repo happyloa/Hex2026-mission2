@@ -60,6 +60,8 @@ npm run typecheck
 npm audit
 ```
 
+目前仍有上游尚未修補的依賴漏洞，詳見[相依套件安全狀態與升級限制](./docs/dependency-security.md)。
+
 產生靜態網站（輸出於 `.output/public`）：
 
 ```sh
