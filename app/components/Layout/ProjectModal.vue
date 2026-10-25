@@ -49,17 +49,17 @@ onBeforeUnmount(() => {
     >
       <div v-if="open && project" class="fixed inset-0 z-[100]">
         <!-- 遮罩 -->
-        <div class="absolute inset-0 bg-dark-60a" @click="$emit('close')"></div>
+        <div class="bg-dark-60a absolute inset-0" @click="$emit('close')"></div>
 
         <!-- modal 內容 -->
         <div
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-project-title"
-          class="absolute left-1/2 top-1/2 mx-auto max-h-[85dvh] w-[calc(100%-24px)] max-w-[1076px] -translate-x-1/2 -translate-y-1/2 overflow-y-auto md:max-h-[90vh]"
+          class="absolute top-1/2 left-1/2 mx-auto max-h-[85dvh] w-[calc(100%-24px)] max-w-[1076px] -translate-x-1/2 -translate-y-1/2 overflow-y-auto md:max-h-[90vh]"
         >
           <!-- 關閉 modal 的按鈕 -->
-          <div class="sticky top-0 flex justify-end bg-neutral-0 px-3 py-2 md:px-6 md:py-3">
+          <div class="bg-neutral-0 sticky top-0 flex justify-end px-3 py-2 md:px-6 md:py-3">
             <button
               ref="closeButton"
               class="size-11 p-3 md:size-12"
@@ -88,7 +88,7 @@ onBeforeUnmount(() => {
           ></div>
           <!-- 專案介紹 -->
           <div
-            class="space-y-5 bg-neutral-0 px-3 py-6 text-paragraph-small md:space-y-6 md:p-10 md:text-paragraph-medium"
+            class="bg-neutral-0 text-paragraph-small md:text-paragraph-medium space-y-5 px-3 py-6 md:space-y-6 md:p-10"
           >
             <!-- 標籤與時間 -->
             <div class="flex flex-wrap justify-between gap-2">
@@ -101,7 +101,10 @@ onBeforeUnmount(() => {
             </div>
             <!-- 名稱與描述 -->
             <div class="text-balance">
-              <h2 id="modal-project-title" class="mb-2 text-heading-small md:mb-3 md:text-heading-medium">
+              <h2
+                id="modal-project-title"
+                class="text-heading-small md:text-heading-medium mb-2 md:mb-3"
+              >
                 {{ project.title }}
               </h2>
               <p>{{ project.description }}</p>
@@ -121,7 +124,13 @@ onBeforeUnmount(() => {
           </div>
           <!-- 專案完整截圖 -->
           <section class="bg-primary-50 px-3 py-10 md:py-20">
-            <img :src="modal.image" :alt="project.title" class="mx-auto block" />
+            <CommonSiteImage
+              :src="modal.image"
+              :alt="project.title"
+              class="mx-auto block h-auto max-w-full"
+              loading="eager"
+              sizes="(min-width: 1076px) 996px, calc(100vw - 48px)"
+            />
           </section>
         </div>
       </div>

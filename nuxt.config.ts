@@ -1,19 +1,45 @@
-import { readdirSync } from 'node:fs'
+import { readdirSync, readFileSync } from 'node:fs'
 import { basename, extname } from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
+import { prepareSiteFont } from './build/fonts'
 
 const getBlogPrerenderRoutes = () => {
   try {
     // 由 content/blog 自動產生文章靜態路由，新增 Markdown 時不用同步維護設定檔。
     return readdirSync(new URL('./content/blog/', import.meta.url))
       .filter((file) => file.endsWith('.md'))
-      .map((file) => `/blog/${basename(file, extname(file))}`)
+      .map((file) => `/blog/${basename(file, extname(file))}/`)
   } catch {
     return []
   }
 }
 
 const blogPrerenderRoutes = getBlogPrerenderRoutes()
+
+const getFontGlyphs = () => {
+  const readText = (directory: URL): string =>
+    readdirSync(directory, { withFileTypes: true })
+      .map((entry) => {
+        const file = new URL(entry.name + (entry.isDirectory() ? '/' : ''), directory)
+        if (entry.isDirectory()) return readText(file)
+        return /\.(vue|ts|css|md)$/.test(entry.name) ? readFileSync(file, 'utf8') : ''
+      })
+      .join('')
+
+  const ascii = Array.from({ length: 95 }, (_, index) => String.fromCharCode(index + 32)).join('')
+  return [
+    ...new Set(
+      ascii +
+        readText(new URL('./app/', import.meta.url)) +
+        readText(new URL('./content/', import.meta.url))
+    )
+  ]
+    .filter((character) => character.codePointAt(0)! >= 32)
+    .sort()
+    .join('')
+}
+
+const fontSource = await prepareSiteFont(getFontGlyphs(), new URL('./', import.meta.url))
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -25,15 +51,7 @@ export default defineNuxtConfig({
     head: {
       htmlAttrs: {
         lang: 'zh-Hant-TW'
-      },
-      link: [
-        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        {
-          rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&display=swap'
-        }
-      ]
+      }
     }
   },
 
@@ -47,7 +65,23 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()]
   },
-  modules: ['@nuxt/content', '@nuxt/icon'],
+  modules: ['@nuxt/content', '@nuxt/icon', '@nuxt/fonts'],
+
+  fonts: {
+    processCSSVariables: true,
+    experimental: { disableLocalFallbacks: true },
+    families: [
+      {
+        name: 'Noto Sans TC',
+        src: fontSource,
+        weight: '500 700',
+        style: 'normal',
+        display: 'swap',
+        preload: true
+      },
+      { name: 'Noto Sans', provider: 'none' }
+    ]
+  },
 
   icon: {
     provider: 'none',
@@ -79,7 +113,11 @@ export default defineNuxtConfig({
       // rename 並非原子操作，會間歇性丟出 EPERM。序列化可穩定避免此問題，
       // 對此規模的網站（20 餘頁）幾乎沒有建置時間影響。
       concurrency: 1,
-      routes: blogPrerenderRoutes
+      routes: [
+        ...blogPrerenderRoutes,
+        '/api/blog/index.json',
+        ...blogPrerenderRoutes.map((route) => `/api${route.slice(0, -1)}.json`)
+      ]
     }
   }
 })

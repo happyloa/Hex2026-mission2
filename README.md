@@ -2,248 +2,72 @@
 
 # 六角 2026 30 天軟體工程師體驗營 - 個人作品網站版型
 
-此專案為六角學院 2026 軟體工程師體驗營任務作品。網站以個人作品集為主軸，包含首頁、服務項目、專案作品、部落格列表與單篇文章頁，可作為個人品牌網站或作品展示版型使用。
+六角學院 2026 軟體工程師體驗營任務作品，包含首頁、服務項目、專案作品、部落格列表與文章頁。
 
 - [設計稿](https://www.figma.com/design/p9J0EAASQNwGpiz7NuJaxi/2026ver.-%E9%AB%94%E9%A9%97%E7%87%9F%E8%A8%AD%E8%A8%88%E7%A8%BF--%E8%A8%AD%E8%A8%88%E5%B8%AB%E7%B7%A8%E8%BC%AF%E6%AA%94-?node-id=11107-13669&p=f&t=m9EDgVEp1OwvunCL-0)
 - [作品展示](https://hex2026-mission2.pages.dev/)
 
-## 使用技術
+使用 Nuxt 4、Vue 3、TypeScript、Tailwind CSS 4、Nuxt Content、Nuxt Icon、Nuxt Fonts 與 Swiper。
 
-- [Nuxt 4](https://nuxt.com/)
-- [Vue 3](https://vuejs.org/)
-- [Tailwind CSS 4](https://tailwindcss.com/)（Vite 外掛）
-- [Nuxt Content](https://content.nuxt.com/)
-- [Nuxt Icon](https://nuxt.com/modules/icon)
-- [Swiper](https://swiperjs.com/)
+## 開始開發
 
-## 開發環境建議
-
-建議使用 [VS Code](https://code.visualstudio.com/) 搭配以下擴充套件：
-
-- [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
-- [Nuxtr](https://marketplace.visualstudio.com/items?itemName=Nuxtr.nuxtr-vscode)
-- [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
-- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-
-## 快速開始
-
-使用 Node.js 24.19.0（見 `.nvmrc`）複製專案並安裝套件：
+使用 Node.js 24.19.0（見 [.nvmrc](./.nvmrc)）：
 
 ```sh
 git clone https://github.com/happyloa/Hex2026-mission2.git
 cd Hex2026-mission2
 npm ci
-```
-
-啟動開發伺服器：
-
-```sh
 npm run dev
 ```
 
-在瀏覽器開啟：
+開啟 <http://localhost:3000/>。VS Code 擴充套件建議見 [.vscode/extensions.json](./.vscode/extensions.json)。
 
-```txt
-http://localhost:3000/
-```
+| 指令                  | 用途                               |
+| --------------------- | ---------------------------------- |
+| `npm run typecheck`   | 型別檢查                           |
+| `npm run build`       | 建立 Nuxt 伺服器版本               |
+| `npm run preview`     | 預覽建置結果                       |
+| `npm run generate`    | 產生靜態網站至 `.output/public`    |
+| `npm run test:static` | 檢查靜態輸出的文章資料、網址與圖片 |
+| `npm audit`           | 掃描相依套件漏洞                   |
 
-建立正式版本：
+首次安裝或建置需連線準備 Noto Sans TC，後續由本站提供；每次建置會依 `app` 與 `content` 的文字重新裁切成單一可變字型，並產生響應式圖片。字型來源與裁切流程見 [build/fonts.ts](./build/fonts.ts)，授權見 [OFL.txt](./public/fonts/OFL.txt)。
 
-```sh
-npm run build
-```
+目前 `npm audit` 仍會列出 Nuxt Content 使用的 Zod 3 與 node-forge 上游問題。TypeScript 維持 Vue 工具鏈需要的 6.x，Node 型別維持 24.x；不要直接以 `npm audit fix --force` 降版框架。
 
-執行型別檢查與套件漏洞掃描：
+## 路由與資料
 
-```sh
-npm run typecheck
-npm audit
-```
+| 頁面     | 路徑           | 資料來源                                       |
+| -------- | -------------- | ---------------------------------------------- |
+| 首頁     | `/`            | 服務、前三個專案與最新三篇文章                 |
+| 服務項目 | `/service`     | [app/data/services.ts](./app/data/services.ts) |
+| 專案作品 | `/project`     | [app/data/projects.ts](./app/data/projects.ts) |
+| 文章列表 | `/blog`        | [content/blog](./content/blog)                 |
+| 單篇文章 | `/blog/:blog/` | 對應檔名的 Markdown                            |
 
-目前仍有上游尚未修補的依賴漏洞，詳見[相依套件安全狀態與升級限制](./docs/dependency-security.md)。
+- `/service?service=frontend`：選取服務流程。
+- `/project?tag=網頁設計`：篩選專案。
+- `/blog?tag=UIUX+設計`：篩選文章。
 
-產生靜態網站（輸出於 `.output/public`）：
+新增文章時，在 `content/blog` 建立 Markdown；檔名即網址 slug。必要欄位見 [content.config.ts](./content.config.ts)，圖文區塊使用 [BlogFigure.vue](./app/components/content/BlogFigure.vue)。建置會自動產生文章路由及 `/api/blog/*.json`，瀏覽器使用這些靜態資料進行導覽與篩選。
 
-```sh
-npm run generate
-```
+新增服務或專案請修改對應資料檔，欄位定義見 [app/types/index.ts](./app/types/index.ts)。圖片放在 `public/img`；[modules/site-images.ts](./modules/site-images.ts) 會產生尺寸資料與較小的 WebP 版本，原始圖片不會被覆寫。文章內文圖片以原始尺寸為顯示上限。
 
-## 頁面路徑
-
-```txt
-app/pages
-├── index.vue                 首頁（/）
-├── service.vue               服務項目（/service）
-├── project.vue               專案作品（/project）
-└── blog
-    ├── index.vue             部落格列表（/blog）
-    └── [blog].vue            單篇文章（/blog/:blog）
-```
-
-常用網址參數：
-
-- `/service?service=graphic`：切換服務流程項目
-- `/project?tag=網頁設計`：篩選專案作品標籤
-- `/blog?tag=UIUX+設計`：篩選部落格文章標籤
-
-## 專案結構
-
-```txt
-app
-├── assets/css/main.css       Tailwind 4 主題色、字級與全域樣式
-├── components
-│   ├── Atom                  基礎元件，例如按鈕
-│   ├── Common                可跨頁共用的卡片與 fallback
-│   ├── Layout                版面區塊，例如 Banner、Modal、Subscription
-│   └── content               Nuxt Content 文章用元件
-├── data                      服務與專案共用資料
-├── pages                     頁面路由
-└── utils                     SEO 與共用工具
-```
-
-```txt
-content
-└── blog                      Nuxt Content 文章 Markdown
-```
-
-```txt
-public
-├── favicon.ico
-├── thumbnail.webp
-└── img                       網站圖片與 OG 圖片
-```
-
-## 發布新文章
-
-所有文章放在 `content/blog`，檔名會成為文章網址。例如：
-
-```txt
-content/blog/my-new-article.md
-```
-
-對應網址會是：
-
-```txt
-/blog/my-new-article
-```
-
-文章 frontmatter 需要包含以下欄位：
-
-```md
----
-title: 新文章標題
-description: 文章摘要，會用於 SEO description 與文章列表
-date: 2026-01-01
-tags:
-  - UIUX 設計
-  - 前端技術
-image: /img/blog/blog_1.webp
-views: 110
-shares: 2
----
-```
-
-文章圖片建議放在 `public/img/blog`，並用絕對路徑引用：
-
-```md
-![圖片替代文字](/img/blog/blog_content_1.webp)
-```
-
-如果要使用客製化圖文區塊，可使用 `app/components/content/BlogFigure.vue`：
-
-```txt
-::blog-figure
----
-src: /img/blog/blog_content_1.webp
-alt: 圖片替代文字
-caption: 圖片說明文字
----
-::
-```
-
-新增 Markdown 後不需要手動修改 `nuxt.config.ts`。專案會自動讀取 `content/blog/*.md` 並產生對應的部落格預渲染路由。
-
-## 新增服務項目
-
-服務資料集中在 `app/data/services.ts`。新增服務時請補上：
-
-- `key`：網址參數使用，例如 `graphic`
-- `eyebrow`：英文小標
-- `title`：服務名稱
-- `summary`：首頁服務卡片摘要
-- `iconPath`：SVG path
-- `steps`：服務流程四個步驟
-
-首頁服務卡片與服務頁流程都會從這份資料取用；如果要從其他頁面連到特定服務，只要帶上 `service` 參數即可：
-
-```txt
-/service?service=frontend
-```
-
-## 新增專案作品
-
-專案資料集中在 `app/data/projects.ts`。新增專案時請補上：
-
-- `id`
-- `images.mobile`
-- `images.desktop`
-- `datetime`
-- `date`
-- `tags`
-- `title`
-- `description`
-- `modal.image`
-- `modal.content`
-- `modal.designPrinciple`
-- `modal.development`
-
-圖片建議放在：
-
-```txt
-public/img/project/mobile
-public/img/project/desktop
-```
-
-首頁目前會取前三筆專案資料，專案列表頁會顯示全部專案並依 `tags` 篩選。
-專案卡片與彈出視窗都會使用這份資料；若要替不同專案更新彈出視窗內容，可直接調整該筆資料的 `modal` 欄位。
-
-## 表單與社群連結
-
-頁尾聯絡表單與訂閱表單目前是前端展示用，使用 `@submit.prevent` 阻止預設送出，尚未串接後端或第三方表單服務。若要正式使用，可選擇：
-
-- 建立 Nuxt server route 串接 Email 或資料庫
-- 串接 Formspree、Netlify Forms 等表單服務
-- 串接自有 API
-
-頁尾社群連結中部分網址目前是 `#` 佔位，公開使用前請替換成自己的 Instagram、LINE、LinkedIn 或 GitHub 連結。
+全域配色、字級與樣式位於 [app/assets/css/main.css](./app/assets/css/main.css)，SEO 工具位於 [app/utils/seo.ts](./app/utils/seo.ts)。Markdown 已排除於 Prettier，避免 MDC 區塊被改寫。
 
 ## 部署
 
-此作品目前以靜態站部署。Cloudflare Pages 的建置指令為 `npm run generate`，發佈目錄為 `.output/public`。需要 Nuxt 伺服器的部署環境則可執行：
+Cloudflare Pages 使用：
 
-```sh
-npm run build
-```
+- 建置指令：`npm run generate`
+- 發佈目錄：`.output/public`
 
-此專案的圖片路徑以 `/img/` 開頭，預設部署在網域根目錄。若要部署到子路徑，除設定 base URL 外，也需調整這些圖片參照：
+部署至其他網域時，設定 `NUXT_PUBLIC_SITE_URL=https://your-domain.com`，供 OG 與分享網址使用。預設部署於網域根目錄；若使用 `NUXT_APP_BASE_URL=/your-repo-name/`，仍需檢查既有 `/img/` 圖片參照是否符合子路徑。
 
-```sh
-NUXT_APP_BASE_URL=/your-repo-name/
-```
+[public/_headers](./public/_headers) 設定安全標頭與資源快取。Nuxt Content 建置期使用 Node.js 內建 SQLite；靜態頁面由預渲染 HTML 與 JSON 提供。Nuxt DevTools 僅在開發環境啟用。
 
-SEO 的 OG URL 與分享網址預設使用作品展示網址。若部署到自己的網域，請設定正式站台 origin：
+## 展示功能限制
 
-```sh
-NUXT_PUBLIC_SITE_URL=https://your-domain.com
-```
-
-Cloudflare Pages 會讀取 `public/_headers`，目前已設定基本安全標頭與靜態資源快取規則。
-
-## 備註
-
-- `nuxt.config.ts` 的 Nuxt DevTools 僅在開發環境啟用。
-- Tailwind 4 使用 `@tailwindcss/vite`；設計 token 寫在 `app/assets/css/main.css` 的 `@theme`，不需要舊版 `tailwind.config.ts`。
-- Nuxt Content 建置期使用 Node.js 內建 `node:sqlite`；`@nuxt/icon` 使用本機圖示集並將所需圖示打包進靜態網站。
-- 網站字型使用 Google Fonts 載入 Noto Sans TC 500 / 700，並保留系統字型 fallback。
-- Markdown 文章已加入 `.prettierignore`，避免 MDC 區塊被格式化後無法正確渲染。
-- 網站已設定 `zh-Hant-TW` 語系、頁面 title、description 與 OG image。
+- 聯絡與訂閱表單使用 `@submit.prevent`，尚未串接後端。
+- Instagram、LINE、LinkedIn 等部分社群連結仍是 `#` 佔位。
+- 部落格的換頁按鈕是展示用，尚未實作分頁。

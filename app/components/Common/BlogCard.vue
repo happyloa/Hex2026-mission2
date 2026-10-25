@@ -8,7 +8,8 @@ const props = defineProps({
     type: String,
     default: 'list',
     validator: (value) => ['list', 'related'].includes(value)
-  }
+  },
+  eager: { type: Boolean, default: false }
 })
 
 const formattedDate = computed(() => {
@@ -37,12 +38,23 @@ const imageClass = computed(() => {
 </script>
 
 <template>
-  <NuxtLink :to="post.path">
+  <NuxtLink :to="getArticlePath(post.path)">
     <article :class="articleClass">
-      <img :src="post.image" :alt="post.title" class="w-full object-cover" :class="imageClass" />
+      <CommonSiteImage
+        :src="post.image"
+        :alt="post.title"
+        :loading="eager ? 'eager' : 'lazy'"
+        :sizes="
+          variant === 'related'
+            ? '(min-width: 768px) 416px, 72vw'
+            : '(min-width: 1024px) 526px, (min-width: 768px) calc(100vw - 244px), calc(100vw - 24px)'
+        "
+        class="w-full object-cover"
+        :class="imageClass"
+      />
       <div class="space-y-2 md:space-y-3">
         <!-- 文章標籤 -->
-        <ul class="tag-list flex flex-wrap text-paragraph-small md:text-paragraph-medium">
+        <ul class="tag-list text-paragraph-small md:text-paragraph-medium flex flex-wrap">
           <li v-for="tag in post.tags" :key="tag">{{ tag }}</li>
         </ul>
         <!-- 標題 -->
@@ -54,7 +66,7 @@ const imageClass = computed(() => {
         </component>
         <!-- meta -->
         <div
-          class="flex flex-wrap justify-between gap-2 whitespace-nowrap text-paragraph-x-small md:text-paragraph-small lg:gap-6"
+          class="text-paragraph-x-small md:text-paragraph-small flex flex-wrap justify-between gap-2 whitespace-nowrap lg:gap-6"
         >
           <time :datetime="post.date">{{ formattedDate }}</time>
           <!-- 觀看數與分享數 -->

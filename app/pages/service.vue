@@ -79,15 +79,15 @@ const faqItems = [
 <template>
   <!-- Banner -->
   <section
-    class="relative bg-[image:var(--banner-mobile-image)] bg-cover bg-center px-3 py-10 text-center text-neutral-0 md:bg-[image:var(--banner-desktop-image)] md:py-20"
+    class="text-neutral-0 relative bg-[image:var(--banner-mobile-image)] bg-cover bg-center px-3 py-10 text-center md:bg-[image:var(--banner-desktop-image)] md:py-20"
     :style="bannerStyle"
   >
     <!-- 遮罩 -->
-    <div class="absolute inset-0 bg-dark-40a"></div>
+    <div class="bg-dark-40a absolute inset-0"></div>
     <!-- 內容 -->
     <div class="relative z-10 mx-auto max-w-[1076px]">
-      <p class="mb-1 text-heading-x-large md:mb-2 lg:text-heading-xxx-large">SERVICES</p>
-      <h1 class="mb-6 text-heading-x-large md:mb-10 lg:text-heading-xx-large">服務項目</h1>
+      <p class="text-heading-x-large lg:text-heading-xxx-large mb-1 md:mb-2">SERVICES</p>
+      <h1 class="text-heading-x-large lg:text-heading-xx-large mb-6 md:mb-10">服務項目</h1>
       <ol class="grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-4">
         <li v-for="service in serviceItems" :key="service.key">
           <button
@@ -117,7 +117,7 @@ const faqItems = [
     </div>
   </section>
   <!-- 服務流程區塊 -->
-  <main class="bg-primary px-3 py-10 text-neutral-0 md:py-20">
+  <main class="bg-primary text-neutral-0 px-3 py-10 md:py-20">
     <div class="mx-auto flex max-w-[1076px] flex-col justify-between gap-6 md:flex-row">
       <!-- 左側標題 -->
       <div class="text-center md:max-w-[416px] md:text-start">
@@ -127,7 +127,7 @@ const faqItems = [
       <!-- 右側步驟 -->
       <div class="flex-1 md:max-w-[636px]">
         <ol
-          class="relative space-y-10 before:absolute before:bottom-16 before:left-[18px] before:top-6 before:w-[0.5px] before:bg-neutral-0 md:before:bottom-20 md:before:left-5 md:before:top-5"
+          class="before:bg-neutral-0 relative space-y-10 before:absolute before:top-6 before:bottom-16 before:left-[18px] before:w-[0.5px] md:before:top-5 md:before:bottom-20 md:before:left-5"
         >
           <li
             v-for="step in serviceSteps"
@@ -135,7 +135,7 @@ const faqItems = [
             class="relative grid grid-cols-[36px_1fr] gap-6 md:grid-cols-[40px_1fr]"
           >
             <span
-              class="z-10 flex size-9 items-center justify-center rounded-full bg-neutral-0 text-neutral md:size-10"
+              class="bg-neutral-0 text-neutral z-10 flex size-9 items-center justify-center rounded-full md:size-10"
             >
               {{ step.id }}
             </span>
@@ -163,15 +163,16 @@ const faqItems = [
         <li>
           <article>
             <NuxtLink to="/project" class="group space-y-2 md:space-y-3">
-              <img
+              <CommonSiteImage
                 src="/img/service/service_case_1.webp"
                 alt="品牌視覺與電商整合，多肉植物品牌電商建置"
                 class="block max-h-[205px] w-full object-cover md:max-h-[305px]"
+                sizes="(min-width: 1296px) 636px, (min-width: 640px) 50vw, calc(100vw - 24px)"
               />
               <!-- 標籤與時間 -->
               <div class="flex flex-col-reverse justify-between gap-1 md:flex-row md:items-center">
                 <ul
-                  class="flex flex-wrap text-paragraph-small md:text-paragraph-medium [&>li:not(:last-child)::after]:mx-0.5 [&>li:not(:last-child)::after]:content-['·'] md:[&>li:not(:last-child)::after]:mx-1"
+                  class="text-paragraph-small md:text-paragraph-medium flex flex-wrap [&>li:not(:last-child)::after]:mx-0.5 [&>li:not(:last-child)::after]:content-['·'] md:[&>li:not(:last-child)::after]:mx-1"
                 >
                   <li>平面設計</li>
                   <li>網頁設計</li>
@@ -185,12 +186,12 @@ const faqItems = [
               </h3>
               <!-- 描述與 CTA 按鈕 -->
               <div class="flex gap-2 md:gap-5">
-                <p class="flex-1 text-paragraph-small md:text-paragraph-medium">
+                <p class="text-paragraph-small md:text-paragraph-medium flex-1">
                   從品牌識別設計到 RWD 響應式網站開發，打造療癒系植栽購物體驗
                 </p>
                 <span
                   aria-hidden="true"
-                  class="flex size-11 items-center justify-center rounded-full bg-neutral transition group-hover:bg-neutral-900 md:size-12"
+                  class="bg-neutral flex size-11 items-center justify-center rounded-full transition group-hover:bg-neutral-900 md:size-12"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -209,15 +210,16 @@ const faqItems = [
         <li>
           <article>
             <NuxtLink to="/project" class="group space-y-2 md:space-y-3">
-              <img
+              <CommonSiteImage
                 src="/img/service/service_case_2.webp"
                 alt="數位產品 UI/UX 設計，個人化財務視覺化軟體"
                 class="block max-h-[205px] w-full object-cover md:max-h-[305px]"
+                sizes="(min-width: 1296px) 636px, (min-width: 640px) 50vw, calc(100vw - 24px)"
               />
               <!-- 標籤與時間 -->
               <div class="flex flex-col-reverse justify-between gap-1 md:flex-row md:items-center">
                 <ul
-                  class="flex flex-wrap text-paragraph-small md:text-paragraph-medium [&>li:not(:last-child)::after]:mx-0.5 [&>li:not(:last-child)::after]:content-['·'] md:[&>li:not(:last-child)::after]:mx-1"
+                  class="text-paragraph-small md:text-paragraph-medium flex flex-wrap [&>li:not(:last-child)::after]:mx-0.5 [&>li:not(:last-child)::after]:content-['·'] md:[&>li:not(:last-child)::after]:mx-1"
                 >
                   <li>平面設計</li>
                   <li>網頁設計</li>
@@ -232,12 +234,12 @@ const faqItems = [
               </h3>
               <!-- 描述與 CTA 按鈕 -->
               <div class="flex gap-2 md:gap-5">
-                <p class="flex-1 text-paragraph-small md:text-paragraph-medium">
+                <p class="text-paragraph-small md:text-paragraph-medium flex-1">
                   運用數據視覺化邏輯，將複雜的財務數據轉化為直覺的個人化操作介面
                 </p>
                 <span
                   aria-hidden="true"
-                  class="flex size-11 items-center justify-center rounded-full bg-neutral transition group-hover:bg-neutral-900 md:size-12"
+                  class="bg-neutral flex size-11 items-center justify-center rounded-full transition group-hover:bg-neutral-900 md:size-12"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -268,11 +270,11 @@ const faqItems = [
         <details
           v-for="faq in faqItems"
           :key="faq.id"
-          class="group border-b border-primary [&::details-content]:block [&::details-content]:overflow-hidden [&::details-content]:[block-size:0] [&::details-content]:[transition:block-size_300ms_ease,content-visibility_300ms_ease_allow-discrete] [&[open]::details-content]:[block-size:auto]"
+          class="group border-primary border-b [&::details-content]:block [&::details-content]:overflow-hidden [&::details-content]:[block-size:0] [&::details-content]:[transition:block-size_300ms_ease,content-visibility_300ms_ease_allow-discrete] [&[open]::details-content]:[block-size:auto]"
           :open="faq.open"
         >
           <summary
-            class="grid cursor-pointer grid-cols-[32px_1fr_24px] gap-3 p-4 text-heading-xxx-small group-open:pb-2 md:items-center md:gap-4 md:p-6 md:text-heading-xx-small md:group-open:pb-4"
+            class="text-heading-xxx-small md:text-heading-xx-small grid cursor-pointer grid-cols-[32px_1fr_24px] gap-3 p-4 group-open:pb-2 md:items-center md:gap-4 md:p-6 md:group-open:pb-4"
           >
             <span class="shrink-0">{{ String(faq.id).padStart(2, '0') }}</span>
             <span>{{ faq.title }}</span>
@@ -282,7 +284,7 @@ const faqItems = [
             />
           </summary>
           <p
-            class="grid grid-cols-[32px_1fr_24px] gap-3 px-4 pb-4 text-paragraph-small md:gap-4 md:px-6 md:pb-6 md:text-paragraph-medium"
+            class="text-paragraph-small md:text-paragraph-medium grid grid-cols-[32px_1fr_24px] gap-3 px-4 pb-4 md:gap-4 md:px-6 md:pb-6"
           >
             <span class="col-start-2">
               {{ faq.content }}

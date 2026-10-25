@@ -86,25 +86,22 @@ const removeScrollListener = () => {
 }
 
 // 監聽路由變化，若切換到部落格單頁則註冊捲動接聽，切出則移除
-watch(
-  isBlogSinglePage,
-  (isSingle) => {
-    if (isSingle) {
-      if (import.meta.client) {
-        nextTick(() => {
-          addScrollListener()
-        })
-      }
-    } else {
-      removeScrollListener()
+watch(isBlogSinglePage, (isSingle) => {
+  if (isSingle) {
+    if (import.meta.client) {
+      nextTick(() => {
+        addScrollListener()
+      })
     }
+  } else {
+    removeScrollListener()
   }
-)
+})
 
 onMounted(() => {
   // 讓鍵盤使用者可以用 Esc 關閉已打開的手機選單。
   window.addEventListener('keydown', handleKeydown)
-  
+
   // 若初始進入即為部落格單頁，則啟動捲動監聽
   if (isBlogSinglePage.value) {
     addScrollListener()
@@ -120,13 +117,22 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <header class="sticky top-0 z-50 bg-primary-50 px-3 py-2 md:py-3">
+  <header class="bg-primary-50 sticky top-0 z-50 px-3 py-2 md:py-3">
     <nav class="mx-auto flex max-w-[1296px] items-center justify-between">
       <!-- logo -->
       <NuxtLink to="/" aria-label="回到首頁" @click="closeMenu">
         <picture>
-          <source media="(min-width: 768px)" srcset="/img/common/desktop/logo.svg" />
-          <img src="/img/common/mobile/logo.svg" alt="Nelson 網站 logo" />
+          <source
+            media="(min-width: 768px)"
+            srcset="/img/common/desktop/logo.svg"
+            width="140"
+            height="40"
+          />
+          <CommonSiteImage
+            src="/img/common/mobile/logo.svg"
+            alt="Nelson 網站 logo"
+            loading="eager"
+          />
         </picture>
       </NuxtLink>
 
@@ -144,7 +150,7 @@ onBeforeUnmount(() => {
 
       <!-- 手機版選單按鈕 -->
       <button
-        class="flex size-11 items-center justify-center rounded-full border-neutral md:hidden"
+        class="border-neutral flex size-11 items-center justify-center rounded-full md:hidden"
         :class="{ border: isMenuOpen }"
         type="button"
         :aria-expanded="isMenuOpen"
@@ -154,9 +160,9 @@ onBeforeUnmount(() => {
       >
         <!-- 漢堡圖示 -->
         <div class="flex size-5 flex-col justify-center gap-[5px]" aria-hidden="true">
-          <div class="h-px bg-neutral"></div>
-          <div class="h-px bg-neutral"></div>
-          <div class="h-px bg-neutral"></div>
+          <div class="bg-neutral h-px"></div>
+          <div class="bg-neutral h-px"></div>
+          <div class="bg-neutral h-px"></div>
         </div>
       </button>
     </nav>
@@ -172,7 +178,7 @@ onBeforeUnmount(() => {
     >
       <div
         v-if="isMenuOpen"
-        class="fixed inset-0 top-16 z-40 bg-dark-60a md:hidden"
+        class="bg-dark-60a fixed inset-0 top-16 z-40 md:hidden"
         aria-hidden="true"
         @click="closeMenu"
       ></div>
@@ -190,13 +196,13 @@ onBeforeUnmount(() => {
       <nav
         v-if="isMenuOpen"
         id="mobile-menu"
-        class="absolute left-0 right-0 top-full z-50 bg-primary-50 py-3 md:hidden"
+        class="bg-primary-50 absolute top-full right-0 left-0 z-50 py-3 md:hidden"
       >
         <ul class="flex flex-col items-center gap-3">
           <li v-for="link in navLinks" :key="link.to">
             <NuxtLink
               :to="link.to"
-              class="block px-3 py-1 text-label-small transition hover:text-primary"
+              class="text-label-small hover:text-primary block px-3 py-1 transition"
               active-class="text-primary"
               @click="closeMenu"
             >
@@ -205,7 +211,7 @@ onBeforeUnmount(() => {
           </li>
           <li>
             <a
-              class="block px-3 py-1 text-label-small transition hover:text-primary"
+              class="text-label-small hover:text-primary block px-3 py-1 transition"
               href="#footer"
               @click="closeMenu"
             >
@@ -218,7 +224,7 @@ onBeforeUnmount(() => {
     <!-- 閱讀進度條 -->
     <div
       v-if="isBlogSinglePage"
-      class="absolute bottom-0 left-0 h-1 bg-primary transition-all duration-75"
+      class="bg-primary absolute bottom-0 left-0 h-1 transition-all duration-75"
       :style="{ width: `${scrollPercent}%` }"
     ></div>
   </header>

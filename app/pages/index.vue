@@ -78,24 +78,14 @@ const closeProjectModal = () => {
 }
 
 // 最新文章
-const { data: latestPosts, refresh: refreshLatestPosts } = await useAsyncData(
-  'home-latest-posts',
-  () => queryCollection('blog').order('date', 'DESC').limit(3).all()
-)
+const { data: posts } = await useBlogIndex()
+const latestBlogPosts = computed(() => posts.value.slice(0, 3))
 
-const latestBlogPosts = computed(() => latestPosts.value ?? [])
-
-onMounted(async () => {
+onMounted(() => {
   // 和 Tailwind 的 lg 斷點一致，視差效果只在電腦版寬度生效。
   desktopMediaQuery = window.matchMedia('(min-width: 1024px)')
   desktopMediaQuery.addEventListener('change', syncHeroParallax)
   syncHeroParallax()
-
-  // 正式環境重新整理時，Nuxt Content 的 payload 偶爾會在 hydration 前後不同步；
-  // 若首頁沒有拿到預渲染資料，就在 client 端補抓一次最新文章。
-  if (!latestPosts.value?.length) {
-    await refreshLatestPosts()
-  }
 })
 
 onBeforeUnmount(() => {
@@ -105,148 +95,160 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <!-- 首頁大圖與自我介紹 -->
-  <section
-    ref="heroSection"
-    class="relative overflow-hidden bg-primary-50 px-3 pb-6 sm:pb-0"
-    @pointermove="updateHeroParallax"
-    @pointerleave="resetHeroParallax"
-  >
-    <div class="mx-auto flex max-w-[1296px] flex-col-reverse gap-6 sm:flex-row sm:items-center">
-      <!-- 標題、描述、按鈕 -->
-      <div class="relative z-20 min-w-0 flex-1 sm:max-w-[526px]">
-        <h1 class="mb-3 text-heading-x-large sm:mb-6 lg:text-heading-xxx-large">
-          Hello<br />
-          I'm Nelson
-        </h1>
-        <p class="mb-8 text-paragraph-small sm:text-paragraph-medium md:mb-[60px]">
-          我是一個擁有 10 年經驗的 UIUX 設計師 和 前端工程師<br />喜歡把美學和程式結合，打造一個又一個精美的網頁設計！
-        </p>
-        <div class="flex gap-3 sm:gap-6">
-          <AtomButton to="#footer">與我聯絡</AtomButton>
-          <AtomButton to="/project" variant="outline">我的履歷</AtomButton>
+  <main>
+    <!-- 首頁大圖與自我介紹 -->
+    <section
+      ref="heroSection"
+      class="bg-primary-50 relative overflow-hidden px-3 pb-6 sm:pb-0"
+      @pointermove="updateHeroParallax"
+      @pointerleave="resetHeroParallax"
+    >
+      <div class="mx-auto flex max-w-[1296px] flex-col-reverse gap-6 sm:flex-row sm:items-center">
+        <!-- 標題、描述、按鈕 -->
+        <div class="relative z-20 min-w-0 flex-1 sm:max-w-[526px]">
+          <h1 class="text-heading-x-large lg:text-heading-xxx-large mb-3 sm:mb-6">
+            Hello<br />
+            I'm Nelson
+          </h1>
+          <p class="text-paragraph-small sm:text-paragraph-medium mb-8 md:mb-[60px]">
+            我是一個擁有 10 年經驗的 UIUX 設計師 和 前端工程師<br />喜歡把美學和程式結合，打造一個又一個精美的網頁設計！
+          </p>
+          <div class="flex gap-3 sm:gap-6">
+            <AtomButton to="#footer">與我聯絡</AtomButton>
+            <AtomButton to="/project" variant="outline">我的履歷</AtomButton>
+          </div>
+        </div>
+        <CommonSiteImage
+          src="/img/index/index_person.webp"
+          alt="Nelson 個人照"
+          class="block h-auto w-full min-w-0 sm:max-w-[746px] sm:flex-1"
+          fetchpriority="high"
+          loading="eager"
+          sizes="(min-width: 1296px) 746px, (min-width: 640px) 55vw, calc(100vw - 24px)"
+        />
+      </div>
+      <!-- 裝飾圖片 -->
+      <div
+        class="pointer-events-none absolute inset-0 z-10 w-full"
+        :style="heroParallaxStyle"
+        aria-hidden="true"
+      >
+        <CommonSiteImage
+          loading="eager"
+          src="/img/index/index_decora_1.webp"
+          class="absolute top-[26px] -left-[15px] w-[80px] transition-transform duration-300 ease-out sm:left-[40%] lg:top-[97px] lg:w-[200px] lg:translate-x-[calc(var(--hero-parallax-x)*-0.65)] lg:translate-y-[calc(var(--hero-parallax-y)*-0.65)] lg:will-change-transform"
+        />
+        <CommonSiteImage
+          loading="eager"
+          src="/img/index/index_decora_2.webp"
+          class="absolute -right-[13px] bottom-[330px] w-[80px] transition-transform duration-300 ease-out sm:right-[10%] sm:bottom-[87px] lg:w-[160px] lg:translate-x-[calc(var(--hero-parallax-x)*0.55)] lg:translate-y-[calc(var(--hero-parallax-y)*0.55)] lg:will-change-transform"
+        />
+        <CommonSiteImage
+          loading="eager"
+          src="/img/index/index_decora_3.webp"
+          class="absolute top-[56px] left-9 hidden w-[140px] transition-transform duration-300 ease-out lg:translate-x-[calc(var(--hero-parallax-x)*0.35)] lg:translate-y-[calc(var(--hero-parallax-y)*0.35)] lg:will-change-transform xl:block"
+        />
+        <CommonSiteImage
+          loading="eager"
+          src="/img/index/index_decora_3.webp"
+          class="absolute right-[34px] bottom-[182px] w-[80px] transition-transform duration-300 ease-out sm:left-[35%] lg:bottom-[192px] lg:translate-x-[calc(var(--hero-parallax-x)*-0.45)] lg:translate-y-[calc(var(--hero-parallax-y)*-0.45)] lg:will-change-transform"
+        />
+        <CommonSiteImage
+          loading="eager"
+          src="/img/index/index_decora_3.webp"
+          class="absolute top-[206px] right-[142px] hidden w-[140px] transition-transform duration-300 ease-out lg:translate-x-[calc(var(--hero-parallax-x)*0.4)] lg:translate-y-[calc(var(--hero-parallax-y)*0.4)] lg:will-change-transform xl:block"
+        />
+        <CommonSiteImage
+          loading="eager"
+          src="/img/index/index_decora_4.webp"
+          class="absolute top-[120px] left-[225px] hidden w-[313px] transition-transform duration-300 ease-out lg:block lg:translate-x-[calc(var(--hero-parallax-x)*0.25)] lg:translate-y-[calc(var(--hero-parallax-y)*0.25)] lg:will-change-transform"
+        />
+        <CommonSiteImage
+          loading="eager"
+          src="/img/index/index_decora_5.webp"
+          class="absolute bottom-20 left-[23%] hidden w-[180px] transition-transform duration-300 ease-out md:block lg:translate-x-[calc(var(--hero-parallax-x)*-0.35)] lg:translate-y-[calc(var(--hero-parallax-y)*-0.35)] lg:will-change-transform"
+        />
+        <CommonSiteImage
+          loading="eager"
+          src="/img/index/index_decora_6.svg"
+          class="absolute bottom-[245px] left-1/2 w-[113px] -translate-x-1/2 sm:hidden"
+        />
+      </div>
+    </section>
+    <!-- 服務項目區塊 -->
+    <section class="bg-primary px-3 py-10 md:py-20">
+      <div class="text-neutral-0 mx-auto max-w-[1296px]">
+        <h2 class="text-heading-xxxx-small md:text-heading-xxx-small">服務項目</h2>
+        <p class="text-heading-x-large md:text-heading-xxx-large mb-6 md:mb-10">SERVICES</p>
+        <!-- 手機版服務項目輪播 -->
+        <Swiper :slides-per-view="1.4" :space-between="12" :loop="true" class="sm:!hidden">
+          <SwiperSlide v-for="service in serviceItems" :key="service.key">
+            <CommonServiceCard :service="service" />
+          </SwiperSlide>
+        </Swiper>
+        <!-- 電腦版服務項目區塊 -->
+        <ol class="hidden gap-3 sm:grid sm:grid-cols-2 md:gap-6 lg:grid-cols-4">
+          <li v-for="service in serviceItems" :key="service.key">
+            <CommonServiceCard :service="service" />
+          </li>
+        </ol>
+      </div>
+    </section>
+    <!-- 專案作品區塊 -->
+    <section class="bg-primary-50 px-3 py-10 md:py-20">
+      <div class="mx-auto max-w-[1296px]">
+        <!-- 標題區塊 -->
+        <div class="mb-6 text-center md:mb-10">
+          <h2 class="text-heading-xxxx-small md:text-heading-xxx-small">專案作品</h2>
+          <p class="text-heading-x-large md:text-heading-xxx-large">PROJECTS</p>
+        </div>
+        <!-- 專案作品列表 -->
+        <div class="flex flex-col gap-6 md:gap-10">
+          <ul class="space-y-3 md:space-y-6">
+            <li v-for="project in homeProjects" :key="project.id">
+              <CommonProjectCard :project="project" heading-level="h3" @open="openProjectModal" />
+            </li>
+          </ul>
+          <AtomButton to="/project" class="self-center">探索更多</AtomButton>
         </div>
       </div>
-      <img
-        src="/img/index/index_person.webp"
-        alt="Nelson 個人照"
-        class="block h-auto w-full min-w-0 sm:max-w-[746px] sm:flex-1"
-        fetchpriority="high"
-      />
-    </div>
-    <!-- 裝飾圖片 -->
-    <div
-      class="pointer-events-none absolute inset-0 z-10 w-full"
-      :style="heroParallaxStyle"
-      aria-hidden="true"
-    >
-      <img
-        src="/img/index/index_decora_1.webp"
-        class="absolute -left-[15px] top-[26px] w-[80px] transition-transform duration-300 ease-out sm:left-[40%] lg:top-[97px] lg:w-[200px] lg:translate-x-[calc(var(--hero-parallax-x)*-0.65)] lg:translate-y-[calc(var(--hero-parallax-y)*-0.65)] lg:will-change-transform"
-      />
-      <img
-        src="/img/index/index_decora_2.webp"
-        class="absolute -right-[13px] bottom-[330px] w-[80px] transition-transform duration-300 ease-out sm:bottom-[87px] sm:right-[10%] lg:w-[160px] lg:translate-x-[calc(var(--hero-parallax-x)*0.55)] lg:translate-y-[calc(var(--hero-parallax-y)*0.55)] lg:will-change-transform"
-      />
-      <img
-        src="/img/index/index_decora_3.webp"
-        class="absolute left-9 top-[56px] hidden w-[140px] transition-transform duration-300 ease-out lg:translate-x-[calc(var(--hero-parallax-x)*0.35)] lg:translate-y-[calc(var(--hero-parallax-y)*0.35)] lg:will-change-transform xl:block"
-      />
-      <img
-        src="/img/index/index_decora_3.webp"
-        class="absolute bottom-[182px] right-[34px] w-[80px] transition-transform duration-300 ease-out sm:left-[35%] lg:bottom-[192px] lg:translate-x-[calc(var(--hero-parallax-x)*-0.45)] lg:translate-y-[calc(var(--hero-parallax-y)*-0.45)] lg:will-change-transform"
-      />
-      <img
-        src="/img/index/index_decora_3.webp"
-        class="absolute right-[142px] top-[206px] hidden w-[140px] transition-transform duration-300 ease-out lg:translate-x-[calc(var(--hero-parallax-x)*0.4)] lg:translate-y-[calc(var(--hero-parallax-y)*0.4)] lg:will-change-transform xl:block"
-      />
-      <img
-        src="/img/index/index_decora_4.webp"
-        class="absolute left-[225px] top-[120px] hidden w-[313px] transition-transform duration-300 ease-out lg:block lg:translate-x-[calc(var(--hero-parallax-x)*0.25)] lg:translate-y-[calc(var(--hero-parallax-y)*0.25)] lg:will-change-transform"
-      />
-      <img
-        src="/img/index/index_decora_5.webp"
-        class="absolute bottom-20 left-[23%] hidden w-[180px] transition-transform duration-300 ease-out md:block lg:translate-x-[calc(var(--hero-parallax-x)*-0.35)] lg:translate-y-[calc(var(--hero-parallax-y)*-0.35)] lg:will-change-transform"
-      />
-      <img
-        src="/img/index/index_decora_6.webp"
-        class="absolute bottom-[245px] left-1/2 w-[113px] -translate-x-1/2 sm:hidden"
-      />
-    </div>
-  </section>
-  <!-- 服務項目區塊 -->
-  <section class="bg-primary px-3 py-10 md:py-20">
-    <div class="mx-auto max-w-[1296px] text-neutral-0">
-      <h2 class="text-heading-xxxx-small md:text-heading-xxx-small">服務項目</h2>
-      <p class="mb-6 text-heading-x-large md:mb-10 md:text-heading-xxx-large">SERVICES</p>
-      <!-- 手機版服務項目輪播 -->
-      <Swiper :slides-per-view="1.4" :space-between="12" :loop="true" class="sm:!hidden">
-        <SwiperSlide v-for="service in serviceItems" :key="service.key">
-          <CommonServiceCard :service="service" />
-        </SwiperSlide>
-      </Swiper>
-      <!-- 電腦版服務項目區塊 -->
-      <ol class="hidden gap-3 sm:grid sm:grid-cols-2 md:gap-6 lg:grid-cols-4">
-        <li v-for="service in serviceItems" :key="service.key">
-          <CommonServiceCard :service="service" />
-        </li>
-      </ol>
-    </div>
-  </section>
-  <!-- 專案作品區塊 -->
-  <section class="bg-primary-50 px-3 py-10 md:py-20">
-    <div class="mx-auto max-w-[1296px]">
-      <!-- 標題區塊 -->
-      <div class="mb-6 text-center md:mb-10">
-        <h2 class="text-heading-xxxx-small md:text-heading-xxx-small">專案作品</h2>
-        <p class="text-heading-x-large md:text-heading-xxx-large">PROJECTS</p>
-      </div>
-      <!-- 專案作品列表 -->
-      <div class="flex flex-col gap-6 md:gap-10">
-        <ul class="space-y-3 md:space-y-6">
-          <li v-for="project in homeProjects" :key="project.id">
-            <CommonProjectCard :project="project" heading-level="h3" @open="openProjectModal" />
+    </section>
+    <!-- 部落格區塊 -->
+    <section class="bg-primary-50 px-3 py-10 md:py-20">
+      <div class="mx-auto max-w-[1296px]">
+        <!-- 標題區塊與按鈕 -->
+        <div class="mb-6 flex items-center justify-between gap-6 md:mb-10">
+          <div>
+            <h2 class="text-heading-xxxx-small md:text-heading-xxx-small">部落格</h2>
+            <p class="text-heading-x-large md:text-heading-xxx-large">BLOGS</p>
+          </div>
+          <AtomButton to="/blog" variant="outline">探索更多</AtomButton>
+        </div>
+        <!-- 手機版最新文章 -->
+        <Swiper
+          v-if="latestBlogPosts.length"
+          :slides-per-view="1.4"
+          :space-between="12"
+          :loop="latestBlogPosts.length > 1"
+          class="md:!hidden"
+        >
+          <SwiperSlide v-for="post in latestBlogPosts" :key="post.path">
+            <CommonBlogCard :post="post" variant="related" />
+          </SwiperSlide>
+        </Swiper>
+        <!-- 電腦版最新文章 -->
+        <ul v-if="latestBlogPosts.length" class="hidden grid-cols-3 gap-6 md:grid">
+          <li v-for="post in latestBlogPosts" :key="post.path">
+            <CommonBlogCard :post="post" variant="related" />
           </li>
         </ul>
-        <AtomButton to="/project" class="self-center">探索更多</AtomButton>
       </div>
-    </div>
-  </section>
-  <!-- 部落格區塊 -->
-  <section class="bg-primary-50 px-3 py-10 md:py-20">
-    <div class="mx-auto max-w-[1296px]">
-      <!-- 標題區塊與按鈕 -->
-      <div class="mb-6 flex items-center justify-between gap-6 md:mb-10">
-        <div>
-          <h2 class="text-heading-xxxx-small md:text-heading-xxx-small">部落格</h2>
-          <p class="text-heading-x-large md:text-heading-xxx-large">BLOGS</p>
-        </div>
-        <AtomButton to="/blog" variant="outline">探索更多</AtomButton>
-      </div>
-      <!-- 手機版最新文章 -->
-      <Swiper
-        v-if="latestBlogPosts.length"
-        :slides-per-view="1.4"
-        :space-between="12"
-        :loop="latestBlogPosts.length > 1"
-        class="md:!hidden"
-      >
-        <SwiperSlide v-for="post in latestBlogPosts" :key="post.path">
-          <CommonBlogCard :post="post" variant="related" />
-        </SwiperSlide>
-      </Swiper>
-      <!-- 電腦版最新文章 -->
-      <ul v-if="latestBlogPosts.length" class="hidden grid-cols-3 gap-6 md:grid">
-        <li v-for="post in latestBlogPosts" :key="post.path">
-          <CommonBlogCard :post="post" variant="related" />
-        </li>
-      </ul>
-    </div>
-  </section>
-  <LayoutProjectModal
-    :open="isProjectModalOpen"
-    :project="selectedProject"
-    @close="closeProjectModal"
-  />
-  <LayoutSubscription />
+    </section>
+    <LayoutProjectModal
+      :open="isProjectModalOpen"
+      :project="selectedProject"
+      @close="closeProjectModal"
+    />
+    <LayoutSubscription />
+  </main>
 </template>

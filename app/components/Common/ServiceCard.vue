@@ -10,8 +10,7 @@ defineProps({
 <template>
   <NuxtLink
     :to="`/service?service=${service.key}`"
-    class="group block h-full w-full space-y-2 bg-primary-50 p-3 text-neutral transition hover:bg-primary-100 sm:space-y-3 md:p-6"
-    :aria-label="`前往查看${service.title}服務流程`"
+    class="group bg-primary-50 text-neutral hover:bg-primary-100 block h-full w-full space-y-2 p-3 transition sm:space-y-3 md:p-6"
   >
     <!-- 標題與 icon -->
     <div class="flex justify-between gap-2 sm:gap-3">
@@ -35,7 +34,7 @@ defineProps({
         {{ service.summary }}
       </p>
       <span
-        class="flex size-11 shrink-0 items-center justify-center rounded-full bg-neutral transition group-hover:bg-neutral-900 md:size-12"
+        class="bg-neutral flex size-11 shrink-0 items-center justify-center rounded-full transition group-hover:bg-neutral-900 md:size-12"
         aria-hidden="true"
       >
         <svg

@@ -1,6 +1,8 @@
 export const SITE_TITLE_BASE = '六角 2026 30 天軟體工程師體驗營'
 export const SITE_OG_IMAGE = '/img/common/og-image.png'
 
+export const getArticlePath = (path: string) => `${path.replace(/\/+$/, '')}/`
+
 export const buildSeoTitle = (title: string) => `${title} | ${SITE_TITLE_BASE}`
 
 export const resolveSiteOrigin = (siteUrl: string | undefined, fallbackOrigin: string) => {

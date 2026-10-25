@@ -1,32 +1,50 @@
-<script setup>
+<script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
+import type { BlogCollectionItem } from '@nuxt/content'
 
 const route = useRoute()
 const requestUrl = useRequestURL()
 const runtimeConfig = useRuntimeConfig()
 const siteOrigin = resolveSiteOrigin(runtimeConfig.public.siteUrl, requestUrl.origin)
 
-const blogSlug = computed(() => route.params.blog)
+const blogSlug = computed(() => String(route.params.blog))
 
-const { data: post } = await useAsyncData(`blog-${blogSlug.value}`, () =>
-  queryCollection('blog').path(`/blog/${blogSlug.value}`).first()
+const { data: postData } = await useFetch<BlogCollectionItem>(
+  () => `/api/blog/${encodeURIComponent(blogSlug.value)}.json`,
+  { baseURL: runtimeConfig.app.baseURL }
 )
 
-if (!post.value) {
+if (!postData.value) {
   throw createError({
     statusCode: 404,
-    statusMessage: '文章不存在',
+    statusMessage: 'Not Found',
+    message: '文章不存在',
     fatal: true
   })
 }
 
+const post = computed(() => {
+  if (!postData.value)
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'Not Found',
+      message: '文章不存在',
+      fatal: true
+    })
+  return postData.value
+})
+
 // 分享與 OG URL 需要帶上 Nuxt baseURL，避免部署在子路徑時產生錯誤連結。
-const articlePath = computed(() => withAppBaseURL(post.value.path, runtimeConfig.app.baseURL))
+const articlePath = computed(() =>
+  withAppBaseURL(getArticlePath(post.value.path), runtimeConfig.app.baseURL)
+)
 const articleUrl = computed(() => buildAbsoluteUrl(articlePath.value, siteOrigin))
 const ogImageUrl = computed(() =>
   buildAbsoluteUrl(withAppBaseURL(SITE_OG_IMAGE, runtimeConfig.app.baseURL), siteOrigin)
 )
+
+useHead(() => ({ link: [{ rel: 'canonical', href: articleUrl.value }] }))
 
 useSeoMeta({
   title: () => buildSeoTitle(post.value.title),
@@ -42,9 +60,7 @@ useSeoMeta({
   twitterImage: () => ogImageUrl.value
 })
 
-const { data: allPosts } = await useAsyncData('blog-related-posts', () =>
-  queryCollection('blog').order('date', 'DESC').all()
-)
+const { data: allPosts } = await useBlogIndex()
 
 const formattedDate = computed(() => {
   return new Intl.DateTimeFormat('en', {
@@ -98,7 +114,7 @@ const instagramUrl = 'https://www.instagram.com/'
   <!-- 麵包屑 -->
   <nav class="bg-primary px-3 py-2 md:py-3">
     <div
-      class="mx-auto flex max-w-[1296px] flex-wrap items-center gap-1 text-label-small text-neutral-0 md:gap-2 md:text-label-medium"
+      class="text-label-small text-neutral-0 md:text-label-medium mx-auto flex max-w-[1296px] flex-wrap items-center gap-1 md:gap-2"
     >
       <NuxtLink to="/">首頁</NuxtLink>
       <svg
@@ -123,7 +139,7 @@ const instagramUrl = 'https://www.instagram.com/'
   </nav>
   <!-- 單篇文章正文區塊 -->
   <main class="px-3 py-10 md:py-20">
-    <article class="mx-auto max-w-[1076px] text-paragraph-small md:text-paragraph-medium">
+    <article class="text-paragraph-small md:text-paragraph-medium mx-auto max-w-[1076px]">
       <!-- 文章 meta，標籤與日期 -->
       <div class="mb-2 flex flex-wrap justify-between gap-2 lg:mb-4">
         <ul class="tag-list flex flex-wrap">
@@ -139,17 +155,17 @@ const instagramUrl = 'https://www.instagram.com/'
         <time :datetime="post.date">{{ formattedDate }}</time>
       </div>
       <!-- 標題 -->
-      <h1 class="mb-2 text-heading-medium lg:mb-4 lg:text-heading-xx-large">
+      <h1 class="text-heading-medium lg:text-heading-xx-large mb-2 lg:mb-4">
         {{ post.title }}
       </h1>
       <!-- 摘要 -->
-      <p class="mb-2 text-heading-xx-small lg:mb-4 lg:text-heading-small">
+      <p class="text-heading-xx-small lg:text-heading-small mb-2 lg:mb-4">
         {{ post.description }}
       </p>
       <!-- 正文 -->
       <ContentRenderer
         :value="post"
-        class="blog-content [&_blockquote]:mb-7 [&_blockquote]:space-y-2 [&_blockquote]:bg-primary-50 [&_blockquote]:p-4 [&_blockquote]:text-center lg:[&_blockquote]:mb-10 lg:[&_blockquote]:p-6 [&_blockquote_p:last-child]:text-heading-xxx-small lg:[&_blockquote_p:last-child]:text-heading-x-small [&_blockquote_p]:mb-0 [&_h2]:mb-2 [&_h2]:text-heading-small lg:[&_h2]:mb-4 lg:[&_h2]:text-heading-large [&_h3]:mb-2 [&_h3]:text-heading-xx-small lg:[&_h3]:mb-4 lg:[&_h3]:text-heading-small [&_hr]:mb-2 [&_hr]:border-neutral-500 lg:[&_hr]:mb-4 [&_p]:mb-7 lg:[&_p]:mb-10 [&_table]:mb-5 [&_table]:w-full [&_table]:table-fixed [&_table]:border-collapse lg:[&_table]:mb-6 [&_tbody]:break-all [&_tbody]:bg-primary-50 [&_tbody]:text-primary [&_td]:border [&_td]:border-neutral-500 [&_td]:px-3 [&_td]:py-2 [&_td]:align-middle lg:[&_td]:px-6 lg:[&_td]:py-3 [&_th]:border [&_th]:border-neutral-500 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left lg:[&_th]:px-6 lg:[&_th]:py-3 [&_thead]:bg-primary [&_thead]:text-heading-xxxx-small [&_thead]:text-neutral-0 lg:[&_thead]:text-heading-xxx-small"
+        class="blog-content [&_blockquote]:bg-primary-50 [&_blockquote_p:last-child]:text-heading-xxx-small lg:[&_blockquote_p:last-child]:text-heading-x-small [&_h2]:text-heading-small lg:[&_h2]:text-heading-large [&_h3]:text-heading-xx-small lg:[&_h3]:text-heading-small [&_tbody]:bg-primary-50 [&_tbody]:text-primary [&_thead]:bg-primary [&_thead]:text-heading-xxxx-small [&_thead]:text-neutral-0 lg:[&_thead]:text-heading-xxx-small [&_blockquote]:mb-7 [&_blockquote]:space-y-2 [&_blockquote]:p-4 [&_blockquote]:text-center lg:[&_blockquote]:mb-10 lg:[&_blockquote]:p-6 [&_blockquote_p]:mb-0 [&_h2]:mb-2 lg:[&_h2]:mb-4 [&_h3]:mb-2 lg:[&_h3]:mb-4 [&_hr]:mb-2 [&_hr]:border-neutral-500 lg:[&_hr]:mb-4 [&_p]:mb-7 lg:[&_p]:mb-10 [&_table]:mb-5 [&_table]:w-full [&_table]:table-fixed [&_table]:border-collapse lg:[&_table]:mb-6 [&_tbody]:break-all [&_td]:border [&_td]:border-neutral-500 [&_td]:px-3 [&_td]:py-2 [&_td]:align-middle lg:[&_td]:px-6 lg:[&_td]:py-3 [&_th]:border [&_th]:border-neutral-500 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left lg:[&_th]:px-6 lg:[&_th]:py-3"
       />
       <!-- 觀看數、分享數、社群分享 -->
       <div class="flex flex-col items-end gap-3 lg:flex-row lg:items-center lg:justify-between">
@@ -171,7 +187,7 @@ const instagramUrl = 'https://www.instagram.com/'
                 :href="facebookShareUrl"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex size-11 items-center justify-center rounded-full border border-neutral-700 text-neutral-700 transition hover:bg-primary-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-0 lg:size-12"
+                class="hover:bg-primary-50 focus-visible:outline-neutral-0 flex size-11 items-center justify-center rounded-full border border-neutral-700 text-neutral-700 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 lg:size-12"
                 aria-label="分享到 Facebook"
               >
                 <Icon name="lucide:share-2" class="size-4 lg:size-5" />
@@ -182,7 +198,7 @@ const instagramUrl = 'https://www.instagram.com/'
                 :href="instagramUrl"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex size-11 items-center justify-center rounded-full border border-neutral-700 text-neutral-700 transition hover:bg-primary-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-0 lg:size-12"
+                class="hover:bg-primary-50 focus-visible:outline-neutral-0 flex size-11 items-center justify-center rounded-full border border-neutral-700 text-neutral-700 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 lg:size-12"
                 aria-label="前往 Instagram"
               >
                 <Icon name="lucide:instagram" class="size-4 lg:size-5" />
@@ -193,7 +209,7 @@ const instagramUrl = 'https://www.instagram.com/'
                 :href="lineShareUrl"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex size-11 items-center justify-center rounded-full border border-neutral-700 text-neutral-700 transition hover:bg-primary-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-0 lg:size-12"
+                class="hover:bg-primary-50 focus-visible:outline-neutral-0 flex size-11 items-center justify-center rounded-full border border-neutral-700 text-neutral-700 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 lg:size-12"
                 aria-label="分享到 LINE"
               >
                 <svg
@@ -229,7 +245,7 @@ const instagramUrl = 'https://www.instagram.com/'
   <section class="bg-primary-50 px-3 py-10 md:py-20">
     <div class="mx-auto max-w-[1296px]">
       <span class="text-heading-xxxx-small md:text-heading-xxx-small">相關文章</span>
-      <h2 class="mb-6 text-heading-x-large md:mb-10 md:text-heading-xxx-large">RELATED BLOG</h2>
+      <h2 class="text-heading-x-large md:text-heading-xxx-large mb-6 md:mb-10">RELATED BLOG</h2>
       <!-- 手機版相關文章 -->
       <Swiper :slides-per-view="1.4" :space-between="12" :loop="true" class="md:!hidden">
         <SwiperSlide v-for="relatedPost in relatedPosts" :key="relatedPost.path">

@@ -31,23 +31,11 @@ const blogTabs = [
 const route = useRoute()
 const router = useRouter()
 
-// 文章列表由 Nuxt Content 取得；刷新頁面時 client 端資料可能會比畫面 hydration 慢一拍。
-const {
-  data: posts,
-  status: postsStatus,
-  refresh: refreshPosts
-} = await useAsyncData('blog-posts', () => queryCollection('blog').order('date', 'DESC').all())
+const { data: posts, status: postsStatus } = await useBlogIndex()
 
 const isPostsPending = computed(
   () => postsStatus.value === 'idle' || postsStatus.value === 'pending'
 )
-
-// 若刷新後 hydration 階段沒有拿到文章，mounted 後再補抓一次，避免 fallback 被誤顯示。
-onMounted(async () => {
-  if (!posts.value?.length) {
-    await refreshPosts()
-  }
-})
 
 // 目前選取的 tab 以網址的 tag 參數為準，沒有參數時回到「全部」。
 const activeBlogTab = computed(() => {
@@ -95,12 +83,12 @@ const setBlogTab = (tab) => {
       <aside class="top-20 min-w-0 md:sticky md:w-[180px] md:self-start">
         <nav>
           <ul
-            class="flex overflow-x-auto whitespace-nowrap text-center text-heading-xxx-small [scrollbar-width:none] md:flex-col md:text-heading-xx-small [&::-webkit-scrollbar]:hidden"
+            class="text-heading-xxx-small md:text-heading-xx-small flex [scrollbar-width:none] overflow-x-auto text-center whitespace-nowrap md:flex-col [&::-webkit-scrollbar]:hidden"
           >
             <li v-for="tab in blogTabs" :key="tab" class="shrink-0 md:shrink">
               <button
                 type="button"
-                class="w-full px-3 py-2 transition hover:bg-primary hover:text-neutral-0 md:py-3"
+                class="hover:bg-primary hover:text-neutral-0 w-full px-3 py-2 transition md:py-3"
                 :class="{ 'bg-primary text-neutral-0': activeBlogTab === tab }"
                 @click="setBlogTab(tab)"
               >
@@ -113,8 +101,8 @@ const setBlogTab = (tab) => {
       <main class="min-w-0 flex-1 space-y-20">
         <ul v-if="filteredPosts.length" class="space-y-6">
           <!-- 文章列表 -->
-          <li v-for="post in filteredPosts" :key="post.path">
-            <CommonBlogCard :post="post" />
+          <li v-for="(post, index) in filteredPosts" :key="post.path">
+            <CommonBlogCard :post="post" :eager="index === 0" />
           </li>
         </ul>
         <CommonEmptyState
@@ -129,7 +117,7 @@ const setBlogTab = (tab) => {
               <button
                 type="button"
                 aria-label="上一頁"
-                class="flex size-11 items-center justify-center rounded-full transition hover:bg-neutral hover:text-neutral-0"
+                class="hover:bg-neutral hover:text-neutral-0 flex size-11 items-center justify-center rounded-full transition"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -145,7 +133,7 @@ const setBlogTab = (tab) => {
             <li>
               <button
                 type="button"
-                class="flex size-11 items-center justify-center rounded-full bg-neutral text-neutral-0 transition"
+                class="bg-neutral text-neutral-0 flex size-11 items-center justify-center rounded-full transition"
               >
                 1
               </button>
@@ -153,7 +141,7 @@ const setBlogTab = (tab) => {
             <li>
               <button
                 type="button"
-                class="flex size-11 items-center justify-center rounded-full transition hover:bg-neutral hover:text-neutral-0"
+                class="hover:bg-neutral hover:text-neutral-0 flex size-11 items-center justify-center rounded-full transition"
               >
                 2
               </button>
@@ -161,7 +149,7 @@ const setBlogTab = (tab) => {
             <li class="hidden md:block">
               <button
                 type="button"
-                class="flex size-11 items-center justify-center rounded-full transition hover:bg-neutral hover:text-neutral-0"
+                class="hover:bg-neutral hover:text-neutral-0 flex size-11 items-center justify-center rounded-full transition"
               >
                 3
               </button>
@@ -169,7 +157,7 @@ const setBlogTab = (tab) => {
             <li>
               <button
                 type="button"
-                class="flex size-11 items-center justify-center rounded-full transition hover:bg-neutral hover:text-neutral-0"
+                class="hover:bg-neutral hover:text-neutral-0 flex size-11 items-center justify-center rounded-full transition"
               >
                 ...
               </button>
@@ -177,7 +165,7 @@ const setBlogTab = (tab) => {
             <li>
               <button
                 type="button"
-                class="flex size-11 items-center justify-center rounded-full transition hover:bg-neutral hover:text-neutral-0"
+                class="hover:bg-neutral hover:text-neutral-0 flex size-11 items-center justify-center rounded-full transition"
               >
                 20
               </button>
@@ -186,7 +174,7 @@ const setBlogTab = (tab) => {
               <button
                 type="button"
                 aria-label="下一頁"
-                class="flex size-11 items-center justify-center rounded-full transition hover:bg-neutral hover:text-neutral-0"
+                class="hover:bg-neutral hover:text-neutral-0 flex size-11 items-center justify-center rounded-full transition"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
