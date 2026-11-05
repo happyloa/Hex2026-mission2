@@ -22,7 +22,16 @@ test('static JSON supports every article and contains a compact index', async ()
     const post = JSON.parse(await readFile(path.join(root, `api/blog/${slug}.json`), 'utf8'))
     assert.equal(post.path, `/blog/${slug}`)
     assert.ok(post.title && post.body && post.description)
+    assert.match(post.date, /^\d{4}-\d{2}-\d{2}$/)
+    assert.ok(Array.isArray(post.tags) && post.tags.every((tag) => typeof tag === 'string'))
+    assert.equal(typeof post.image, 'string')
+    assert.equal(typeof post.views, 'number')
+    assert.equal(typeof post.shares, 'number')
     const summary = index.find((item) => item.path === post.path)
+    assert.deepEqual(
+      Object.keys(summary).sort(),
+      ['path', 'title', 'description', 'date', 'tags', 'image', 'views', 'shares'].sort()
+    )
     for (const key of Object.keys(summary))
       assert.deepEqual(summary[key], post[key], `${slug}: ${key}`)
   }

@@ -68,7 +68,8 @@ export default defineNuxtConfig({
   modules: ['@nuxt/content', '@nuxt/icon', '@nuxt/fonts'],
 
   fonts: {
-    processCSSVariables: true,
+    processCSSVariables: 'font-prefixed-only',
+    provider: 'local',
     experimental: { disableLocalFallbacks: true },
     families: [
       {
