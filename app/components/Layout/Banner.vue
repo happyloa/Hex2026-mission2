@@ -50,7 +50,7 @@ const bannerStyle = computed(() => ({
     <!-- 裝飾文字 -->
     <span
       v-if="showDecoration"
-      class="pointer-events-none absolute left-1/2 top-[240px] z-10 -translate-x-[calc(50%+12px)] text-[160px] font-bold leading-[1.2] text-primary-50/20 md:top-[140px] md:-translate-x-[calc(50%+42px)] md:text-[300px]"
+      class="pointer-events-none absolute top-[240px] left-1/2 z-10 -translate-x-[calc(50%+12px)] text-[160px] leading-[1.2] font-bold text-primary-50/20 md:top-[140px] md:-translate-x-[calc(50%+42px)] md:text-[300px]"
       >{{ decorationText }}
     </span>
   </section>

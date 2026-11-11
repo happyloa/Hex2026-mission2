@@ -54,7 +54,7 @@ const imageClass = computed(() => {
       />
       <div class="space-y-2 md:space-y-3">
         <!-- 文章標籤 -->
-        <ul class="tag-list text-paragraph-small md:text-paragraph-medium flex flex-wrap">
+        <ul class="tag-list flex flex-wrap text-paragraph-small md:text-paragraph-medium">
           <li v-for="tag in post.tags" :key="tag">{{ tag }}</li>
         </ul>
         <!-- 標題 -->
@@ -66,7 +66,7 @@ const imageClass = computed(() => {
         </component>
         <!-- meta -->
         <div
-          class="text-paragraph-x-small md:text-paragraph-small flex flex-wrap justify-between gap-2 whitespace-nowrap lg:gap-6"
+          class="flex flex-wrap justify-between gap-2 text-paragraph-x-small whitespace-nowrap md:text-paragraph-small lg:gap-6"
         >
           <time :datetime="post.date">{{ formattedDate }}</time>
           <!-- 觀看數與分享數 -->

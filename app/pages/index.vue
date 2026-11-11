@@ -99,18 +99,18 @@ onBeforeUnmount(() => {
     <!-- 首頁大圖與自我介紹 -->
     <section
       ref="heroSection"
-      class="bg-primary-50 relative overflow-hidden px-3 pb-6 sm:pb-0"
+      class="relative overflow-hidden bg-primary-50 px-3 pb-6 sm:pb-0"
       @pointermove="updateHeroParallax"
       @pointerleave="resetHeroParallax"
     >
       <div class="mx-auto flex max-w-[1296px] flex-col-reverse gap-6 sm:flex-row sm:items-center">
         <!-- 標題、描述、按鈕 -->
         <div class="relative z-20 min-w-0 flex-1 sm:max-w-[526px]">
-          <h1 class="text-heading-x-large lg:text-heading-xxx-large mb-3 sm:mb-6">
+          <h1 class="mb-3 text-heading-x-large sm:mb-6 lg:text-heading-xxx-large">
             Hello<br />
             I'm Nelson
           </h1>
-          <p class="text-paragraph-small sm:text-paragraph-medium mb-8 md:mb-[60px]">
+          <p class="mb-8 text-paragraph-small sm:text-paragraph-medium md:mb-[60px]">
             我是一個擁有 10 年經驗的 UIUX 設計師 和 前端工程師<br />喜歡把美學和程式結合，打造一個又一個精美的網頁設計！
           </p>
           <div class="flex gap-3 sm:gap-6">
@@ -177,9 +177,9 @@ onBeforeUnmount(() => {
     </section>
     <!-- 服務項目區塊 -->
     <section class="bg-primary px-3 py-10 md:py-20">
-      <div class="text-neutral-0 mx-auto max-w-[1296px]">
+      <div class="mx-auto max-w-[1296px] text-neutral-0">
         <h2 class="text-heading-xxxx-small md:text-heading-xxx-small">服務項目</h2>
-        <p class="text-heading-x-large md:text-heading-xxx-large mb-6 md:mb-10">SERVICES</p>
+        <p class="mb-6 text-heading-x-large md:mb-10 md:text-heading-xxx-large">SERVICES</p>
         <!-- 手機版服務項目輪播 -->
         <Swiper :slides-per-view="1.4" :space-between="12" :loop="true" class="sm:!hidden">
           <SwiperSlide v-for="service in serviceItems" :key="service.key">

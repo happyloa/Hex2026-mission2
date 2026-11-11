@@ -83,12 +83,12 @@ const setBlogTab = (tab) => {
       <aside class="top-20 min-w-0 md:sticky md:w-[180px] md:self-start">
         <nav>
           <ul
-            class="text-heading-xxx-small md:text-heading-xx-small flex [scrollbar-width:none] overflow-x-auto text-center whitespace-nowrap md:flex-col [&::-webkit-scrollbar]:hidden"
+            class="flex [scrollbar-width:none] overflow-x-auto text-center text-heading-xxx-small whitespace-nowrap md:flex-col md:text-heading-xx-small [&::-webkit-scrollbar]:hidden"
           >
             <li v-for="tab in blogTabs" :key="tab" class="shrink-0 md:shrink">
               <button
                 type="button"
-                class="hover:bg-primary hover:text-neutral-0 w-full px-3 py-2 transition md:py-3"
+                class="w-full px-3 py-2 transition hover:bg-primary hover:text-neutral-0 md:py-3"
                 :class="{ 'bg-primary text-neutral-0': activeBlogTab === tab }"
                 @click="setBlogTab(tab)"
               >
@@ -117,7 +117,7 @@ const setBlogTab = (tab) => {
               <button
                 type="button"
                 aria-label="上一頁"
-                class="hover:bg-neutral hover:text-neutral-0 flex size-11 items-center justify-center rounded-full transition"
+                class="flex size-11 items-center justify-center rounded-full transition hover:bg-neutral hover:text-neutral-0"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -133,7 +133,7 @@ const setBlogTab = (tab) => {
             <li>
               <button
                 type="button"
-                class="bg-neutral text-neutral-0 flex size-11 items-center justify-center rounded-full transition"
+                class="flex size-11 items-center justify-center rounded-full bg-neutral text-neutral-0 transition"
               >
                 1
               </button>
@@ -141,7 +141,7 @@ const setBlogTab = (tab) => {
             <li>
               <button
                 type="button"
-                class="hover:bg-neutral hover:text-neutral-0 flex size-11 items-center justify-center rounded-full transition"
+                class="flex size-11 items-center justify-center rounded-full transition hover:bg-neutral hover:text-neutral-0"
               >
                 2
               </button>
@@ -149,7 +149,7 @@ const setBlogTab = (tab) => {
             <li class="hidden md:block">
               <button
                 type="button"
-                class="hover:bg-neutral hover:text-neutral-0 flex size-11 items-center justify-center rounded-full transition"
+                class="flex size-11 items-center justify-center rounded-full transition hover:bg-neutral hover:text-neutral-0"
               >
                 3
               </button>
@@ -157,7 +157,7 @@ const setBlogTab = (tab) => {
             <li>
               <button
                 type="button"
-                class="hover:bg-neutral hover:text-neutral-0 flex size-11 items-center justify-center rounded-full transition"
+                class="flex size-11 items-center justify-center rounded-full transition hover:bg-neutral hover:text-neutral-0"
               >
                 ...
               </button>
@@ -165,7 +165,7 @@ const setBlogTab = (tab) => {
             <li>
               <button
                 type="button"
-                class="hover:bg-neutral hover:text-neutral-0 flex size-11 items-center justify-center rounded-full transition"
+                class="flex size-11 items-center justify-center rounded-full transition hover:bg-neutral hover:text-neutral-0"
               >
                 20
               </button>
@@ -174,7 +174,7 @@ const setBlogTab = (tab) => {
               <button
                 type="button"
                 aria-label="下一頁"
-                class="hover:bg-neutral hover:text-neutral-0 flex size-11 items-center justify-center rounded-full transition"
+                class="flex size-11 items-center justify-center rounded-full transition hover:bg-neutral hover:text-neutral-0"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

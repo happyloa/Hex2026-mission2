@@ -20,10 +20,7 @@ const socialLinks = [
 </script>
 
 <template>
-  <ul
-    :class="['flex gap-3', size === 'md' ? 'mb-6' : 'mb-3 flex-wrap']"
-    aria-label="社群連結"
-  >
+  <ul :class="['flex gap-3', size === 'md' ? 'mb-6' : 'mb-3 flex-wrap']" aria-label="社群連結">
     <li v-for="link in socialLinks" :key="link.label">
       <a
         :href="link.to"

@@ -76,7 +76,7 @@ const closeProjectModal = () => {
   <LayoutBanner />
   <nav class="px-3 py-6 md:py-10">
     <ul
-      class="mx-auto flex max-w-[1296px] overflow-x-auto whitespace-nowrap text-center text-heading-xxx-small [scrollbar-width:none] md:text-heading-xx-small"
+      class="mx-auto flex max-w-[1296px] [scrollbar-width:none] overflow-x-auto text-center text-heading-xxx-small whitespace-nowrap md:text-heading-xx-small"
     >
       <li v-for="tab in projectTabs" :key="tab" class="flex-1">
         <button
