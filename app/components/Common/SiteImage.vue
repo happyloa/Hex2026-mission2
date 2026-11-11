@@ -1,19 +1,25 @@
-<script setup>
-const props = defineProps({
-  src: { type: String, required: true },
-  alt: { type: String, default: '' },
-  sizes: { type: String, default: '100vw' },
-  loading: { type: String, default: 'lazy' },
-  fetchpriority: { type: String, default: 'auto' }
-})
+<script setup lang="ts">
+const {
+  src,
+  alt = '',
+  sizes = '100vw',
+  loading = 'lazy',
+  fetchpriority = 'auto'
+} = defineProps<{
+  src: string
+  alt?: string
+  sizes?: string
+  loading?: 'lazy' | 'eager'
+  fetchpriority?: 'high' | 'low' | 'auto'
+}>()
 
-const config = useRuntimeConfig()
-const image = computed(() => getSiteImage(props.src))
-const source = computed(() => withAppBaseURL(props.src, config.app.baseURL))
+const { app } = useRuntimeConfig()
+const image = computed(() => getSiteImage(src))
+const source = computed(() => withAppBaseURL(src, app.baseURL))
 const sourceSet = computed(
   () =>
     image.value?.variants
-      .map(({ src, width }) => `${withAppBaseURL(src, config.app.baseURL)} ${width}w`)
+      .map(({ src: variant, width }) => `${withAppBaseURL(variant, app.baseURL)} ${width}w`)
       .join(', ') || undefined
 )
 </script>

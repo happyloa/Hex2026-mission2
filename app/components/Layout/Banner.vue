@@ -1,40 +1,30 @@
-<script setup>
-const props = defineProps({
-  title: {
-    type: String,
-    default: '專案作品'
-  },
-  heading: {
-    type: String,
-    default: 'PROJECTS'
-  },
-  mobileImage: {
-    type: String,
-    default: '/img/project/mobile/project_banner.webp'
-  },
-  desktopImage: {
-    type: String,
-    default: '/img/project/desktop/project_banner.webp'
-  },
-  decorationText: {
-    type: String,
-    default: 'BLOG'
-  },
-  showDecoration: {
-    type: Boolean,
-    default: false
-  }
-})
+<script setup lang="ts">
+const {
+  title = '專案作品',
+  heading = 'PROJECTS',
+  mobileImage = '/img/project/mobile/project_banner.webp',
+  desktopImage = '/img/project/desktop/project_banner.webp',
+  decorationText = 'BLOG',
+  showDecoration = false
+} = defineProps<{
+  title?: string
+  heading?: string
+  mobileImage?: string
+  desktopImage?: string
+  decorationText?: string
+  showDecoration?: boolean
+}>()
 
+const { app } = useRuntimeConfig()
 const bannerStyle = computed(() => ({
-  '--banner-mobile-image': `url('${props.mobileImage}')`,
-  '--banner-desktop-image': `url('${props.desktopImage}')`
+  '--banner-mobile-image': toCssImage(mobileImage, app.baseURL),
+  '--banner-desktop-image': toCssImage(desktopImage, app.baseURL)
 }))
 </script>
 
 <template>
   <section
-    class="relative flex h-[380px] flex-col justify-center overflow-hidden bg-[image:var(--banner-mobile-image)] bg-cover bg-center text-center text-neutral-0 md:bg-[image:var(--banner-desktop-image)]"
+    class="relative flex h-95 flex-col justify-center overflow-hidden bg-(image:--banner-mobile-image) bg-cover bg-center text-center text-neutral-0 md:bg-(image:--banner-desktop-image)"
     :style="bannerStyle"
   >
     <!-- 遮罩 -->
@@ -50,7 +40,8 @@ const bannerStyle = computed(() => ({
     <!-- 裝飾文字 -->
     <span
       v-if="showDecoration"
-      class="pointer-events-none absolute top-[240px] left-1/2 z-10 -translate-x-[calc(50%+12px)] text-[160px] leading-[1.2] font-bold text-primary-50/20 md:top-[140px] md:-translate-x-[calc(50%+42px)] md:text-[300px]"
+      aria-hidden="true"
+      class="pointer-events-none absolute top-60 left-1/2 z-10 -translate-x-[calc(50%+12px)] text-[160px] leading-[1.2] font-bold text-primary-50/20 md:top-35 md:-translate-x-[calc(50%+42px)] md:text-[300px]"
       >{{ decorationText }}
     </span>
   </section>

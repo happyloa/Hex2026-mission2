@@ -1,10 +1,8 @@
-<script setup></script>
-
 <template>
   <footer id="footer" class="bg-primary px-3 py-10 text-neutral-0 md:py-20">
-    <div class="mx-auto flex max-w-[1296px] flex-col justify-between gap-6 md:flex-row">
+    <div class="mx-auto flex max-w-324 flex-col justify-between gap-6 md:flex-row">
       <!-- 左側文字區塊 -->
-      <div class="flex-1 md:max-w-[526px]">
+      <div class="flex-1 md:max-w-131.5">
         <p class="text-heading-xxxx-small md:text-heading-xxx-small">與我聯絡</p>
         <h3 class="mb-3 text-heading-x-large md:mb-6 md:text-heading-xxx-large">CONTACT</h3>
         <p class="text-paragraph-small md:text-paragraph-medium">
@@ -13,14 +11,14 @@
         </p>
 
         <!-- 電腦版 social -->
-        <div class="mt-[92px] hidden md:block">
+        <div class="mt-23 hidden md:block">
           <CommonSocialContact size="md" />
         </div>
       </div>
 
       <!-- 右側表單 -->
       <form
-        class="grid max-w-[746px] flex-1 gap-3 text-paragraph-small sm:grid-cols-2 md:gap-6 md:text-paragraph-medium lg:px-10"
+        class="grid max-w-186.5 flex-1 gap-3 text-paragraph-small sm:grid-cols-2 md:gap-6 md:text-paragraph-medium lg:px-10"
         @submit.prevent
       >
         <label class="sr-only" for="name">姓名</label>
@@ -55,7 +53,7 @@
           id="message"
           placeholder="備註"
           rows="4"
-          class="resize-none rounded-[32px] border border-neutral-0 bg-transparent px-5 py-4 text-neutral-0 outline-none placeholder:text-neutral-0 sm:col-span-2 md:rounded-[40px] md:px-8 md:py-5"
+          class="resize-none rounded-4xl border border-neutral-0 bg-transparent px-5 py-4 text-neutral-0 outline-none placeholder:text-neutral-0 sm:col-span-2 md:rounded-[40px] md:px-8 md:py-5"
         />
 
         <AtomButton type="submit" color="white" full class="sm:col-span-2"> 送出 </AtomButton>

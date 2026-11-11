@@ -1,6 +1,7 @@
-<script setup>
-// 專案卡片與 modal 共用 app/data/projects.js 的資料。
-import { projects } from '../data/projects'
+<script setup lang="ts">
+// 專案卡片與 modal 共用 app/data/projects.ts 的資料。
+import { projects } from '~/data/projects'
+import type { Project } from '~/types'
 
 const requestUrl = useRequestURL()
 const runtimeConfig = useRuntimeConfig()
@@ -17,52 +18,25 @@ useSeoMeta(
   })
 )
 
-// tab 的「全部」狀態不寫進網址，讓 /project 保持為預設列表。
-const ALL_PROJECTS_LABEL = '全部'
-
-const route = useRoute()
-const router = useRouter()
+const { activeTag: activeProjectTab, setTag: setProjectTab } = useTagQuery()
 
 // 依據專案標籤自動產生 tab，避免分類名稱需要在畫面與資料中維護兩次。
-const projectTabs = computed(() => [
-  ALL_PROJECTS_LABEL,
-  ...new Set(projects.flatMap((project) => project.tags))
-])
-
-// 目前選取的 tab 以網址的 tag 參數為準，沒有參數時回到「全部」。
-const activeProjectTab = computed(() => {
-  const tag = route.query.tag
-
-  return typeof tag === 'string' && tag ? tag : ALL_PROJECTS_LABEL
-})
+const projectTabs = [ALL_TAGS_LABEL, ...new Set(projects.flatMap((project) => project.tags))]
 
 // 如果網址帶了不存在的 tag，會得到空陣列，交給 template 顯示 fallback。
 const filteredProjects = computed(() => {
-  if (activeProjectTab.value === ALL_PROJECTS_LABEL) {
+  if (activeProjectTab.value === ALL_TAGS_LABEL) {
     return projects
   }
 
   return projects.filter((project) => project.tags.includes(activeProjectTab.value))
 })
 
-// 切換 tab 時同步更新網址；切回「全部」則移除 tag 參數。
-const setProjectTab = (tab) => {
-  const query = { ...route.query }
-
-  if (tab === ALL_PROJECTS_LABEL) {
-    delete query.tag
-  } else {
-    query.tag = tab
-  }
-
-  router.push({ query })
-}
-
-const selectedProject = ref(null)
+const selectedProject = ref<Project | null>(null)
 const isProjectModalOpen = ref(false)
 
 // 開啟 modal 前先記錄點擊的專案，讓 modal 內容能對應目前卡片。
-const openProjectModal = (project) => {
+const openProjectModal = (project: Project) => {
   selectedProject.value = project
   isProjectModalOpen.value = true
 }
@@ -74,15 +48,16 @@ const closeProjectModal = () => {
 
 <template>
   <LayoutBanner />
-  <nav class="px-3 py-6 md:py-10">
+  <nav class="px-3 py-6 md:py-10" aria-label="專案分類">
     <ul
-      class="mx-auto flex max-w-[1296px] [scrollbar-width:none] overflow-x-auto text-center text-heading-xxx-small whitespace-nowrap md:text-heading-xx-small"
+      class="mx-auto flex max-w-324 scrollbar-none overflow-x-auto text-center text-heading-xxx-small whitespace-nowrap md:text-heading-xx-small"
     >
       <li v-for="tab in projectTabs" :key="tab" class="flex-1">
         <button
           type="button"
           class="w-full px-3 py-2 transition hover:bg-primary hover:text-neutral-0 md:py-3"
           :class="{ 'bg-primary text-neutral-0': activeProjectTab === tab }"
+          :aria-pressed="activeProjectTab === tab"
           @click="setProjectTab(tab)"
         >
           {{ tab }}
@@ -91,7 +66,7 @@ const closeProjectModal = () => {
     </ul>
   </nav>
   <main class="flex flex-col gap-10 px-3 pb-10 md:gap-20 md:pb-20">
-    <ul v-if="filteredProjects.length" class="mx-auto w-full max-w-[1296px] space-y-3 md:space-y-6">
+    <ul v-if="filteredProjects.length" class="mx-auto w-full max-w-324 space-y-3 md:space-y-6">
       <!-- 專案列表 -->
       <li v-for="project in filteredProjects" :key="project.id">
         <CommonProjectCard :project="project" @open="openProjectModal" />
@@ -99,7 +74,7 @@ const closeProjectModal = () => {
     </ul>
     <CommonEmptyState
       v-else
-      class="mx-auto w-full max-w-[1296px]"
+      class="mx-auto w-full max-w-324"
       title="目前沒有符合的專案"
       description="可以切回全部，或選擇其它分類看看。"
     />

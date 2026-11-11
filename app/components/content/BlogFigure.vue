@@ -1,19 +1,11 @@
-<script setup>
-const props = defineProps({
-  src: {
-    type: String,
-    required: true
-  },
-  alt: {
-    type: String,
-    required: true
-  },
-  caption: {
-    type: String,
-    required: true
-  }
-})
-const image = computed(() => getSiteImage(props.src))
+<script setup lang="ts">
+const { src } = defineProps<{
+  src: string
+  alt: string
+  caption: string
+}>()
+
+const image = computed(() => getSiteImage(src))
 </script>
 
 <template>

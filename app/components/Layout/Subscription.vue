@@ -1,35 +1,34 @@
-<script setup>
-defineProps({
-  headingLevel: {
-    type: String,
-    default: 'h2'
-  }
-})
+<script setup lang="ts">
+const { headingLevel = 'h2' } = defineProps<{ headingLevel?: 'h2' | 'h3' }>()
 
+const { app } = useRuntimeConfig()
 const backgroundStyle = {
-  '--subscription-mobile-image': "url('/img/common/mobile/subscription_bg.webp')",
-  '--subscription-desktop-image': "url('/img/common/desktop/subscription_bg.webp')"
+  '--subscription-mobile-image': toCssImage('/img/common/mobile/subscription_bg.webp', app.baseURL),
+  '--subscription-desktop-image': toCssImage(
+    '/img/common/desktop/subscription_bg.webp',
+    app.baseURL
+  )
 }
 </script>
 
 <template>
   <section
-    class="relative bg-[image:var(--subscription-mobile-image)] bg-cover bg-center md:bg-[image:var(--subscription-desktop-image)]"
+    class="relative bg-(image:--subscription-mobile-image) bg-cover bg-center md:bg-(image:--subscription-desktop-image)"
     :style="backgroundStyle"
   >
     <!-- 遮罩 -->
     <div class="absolute inset-0 bg-dark-60a"></div>
 
-    <div class="relative z-10 mx-auto flex max-w-[1296px] flex-col gap-0 md:flex-row md:gap-6">
+    <div class="relative z-10 mx-auto flex max-w-324 flex-col gap-0 md:flex-row md:gap-6">
       <CommonSiteImage
         src="/img/common/subscription.webp"
         alt="訂閱 CTA 裝飾圖片"
-        class="h-auto w-full self-center md:max-w-[526px]"
+        class="h-auto w-full self-center md:max-w-131.5"
         sizes="(min-width: 768px) 526px, 100vw"
       />
       <!-- 右側標題與文字 -->
       <div
-        class="flex flex-col justify-center px-3 py-10 text-neutral-0 md:max-w-[746px] lg:px-10 lg:py-20"
+        class="flex flex-col justify-center px-3 py-10 text-neutral-0 md:max-w-186.5 lg:px-10 lg:py-20"
       >
         <p class="text-heading-xxxx-small md:text-heading-xxx-small">電子報訂閱</p>
         <component

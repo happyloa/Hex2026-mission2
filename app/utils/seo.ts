@@ -53,8 +53,8 @@ export const getPageSeo = ({
     ogDescription: description,
     ogImage: imageUrl,
     ogUrl: buildAbsoluteUrl(withAppBaseURL(path, baseURL), origin),
-    ogType: 'website',
-    twitterCard: 'summary_large_image',
+    ogType: 'website' as const,
+    twitterCard: 'summary_large_image' as const,
     twitterTitle: fullTitle,
     twitterDescription: description,
     twitterImage: imageUrl

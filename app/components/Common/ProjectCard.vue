@@ -1,29 +1,28 @@
-<script setup>
-defineProps({
-  project: {
-    type: Object,
-    required: true
-  },
-  headingLevel: {
-    type: String,
-    default: 'h2'
-  }
-})
+<script setup lang="ts">
+import type { Project } from '~/types'
 
-defineEmits(['open'])
+const { project, headingLevel = 'h2' } = defineProps<{
+  project: Project
+  headingLevel?: 'h2' | 'h3'
+}>()
+
+defineEmits<{ open: [project: Project] }>()
+
+const { app } = useRuntimeConfig()
+const backgroundStyle = computed(() => ({
+  '--project-mobile-image': toCssImage(project.images.mobile, app.baseURL),
+  '--project-desktop-image': toCssImage(project.images.desktop, app.baseURL)
+}))
 </script>
 
 <template>
   <article
-    class="flex h-[580px] flex-col-reverse bg-[image:var(--project-mobile-image)] bg-cover bg-center p-4 md:h-auto md:flex-row md:bg-[image:var(--project-desktop-image)] md:p-7"
-    :style="{
-      '--project-mobile-image': `url(${project.images.mobile})`,
-      '--project-desktop-image': `url(${project.images.desktop})`
-    }"
+    class="flex h-145 flex-col-reverse bg-(image:--project-mobile-image) bg-cover bg-center p-4 md:h-auto md:flex-row md:bg-(image:--project-desktop-image) md:p-7"
+    :style="backgroundStyle"
   >
     <!-- 內容區塊 -->
     <div
-      class="flex w-full flex-col items-center gap-3 bg-primary-50 p-6 text-center text-paragraph-small md:max-w-[386px] md:p-10 md:text-paragraph-medium"
+      class="flex w-full flex-col items-center gap-3 bg-primary-50 p-6 text-center text-paragraph-small md:max-w-96.5 md:p-10 md:text-paragraph-medium"
     >
       <!-- 專案時間 -->
       <time :datetime="project.datetime" class="text-paragraph-x-small md:text-paragraph-small"

@@ -1,10 +1,7 @@
-<script setup>
-defineProps({
-  service: {
-    type: Object,
-    required: true
-  }
-})
+<script setup lang="ts">
+import type { ServiceItem } from '~/types'
+
+defineProps<{ service: ServiceItem }>()
 </script>
 
 <template>

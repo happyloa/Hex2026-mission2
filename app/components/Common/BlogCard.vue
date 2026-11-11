@@ -1,27 +1,20 @@
-<script setup>
-const props = defineProps({
-  post: {
-    type: Object,
-    required: true
-  },
-  variant: {
-    type: String,
-    default: 'list',
-    validator: (value) => ['list', 'related'].includes(value)
-  },
-  eager: { type: Boolean, default: false }
-})
+<script setup lang="ts">
+import type { BlogSummary } from '~/composables/useBlogIndex'
 
-const formattedDate = computed(() => {
-  return new Intl.DateTimeFormat('en', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric'
-  }).format(new Date(`${props.post.date}T00:00:00`))
-})
+const {
+  post,
+  variant = 'list',
+  eager = false
+} = defineProps<{
+  post: BlogSummary
+  variant?: 'list' | 'related'
+  eager?: boolean
+}>()
+
+const formattedDate = computed(() => formatPostDate(post.date))
 
 const articleClass = computed(() => {
-  if (props.variant === 'related') {
+  if (variant === 'related') {
     return ''
   }
 
@@ -29,11 +22,11 @@ const articleClass = computed(() => {
 })
 
 const imageClass = computed(() => {
-  if (props.variant === 'related') {
-    return 'mb-2 block h-[150px] md:h-[240px] md:mb-3'
+  if (variant === 'related') {
+    return 'mb-2 block h-37.5 md:h-60 md:mb-3'
   }
 
-  return 'h-[200px] lg:h-[256px] lg:max-w-[526px]'
+  return 'h-50 lg:h-64 lg:max-w-131.5'
 })
 </script>
 

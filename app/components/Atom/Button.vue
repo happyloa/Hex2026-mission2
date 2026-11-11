@@ -1,29 +1,19 @@
-<script setup>
-const props = defineProps({
-  to: {
-    type: [String, Object],
-    default: null
-  },
-  variant: {
-    type: String,
-    default: 'filled',
-    validator: (value) => ['filled', 'outline'].includes(value)
-  },
-  color: {
-    type: String,
-    default: 'neutral',
-    validator: (value) => ['neutral', 'white'].includes(value)
-  },
-  type: {
-    type: String,
-    default: 'button',
-    validator: (value) => ['button', 'submit', 'reset'].includes(value)
-  },
-  full: {
-    type: Boolean,
-    default: false
-  }
-})
+<script setup lang="ts">
+import type { RouteLocationRaw } from 'vue-router'
+
+const {
+  to,
+  variant = 'filled',
+  color = 'neutral',
+  type = 'button',
+  full = false
+} = defineProps<{
+  to?: RouteLocationRaw
+  variant?: 'filled' | 'outline'
+  color?: 'neutral' | 'white'
+  type?: 'button' | 'submit' | 'reset'
+  full?: boolean
+}>()
 
 const baseClass =
   'inline-flex items-center justify-center rounded-full px-5 py-3 text-label-small transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 md:px-6 md:text-label-medium'
@@ -41,11 +31,7 @@ const variantClasses = {
   }
 }
 
-const buttonClass = computed(() => [
-  baseClass,
-  variantClasses[props.variant][props.color],
-  props.full && 'w-full'
-])
+const buttonClass = computed(() => [baseClass, variantClasses[variant][color], full && 'w-full'])
 </script>
 
 <template>

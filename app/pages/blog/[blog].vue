@@ -62,13 +62,7 @@ useSeoMeta({
 
 const { data: allPosts } = await useBlogIndex()
 
-const formattedDate = computed(() => {
-  return new Intl.DateTimeFormat('en', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric'
-  }).format(new Date(`${post.value.date}T00:00:00`))
-})
+const formattedDate = computed(() => formatPostDate(post.value.date))
 
 // 相關文章以共同標籤數排序，不足三篇時用最新文章補滿。
 const relatedPosts = computed(() => {
@@ -112,9 +106,9 @@ const instagramUrl = 'https://www.instagram.com/'
 
 <template>
   <!-- 麵包屑 -->
-  <nav class="bg-primary px-3 py-2 md:py-3">
+  <nav class="bg-primary px-3 py-2 md:py-3" aria-label="麵包屑">
     <div
-      class="mx-auto flex max-w-[1296px] flex-wrap items-center gap-1 text-label-small text-neutral-0 md:gap-2 md:text-label-medium"
+      class="mx-auto flex max-w-324 flex-wrap items-center gap-1 text-label-small text-neutral-0 md:gap-2 md:text-label-medium"
     >
       <NuxtLink to="/">首頁</NuxtLink>
       <svg
@@ -122,6 +116,7 @@ const instagramUrl = 'https://www.instagram.com/'
         viewBox="0 -960 960 960"
         fill="currentColor"
         class="size-5 md:size-6"
+        aria-hidden="true"
       >
         <path d="m549.69-480-189-189L384-692.31 596.31-480 384-267.69 360.69-291z" />
       </svg>
@@ -131,15 +126,16 @@ const instagramUrl = 'https://www.instagram.com/'
         viewBox="0 -960 960 960"
         fill="currentColor"
         class="size-5 md:size-6"
+        aria-hidden="true"
       >
         <path d="m549.69-480-189-189L384-692.31 596.31-480 384-267.69 360.69-291z" />
       </svg>
-      <span>{{ post.title }}</span>
+      <span aria-current="page">{{ post.title }}</span>
     </div>
   </nav>
   <!-- 單篇文章正文區塊 -->
   <main class="px-3 py-10 md:py-20">
-    <article class="mx-auto max-w-[1076px] text-paragraph-small md:text-paragraph-medium">
+    <article class="mx-auto max-w-269 text-paragraph-small md:text-paragraph-medium">
       <!-- 文章 meta，標籤與日期 -->
       <div class="mb-2 flex flex-wrap justify-between gap-2 lg:mb-4">
         <ul class="tag-list flex flex-wrap">
@@ -187,7 +183,7 @@ const instagramUrl = 'https://www.instagram.com/'
                 :href="facebookShareUrl"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex size-11 items-center justify-center rounded-full border border-neutral-700 text-neutral-700 transition hover:bg-primary-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-0 lg:size-12"
+                class="flex size-11 items-center justify-center rounded-full border border-neutral text-neutral transition hover:bg-primary-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral lg:size-12"
                 aria-label="分享到 Facebook"
               >
                 <Icon name="lucide:share-2" class="size-4 lg:size-5" />
@@ -198,7 +194,7 @@ const instagramUrl = 'https://www.instagram.com/'
                 :href="instagramUrl"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex size-11 items-center justify-center rounded-full border border-neutral-700 text-neutral-700 transition hover:bg-primary-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-0 lg:size-12"
+                class="flex size-11 items-center justify-center rounded-full border border-neutral text-neutral transition hover:bg-primary-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral lg:size-12"
                 aria-label="前往 Instagram"
               >
                 <Icon name="lucide:instagram" class="size-4 lg:size-5" />
@@ -209,7 +205,7 @@ const instagramUrl = 'https://www.instagram.com/'
                 :href="lineShareUrl"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex size-11 items-center justify-center rounded-full border border-neutral-700 text-neutral-700 transition hover:bg-primary-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-0 lg:size-12"
+                class="flex size-11 items-center justify-center rounded-full border border-neutral text-neutral transition hover:bg-primary-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral lg:size-12"
                 aria-label="分享到 LINE"
               >
                 <svg
@@ -243,11 +239,11 @@ const instagramUrl = 'https://www.instagram.com/'
     </article>
   </main>
   <section class="bg-primary-50 px-3 py-10 md:py-20">
-    <div class="mx-auto max-w-[1296px]">
+    <div class="mx-auto max-w-324">
       <span class="text-heading-xxxx-small md:text-heading-xxx-small">相關文章</span>
       <h2 class="mb-6 text-heading-x-large md:mb-10 md:text-heading-xxx-large">RELATED BLOG</h2>
       <!-- 手機版相關文章 -->
-      <Swiper :slides-per-view="1.4" :space-between="12" :loop="true" class="md:!hidden">
+      <Swiper :slides-per-view="1.4" :space-between="12" :loop="true" class="md:hidden!">
         <SwiperSlide v-for="relatedPost in relatedPosts" :key="relatedPost.path">
           <CommonBlogCard :post="relatedPost" variant="related" />
         </SwiperSlide>

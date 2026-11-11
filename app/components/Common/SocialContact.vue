@@ -1,11 +1,5 @@
-<script setup>
-defineProps({
-  size: {
-    type: String,
-    default: 'sm',
-    validator: (v) => ['sm', 'md'].includes(v)
-  }
-})
+<script setup lang="ts">
+const { size = 'sm' } = defineProps<{ size?: 'sm' | 'md' }>()
 
 const socialLinks = [
   { label: 'Instagram', icon: 'simple-icons:instagram', to: '#' },

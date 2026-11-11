@@ -1,4 +1,7 @@
-<script setup>
+<script setup lang="ts">
+const { app } = useRuntimeConfig()
+const desktopLogo = withAppBaseURL('/img/common/desktop/logo.svg', app.baseURL)
+
 const navLinks = [
   { label: '服務項目', to: '/service' },
   { label: '專案作品', to: '/project' },
@@ -34,7 +37,7 @@ const unlockBodyScroll = () => {
 }
 
 // 手機選單打開時鎖住背景捲動，關閉或離開元件時恢復。
-const syncBodyScrollLock = (shouldLock) => {
+const syncBodyScrollLock = (shouldLock: boolean) => {
   if (shouldLock) {
     lockBodyScroll()
   } else {
@@ -42,7 +45,7 @@ const syncBodyScrollLock = (shouldLock) => {
   }
 }
 
-const handleKeydown = (event) => {
+const handleKeydown = (event: KeyboardEvent) => {
   if (event.key === 'Escape' && isMenuOpen.value) {
     closeMenu()
   }
@@ -118,16 +121,11 @@ onBeforeUnmount(() => {
 
 <template>
   <header class="sticky top-0 z-50 bg-primary-50 px-3 py-2 md:py-3">
-    <nav class="mx-auto flex max-w-[1296px] items-center justify-between">
+    <nav class="mx-auto flex max-w-324 items-center justify-between">
       <!-- logo -->
       <NuxtLink to="/" aria-label="回到首頁" @click="closeMenu">
         <picture>
-          <source
-            media="(min-width: 768px)"
-            srcset="/img/common/desktop/logo.svg"
-            width="140"
-            height="40"
-          />
+          <source media="(min-width: 768px)" :srcset="desktopLogo" width="140" height="40" />
           <CommonSiteImage
             src="/img/common/mobile/logo.svg"
             alt="Nelson 網站 logo"
@@ -159,7 +157,7 @@ onBeforeUnmount(() => {
         @click="toggleMenu"
       >
         <!-- 漢堡圖示 -->
-        <div class="flex size-5 flex-col justify-center gap-[5px]" aria-hidden="true">
+        <div class="flex size-5 flex-col justify-center gap-1.25" aria-hidden="true">
           <div class="h-px bg-neutral"></div>
           <div class="h-px bg-neutral"></div>
           <div class="h-px bg-neutral"></div>
@@ -221,11 +219,12 @@ onBeforeUnmount(() => {
         </ul>
       </nav>
     </Transition>
-    <!-- 閱讀進度條 -->
+    <!-- 閱讀進度條：以 transform 縮放，捲動時只觸發合成，不重新計算版面 -->
     <div
       v-if="isBlogSinglePage"
-      class="absolute bottom-0 left-0 h-1 bg-primary transition-all duration-75"
-      :style="{ width: `${scrollPercent}%` }"
+      aria-hidden="true"
+      class="absolute bottom-0 left-0 h-1 w-full origin-left bg-primary transition-transform duration-75 motion-reduce:transition-none"
+      :style="{ transform: `scaleX(${scrollPercent / 100})` }"
     ></div>
   </header>
 </template>

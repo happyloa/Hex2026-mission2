@@ -1,5 +1,6 @@
-<script setup>
-import { defaultService, serviceItems } from '../data/services'
+<script setup lang="ts">
+import { defaultService, serviceItems } from '~/data/services'
+import type { ServiceItem } from '~/types'
 
 const requestUrl = useRequestURL()
 const runtimeConfig = useRuntimeConfig()
@@ -7,8 +8,14 @@ const siteOrigin = resolveSiteOrigin(runtimeConfig.public.siteUrl, requestUrl.or
 const route = useRoute()
 const router = useRouter()
 const bannerStyle = {
-  '--banner-mobile-image': "url('/img/service/mobile/service_banner.webp')",
-  '--banner-desktop-image': "url('/img/service/desktop/service_banner.webp')"
+  '--banner-mobile-image': toCssImage(
+    '/img/service/mobile/service_banner.webp',
+    runtimeConfig.app.baseURL
+  ),
+  '--banner-desktop-image': toCssImage(
+    '/img/service/desktop/service_banner.webp',
+    runtimeConfig.app.baseURL
+  )
 }
 
 useSeoMeta(
@@ -22,21 +29,22 @@ useSeoMeta(
   })
 )
 
+const findService = (key: unknown) => serviceItems.find((item) => item.key === key)
+const fallbackService = findService(defaultService)
+if (!fallbackService) {
+  throw createError({ statusCode: 500, message: `找不到預設服務項目：${defaultService}` })
+}
+
 // 依照網址 service 參數決定目前選取的項目；若參數不存在或不合法則回到預設項目。
-const activeServiceKey = computed(() => {
-  const service = Array.isArray(route.query.service) ? route.query.service[0] : route.query.service
-  return serviceItems.some((item) => item.key === service) ? service : defaultService
-})
-
-// 將目前選取的服務項目整理成單一物件，供 banner active 狀態與流程區塊共用。
+// 選取的項目同時供 banner active 狀態與流程區塊共用。
 const activeService = computed(
-  () => serviceItems.find((item) => item.key === activeServiceKey.value) || serviceItems[0]
+  () => findService([route.query.service].flat()[0]) ?? fallbackService
 )
-
+const activeServiceKey = computed(() => activeService.value.key)
 const serviceSteps = computed(() => activeService.value.steps)
 
 // 點擊 banner 項目時只更新 service query，保留頁面上其它既有 query。
-const setActiveService = (service) => {
+const setActiveService = (service: ServiceItem) => {
   router.push({
     query: {
       ...route.query,
@@ -79,13 +87,13 @@ const faqItems = [
 <template>
   <!-- Banner -->
   <section
-    class="relative bg-[image:var(--banner-mobile-image)] bg-cover bg-center px-3 py-10 text-center text-neutral-0 md:bg-[image:var(--banner-desktop-image)] md:py-20"
+    class="relative bg-(image:--banner-mobile-image) bg-cover bg-center px-3 py-10 text-center text-neutral-0 md:bg-(image:--banner-desktop-image) md:py-20"
     :style="bannerStyle"
   >
     <!-- 遮罩 -->
     <div class="absolute inset-0 bg-dark-40a"></div>
     <!-- 內容 -->
-    <div class="relative z-10 mx-auto max-w-[1076px]">
+    <div class="relative z-10 mx-auto max-w-269">
       <p class="mb-1 text-heading-x-large md:mb-2 lg:text-heading-xxx-large">SERVICES</p>
       <h1 class="mb-6 text-heading-x-large md:mb-10 lg:text-heading-xx-large">服務項目</h1>
       <ol class="grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-4">
@@ -106,6 +114,7 @@ const faqItems = [
               viewBox="0 -960 960 960"
               fill="currentColor"
               class="mb-1 size-6 md:mb-3 md:size-7"
+              aria-hidden="true"
             >
               <path :d="service.iconPath" />
             </svg>
@@ -118,16 +127,16 @@ const faqItems = [
   </section>
   <!-- 服務流程區塊 -->
   <main class="bg-primary px-3 py-10 text-neutral-0 md:py-20">
-    <div class="mx-auto flex max-w-[1076px] flex-col justify-between gap-6 md:flex-row">
+    <div class="mx-auto flex max-w-269 flex-col justify-between gap-6 md:flex-row">
       <!-- 左側標題 -->
-      <div class="text-center md:max-w-[416px] md:text-start">
+      <div class="text-center md:max-w-104 md:text-start">
         <p class="text-heading-xxxx-small md:text-heading-xxx-small">SERVICE STEPS</p>
         <h2 class="text-heading-x-large md:text-heading-xx-large">服務流程</h2>
       </div>
       <!-- 右側步驟 -->
-      <div class="flex-1 md:max-w-[636px]">
+      <div class="flex-1 md:max-w-159">
         <ol
-          class="relative space-y-10 before:absolute before:top-6 before:bottom-16 before:left-[18px] before:w-[0.5px] before:bg-neutral-0 md:before:top-5 md:before:bottom-20 md:before:left-5"
+          class="relative space-y-10 before:absolute before:top-6 before:bottom-16 before:left-4.5 before:w-[0.5px] before:bg-neutral-0 md:before:top-5 md:before:bottom-20 md:before:left-5"
         >
           <li
             v-for="step in serviceSteps"
@@ -152,7 +161,7 @@ const faqItems = [
   </main>
   <!-- 客戶案例區塊 -->
   <section class="px-3 py-10 md:py-20">
-    <div class="mx-auto max-w-[1076px]">
+    <div class="mx-auto max-w-269">
       <div class="mb-10 text-center md:text-start">
         <p class="text-heading-xxxx-small md:text-heading-xxx-small">USER CASE</p>
         <h2 class="text-heading-x-large md:text-heading-xx-large">客戶案例</h2>
@@ -166,7 +175,7 @@ const faqItems = [
               <CommonSiteImage
                 src="/img/service/service_case_1.webp"
                 alt="品牌視覺與電商整合，多肉植物品牌電商建置"
-                class="block max-h-[205px] w-full object-cover md:max-h-[305px]"
+                class="block max-h-51.25 w-full object-cover md:max-h-76.25"
                 sizes="(min-width: 1296px) 636px, (min-width: 640px) 50vw, calc(100vw - 24px)"
               />
               <!-- 標籤與時間 -->
@@ -213,7 +222,7 @@ const faqItems = [
               <CommonSiteImage
                 src="/img/service/service_case_2.webp"
                 alt="數位產品 UI/UX 設計，個人化財務視覺化軟體"
-                class="block max-h-[205px] w-full object-cover md:max-h-[305px]"
+                class="block max-h-51.25 w-full object-cover md:max-h-76.25"
                 sizes="(min-width: 1296px) 636px, (min-width: 640px) 50vw, calc(100vw - 24px)"
               />
               <!-- 標籤與時間 -->
@@ -259,18 +268,18 @@ const faqItems = [
   </section>
   <!-- FAQ 區塊 -->
   <section class="bg-primary-50 px-3 py-10 md:py-20">
-    <div class="mx-auto flex max-w-[1076px] flex-col justify-between gap-6 md:flex-row">
+    <div class="mx-auto flex max-w-269 flex-col justify-between gap-6 md:flex-row">
       <!-- 左側標題 -->
-      <div class="text-center md:max-w-[416px] md:text-start">
+      <div class="text-center md:max-w-104 md:text-start">
         <p class="text-heading-xxxx-small md:text-heading-xxx-small">FAQ</p>
         <h2 class="text-heading-x-large md:text-heading-xx-large">常見問題</h2>
       </div>
       <!-- 右側手風琴 -->
-      <div class="flex-1 md:max-w-[636px]">
+      <div class="flex-1 md:max-w-159">
         <details
           v-for="faq in faqItems"
           :key="faq.id"
-          class="group border-b border-primary [&::details-content]:block [&::details-content]:overflow-hidden [&::details-content]:[block-size:0] [&::details-content]:[transition:block-size_300ms_ease,content-visibility_300ms_ease_allow-discrete] [&[open]::details-content]:[block-size:auto]"
+          class="group border-b border-primary details-content:block details-content:overflow-hidden details-content:[transition:block-size_300ms_ease,content-visibility_300ms_ease_allow-discrete] details-content:block-0 [&[open]::details-content]:block-auto"
           :open="faq.open"
         >
           <summary
