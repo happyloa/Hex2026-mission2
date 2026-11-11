@@ -11,6 +11,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "typecheck": "nuxt prepare && vue-tsc -b --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test:static": "node --test tests/static-site.test.mjs",
     "postinstall": "nuxt prepare"
   },

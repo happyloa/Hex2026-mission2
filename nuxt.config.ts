@@ -46,8 +46,8 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-07-19',
   devtools: { enabled: process.env.NODE_ENV === 'development' },
 
+  // 子路徑部署時由 Nuxt 自動讀取 NUXT_APP_BASE_URL，不需在此重複設定。
   app: {
-    baseURL: process.env.NUXT_APP_BASE_URL || '/',
     head: {
       htmlAttrs: {
         lang: 'zh-Hant-TW'
@@ -55,9 +55,10 @@ export default defineNuxtConfig({
     }
   },
 
+  // 可用 NUXT_PUBLIC_SITE_URL 覆寫，Nuxt 會在執行期與預渲染時自動套用。
   runtimeConfig: {
     public: {
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://hex2026-mission2.pages.dev'
+      siteUrl: 'https://hex2026-mission2.pages.dev'
     }
   },
 

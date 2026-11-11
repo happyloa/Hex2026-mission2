@@ -20,16 +20,18 @@ npm run dev
 
 開啟 <http://localhost:3000/>。VS Code 擴充套件建議見 [.vscode/extensions.json](./.vscode/extensions.json)。
 
-| 指令                  | 用途                               |
-| --------------------- | ---------------------------------- |
-| `npm run typecheck`   | 型別檢查                           |
-| `npm run build`       | 建立 Nuxt 伺服器版本               |
-| `npm run preview`     | 預覽建置結果                       |
-| `npm run generate`    | 產生靜態網站至 `.output/public`    |
-| `npm run test:static` | 檢查靜態輸出的文章資料、網址與圖片 |
-| `npm audit`           | 掃描相依套件漏洞                   |
+| 指令                   | 用途                               |
+| ---------------------- | ---------------------------------- |
+| `npm run format`       | 以 Prettier 格式化並排序 class     |
+| `npm run format:check` | 檢查格式                           |
+| `npm run typecheck`    | 型別檢查                           |
+| `npm run build`        | 建立 Nuxt 伺服器版本               |
+| `npm run preview`      | 預覽建置結果                       |
+| `npm run generate`     | 產生靜態網站至 `.output/public`    |
+| `npm run test:static`  | 檢查靜態輸出的文章資料、網址與圖片 |
+| `npm audit`            | 掃描相依套件漏洞                   |
 
-提交前執行型別檢查、建置與漏洞掃描；`test:static` 需要先執行 `generate`。
+`test:static` 需要先執行 `generate`。[CI](./.github/workflows/ci.yml) 會在推送至 `main` 與 PR 時依序執行格式、型別、靜態產生、整合測試與漏洞掃描（moderate 以上即失敗）。
 
 字型由 Nuxt Fonts 自託管。首次安裝或建置需連線下載 Noto Sans TC，並依 `app`、`content` 的文字裁切成單一可變字型。來源與流程見 [build/fonts.ts](./build/fonts.ts)，授權見 [OFL.txt](./public/fonts/OFL.txt)。
 
@@ -63,9 +65,9 @@ Cloudflare Pages 使用：
 - 建置指令：`npm run generate`
 - 發佈目錄：`.output/public`
 
-部署至其他網域時，設定 `NUXT_PUBLIC_SITE_URL=https://your-domain.com`，供 OG 與分享網址使用。預設部署於網域根目錄；若使用 `NUXT_APP_BASE_URL=/your-repo-name/`，仍需檢查既有 `/img/` 圖片參照是否符合子路徑。
+部署至其他網域時，設定 `NUXT_PUBLIC_SITE_URL=https://your-domain.com`，供 OG 與分享網址使用。預設部署於網域根目錄；部署至子路徑時設定 `NUXT_APP_BASE_URL=/your-repo-name/`，圖片、CSS 背景圖與 favicon 都會自動加上前綴。
 
-[public/_headers](./public/_headers) 設定安全標頭與資源快取。Nuxt Content 建置時使用 Node.js 內建 SQLite，部署只需靜態 HTML、JSON 與資源檔。Nuxt DevTools 僅在開發環境啟用。
+[public/_headers](./public/_headers) 設定 CSP 等安全標頭與資源快取；CSP 僅允許同源資源，新增外部服務（分析、嵌入內容等）時需同步調整。Nuxt Content 建置時使用 Node.js 內建 SQLite，部署只需靜態 HTML、JSON 與資源檔。Nuxt DevTools 僅在開發環境啟用。
 
 ## 展示功能限制
 
