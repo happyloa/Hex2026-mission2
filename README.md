@@ -25,7 +25,7 @@ npm run dev
 | `npm run format`       | 以 Prettier 格式化並排序 class     |
 | `npm run format:check` | 檢查格式                           |
 | `npm run typecheck`    | 型別檢查                           |
-| `npm run build`        | 建立 Nuxt 伺服器版本               |
+| `npm run build`        | 產生靜態網站（與 `generate` 相同） |
 | `npm run preview`      | 預覽建置結果                       |
 | `npm run generate`     | 產生靜態網站至 `.output/public`    |
 | `npm run test:static`  | 檢查靜態輸出的文章資料、網址與圖片 |
@@ -59,15 +59,19 @@ TypeScript 維持 6.x：TypeScript 7 已移除 `vue-tsc` 依賴的 JavaScript AP
 
 ## 部署
 
+全站為靜態網站：[nuxt.config.ts](./nuxt.config.ts) 設定 `nitro.static`，`build` 與 `generate` 都會預渲染所有頁面，不產生伺服器或 Worker。
+
 Cloudflare Pages 使用：
 
 - Node.js：`26.13.0`，與 `.nvmrc` 一致
-- 建置指令：`npm run generate`
-- 發佈目錄：`.output/public`
+- 建置指令：`npm run build`（或 `npm run generate`）
+- 發佈目錄：`dist`
+
+在 Cloudflare Pages 建置時，Nitro 會自動改用 `cloudflare-pages-static` preset 並輸出至 `dist`，同時產生 `_headers` 與 404 用的 `_redirects`；本機建置則輸出至 `.output/public`。
 
 部署至其他網域時，設定 `NUXT_PUBLIC_SITE_URL=https://your-domain.com`，供 OG 與分享網址使用。預設部署於網域根目錄；部署至子路徑時設定 `NUXT_APP_BASE_URL=/your-repo-name/`，圖片、CSS 背景圖與 favicon 都會自動加上前綴。
 
-[public/_headers](./public/_headers) 設定 CSP 等安全標頭與資源快取；CSP 僅允許同源資源，新增外部服務（分析、嵌入內容等）時需同步調整。Nuxt Content 建置時使用 Node.js 內建 SQLite，部署只需靜態 HTML、JSON 與資源檔。Nuxt DevTools 僅在開發環境啟用。
+[public/_headers](./public/_headers) 設定 CSP 等安全標頭與圖片快取，`/_nuxt` 與 `/_images` 的長效快取由 Nitro 依資源設定自動產生；CSP 僅允許同源資源，新增外部服務（分析、嵌入內容等）時需同步調整。Nuxt Content 建置時使用 Node.js 內建 SQLite，部署只需靜態 HTML、JSON 與資源檔。Nuxt DevTools 僅在開發環境啟用。
 
 ## 展示功能限制
 

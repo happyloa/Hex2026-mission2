@@ -110,6 +110,11 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    // 全站皆為預渲染的靜態內容，不需要伺服器。固定為靜態輸出後，無論部署平台執行
+    // `nuxt build` 或 `nuxt generate` 都會爬取並預渲染所有頁面，不會產生 Worker，
+    // public/_headers 的安全標頭因此能套用到每一個頁面。在 Cloudflare Pages 上
+    // Nitro 會自動改用 cloudflare-pages-static preset，輸出至 dist。
+    static: true,
     prerender: {
       // 序列化預渲染：平行寫入同一個 cache key 時，Windows 檔案系統的
       // rename 並非原子操作，會間歇性丟出 EPERM。序列化可穩定避免此問題，
