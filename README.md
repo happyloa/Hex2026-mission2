@@ -33,7 +33,7 @@ npm run dev
 
 字型由 Nuxt Fonts 自託管。首次安裝或建置需連線下載 Noto Sans TC，並依 `app`、`content` 的文字裁切成單一可變字型。來源與流程見 [build/fonts.ts](./build/fonts.ts)，授權見 [OFL.txt](./public/fonts/OFL.txt)。
 
-TypeScript 維持 Vue 工具鏈相容的 6.x（[上游追蹤](https://github.com/vuejs/language-tools/issues/5381)）。`overrides` 將 Nuxt Content 的 Zod、minimatch 及建置工具的 glob 固定在已修補版本，待上游依賴更新後可移除。`npm audit` 仍會列出建置工具間接依賴的 [deepmerge 漏洞](https://github.com/advisories/GHSA-gcqx-w48m-w2h4)，目前沒有官方修補版；勿使用 `npm audit fix --force` 降版框架。
+TypeScript 維持 6.x：TypeScript 7 已移除 `vue-tsc` 依賴的 JavaScript API，Vue 工具鏈改經由 [typescript-native-bridge](https://github.com/vuejs/language-tools/issues/5381) 支援，待 `vue-tsc` 正式支援後再升級。`overrides` 將 Nuxt Content 的 Zod、minimatch 及建置工具的 glob 固定在已修補版本，待上游依賴更新後可移除。`npm audit` 仍會列出建置工具間接依賴的 [deepmerge 漏洞](https://github.com/advisories/GHSA-gcqx-w48m-w2h4)，目前沒有官方修補版；勿使用 `npm audit fix --force` 降版框架。
 
 ## 路由與資料
 
