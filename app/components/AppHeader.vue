@@ -3,9 +3,9 @@ const { app } = useRuntimeConfig()
 const desktopLogo = withAppBaseURL('/img/common/desktop/logo.svg', app.baseURL)
 
 const navLinks = [
-  { label: '服務項目', to: '/service' },
-  { label: '專案作品', to: '/project' },
-  { label: '部落格', to: '/blog' }
+  { label: '服務項目', to: '/service/' },
+  { label: '專案作品', to: '/project/' },
+  { label: '部落格', to: '/blog/' }
 ]
 
 const navLinkClass = 'px-3 py-1 text-label-medium transition hover:text-primary'
@@ -55,8 +55,8 @@ watch(isMenuOpen, syncBodyScrollLock)
 
 // 閱讀進度條相關邏輯
 const route = useRoute()
-// 判斷當前頁面是否為部落格單頁 (例如: /blog/ai-interface-design-workflow)
-const isBlogSinglePage = computed(() => route.path.startsWith('/blog/'))
+// 以動態參數判斷是否為部落格單頁；靜態主機會把 /blog 導向 /blog/，不能只比對路徑前綴。
+const isBlogSinglePage = computed(() => Boolean(route.params.blog))
 
 const scrollPercent = ref(0)
 let isListening = false

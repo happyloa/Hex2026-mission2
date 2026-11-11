@@ -120,7 +120,7 @@ const instagramUrl = 'https://www.instagram.com/'
       >
         <path d="m549.69-480-189-189L384-692.31 596.31-480 384-267.69 360.69-291z" />
       </svg>
-      <NuxtLink to="/blog">部落格</NuxtLink>
+      <NuxtLink to="/blog/">部落格</NuxtLink>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 -960 960 960"
@@ -141,7 +141,7 @@ const instagramUrl = 'https://www.instagram.com/'
         <ul class="tag-list flex flex-wrap">
           <li v-for="tag in post.tags" :key="tag">
             <NuxtLink
-              :to="{ path: '/blog', query: { tag } }"
+              :to="{ path: '/blog/', query: { tag } }"
               class="transition hover:text-neutral-500"
             >
               {{ tag }}

@@ -14,7 +14,7 @@ useSeoMeta(
       '瀏覽 Nelson 的專案作品，包含品牌識別、UIUX 設計、RWD 網站開發與數位產品介面規劃。',
     origin: siteOrigin,
     baseURL: runtimeConfig.app.baseURL,
-    path: '/project'
+    path: '/project/'
   })
 )
 

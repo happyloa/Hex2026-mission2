@@ -10,7 +10,7 @@ useSeoMeta(
       '閱讀 UIUX 設計、前端技術、設計規範與 AI 趨勢應用文章，整理數位產品設計與開發的實務觀點。',
     origin: siteOrigin,
     baseURL: runtimeConfig.app.baseURL,
-    path: '/blog'
+    path: '/blog/'
   })
 )
 

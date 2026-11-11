@@ -6,7 +6,7 @@ defineProps<{ service: ServiceItem }>()
 
 <template>
   <NuxtLink
-    :to="`/service?service=${service.key}`"
+    :to="`/service/?service=${service.key}`"
     class="group block h-full w-full space-y-2 bg-primary-50 p-3 text-neutral transition hover:bg-primary-100 sm:space-y-3 md:p-6"
   >
     <!-- 標題與 icon -->

@@ -50,8 +50,15 @@ test('prerendered pages reserve local image sizes and link directly to canonical
       (html.match(/as="font"/g) || []).length <= 1,
       `${route}: only preload the single subset font`
     )
-    for (const [, href] of html.matchAll(/href="(\/blog\/[^"?#]+)"/g)) {
+    // 靜態主機會把沒有結尾斜線的頁面網址 308 導向帶斜線的版本；_payload.json 等檔案除外。
+    for (const [, href] of html.matchAll(/href="(\/(?:service|project|blog)[^"?#]*)/g)) {
+      if (/\.[a-z]+$/i.test(href)) continue
       assert.ok(href.endsWith('/'), `${route}: ${href} would redirect`)
+    }
+    for (const [, url] of html.matchAll(
+      /<(?:link rel="canonical"|meta property="og:url")[^>]*?(?:href|content)="([^"]+)"/g
+    )) {
+      assert.ok(new URL(url).pathname.endsWith('/'), `${route}: canonical ${url} would redirect`)
     }
     for (const [tag] of html.matchAll(/<img\s[^>]+>/g)) {
       if (!/src="\/(?:img|_images)\//.test(tag)) continue

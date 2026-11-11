@@ -25,7 +25,7 @@ useSeoMeta(
       '了解 Nelson 提供的品牌視覺、UIUX 設計、網頁設計與前端開發服務，協助產品從設計提案走到可落地的網站體驗。',
     origin: siteOrigin,
     baseURL: runtimeConfig.app.baseURL,
-    path: '/service'
+    path: '/service/'
   })
 )
 
@@ -171,7 +171,7 @@ const faqItems = [
         <!-- 案例1 -->
         <li>
           <article>
-            <NuxtLink to="/project" class="group space-y-2 md:space-y-3">
+            <NuxtLink to="/project/" class="group space-y-2 md:space-y-3">
               <CommonSiteImage
                 src="/img/service/service_case_1.webp"
                 alt="品牌視覺與電商整合，多肉植物品牌電商建置"
@@ -218,7 +218,7 @@ const faqItems = [
         <!-- 案例2 -->
         <li>
           <article>
-            <NuxtLink to="/project" class="group space-y-2 md:space-y-3">
+            <NuxtLink to="/project/" class="group space-y-2 md:space-y-3">
               <CommonSiteImage
                 src="/img/service/service_case_2.webp"
                 alt="數位產品 UI/UX 設計，個人化財務視覺化軟體"

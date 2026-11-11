@@ -119,7 +119,7 @@ onBeforeUnmount(() => {
           </p>
           <div class="flex gap-3 sm:gap-6">
             <AtomButton to="#footer">與我聯絡</AtomButton>
-            <AtomButton to="/project" variant="outline">我的履歷</AtomButton>
+            <AtomButton to="/project/" variant="outline">我的履歷</AtomButton>
           </div>
         </div>
         <CommonSiteImage
@@ -205,7 +205,7 @@ onBeforeUnmount(() => {
               <CommonProjectCard :project="project" heading-level="h3" @open="openProjectModal" />
             </li>
           </ul>
-          <AtomButton to="/project" class="self-center">探索更多</AtomButton>
+          <AtomButton to="/project/" class="self-center">探索更多</AtomButton>
         </div>
       </div>
     </section>
@@ -218,7 +218,7 @@ onBeforeUnmount(() => {
             <h2 class="text-heading-xxxx-small md:text-heading-xxx-small">部落格</h2>
             <p class="text-heading-x-large md:text-heading-xxx-large">BLOGS</p>
           </div>
-          <AtomButton to="/blog" variant="outline">探索更多</AtomButton>
+          <AtomButton to="/blog/" variant="outline">探索更多</AtomButton>
         </div>
         <!-- 手機版最新文章 -->
         <Swiper
